@@ -1,0 +1,173 @@
+#!/bin/bash
+PATH="$PWD/node_modules/.bin":$PATH
+set -e
+
+hello() {
+    echo Hello from taskfile
+    echo args: "$1" "$2" "$3"
+}
+
+remark_run() {
+    node -r ts-node/register/transpile-only node_modules/remark-cli/cli.js readme.md "$@"
+}
+
+remark_output() {
+    remark_run --output
+}
+
+build() {
+    set -x
+    rm -rfv dist
+    cp -rfv src dist
+    cat tsconfig.json | jq 'del(.include, .compilerOptions.outDir)' > dist/tsconfig.json
+    cp -v README.md LICENSE package.json dist
+    cd dist
+    /usr/bin/find . -name '*.spec.ts' | xargs rm -rvf
+    tsc -p .
+    rm -rvf tsconfig.json
+    cd ..
+    set +x
+}
+
+bundle() {
+    set -x
+    rm -rfv dist
+    cp -rfv src dist
+    cat tsconfig.json | jq '.compilerOptions.module = "esnext" | del(.include, .compilerOptions.outDir)' > dist/tsconfig.json
+    cp -v README.md LICENSE package.json dist
+    cd dist
+    /usr/bin/find . -name '*.spec.ts' | xargs rm -rvf
+    npx microbundle -i index.ts --no-compress -f es,umd -o .
+    rm -rvf tsconfig.json
+    /usr/bin/find . -name '.rts2*' | xargs rm -rf
+    package=$(cat package.json)
+    echo "$package" | jq '.main = "bundle.umd.js"' \
+        | jq '.module = "bundle.mjs"' \
+        > package.json
+    cd ..
+    set +x
+}
+
+generate_liense() {
+    npx license-generator install MIT
+}
+
+# Build frontend package
+build_f() {
+    ng-packagr
+}
+
+eslint_run() {
+    eslint src --ext ts
+}
+
+lint_watch() {
+    npm run tsclint:w 2>&1 &
+    npm run eslint:w 2>&1 &
+}
+
+
+git_last_release_tag() {
+    result=""
+    rev=$(git rev-list --max-count=1 --tags="v[0-9]*\\.[0-9]*\\.[0-9]*")
+    if [ -n "$rev" ]; then
+        result=$(git describe --tags $rev)
+    fi
+    if [ -n "$result" ]; then
+        result=$(git rev-list --max-parents=0 HEAD)
+    fi
+    echo $result
+}
+
+commit_lint() {
+    set -x
+    from=$(git_last_release_tag)
+    commitlint --from $from
+}
+
+# Deploy package for monorepo strategy
+# Example: sh Taskfile deploy_package src/subpackage
+# setup global for faster deployment several package:
+# npm i -g semantic-release semantic-release-monorepo @semantic-release/changelog @semantic-release/commit-analyzer @semantic-release/git @semantic-release/github @semantic-release/npm @semantic-release/release-notes-generator remark-cli remark-license
+# npm i --no-save remark-cli remark-license remark-toc
+deploy_package() {
+    set -x
+    root=`pwd`
+    build_package $1
+    cd $1
+    npx semantic-release -e semantic-release-monorepo
+    cd $root
+    set +x
+}
+
+# build sub package (monorepo)
+build_package() {
+    echo Building package $1
+
+    # Prepare
+    root=`pwd`
+    rootPackage=`cat package.json`
+    rootTsConfig=`cat tsconfig.json`
+
+    # Switching directory to package
+    cd "$root/$1"
+
+    # Clean
+    rm -rfv dist
+    mkdir dist
+
+    build_package_json
+
+    # Merge root and local tsconfig files
+    localTsConfig=`cat tsconfig.json || echo {}`
+    echo "$rootTsConfig" "$localTsConfig" \
+        | jq -s '.[0] * .[1]' \
+        | jq 'del(.include, .compilerOptions.outDir)' \
+        > dist/tsconfig.json
+
+    # Build
+    cp -rfv *.ts ./dist
+    cd dist
+    /usr/bin/find . -name '*.spec.ts' | xargs rm -rvf
+    tsc --incremental false --project .
+    rm -rvf tsconfig.json
+    cd ..
+    # Return to package directory
+    # Copy other files to dist
+    cp -vf README.md LICENSE package.json dist || true
+    cd $root
+    return 0
+}
+
+# Configure package.json for package
+# $1 - path to subpackage root
+# https://riptutorial.com/bash/example/19531/a-function-that-accepts-named-parameters
+build_package_json() {
+    if [ -z "$root" ]; then
+        local root=`git rev-parse --show-toplevel`
+        local rootPackage=`cat $root/package.json`
+    fi
+    if [ -n "$1" ]; then
+        parentScope=`pwd`
+        cd $1
+    fi
+    [ ! -f package.json ] && npm init -y 1> /dev/null
+    localPackage=`cat package.json`
+    localPackage=`echo "$localPackage" | jq '.license = "MIT"'`
+    author=`echo "$localPackage" | jq -r '.author | select (. != null)'`
+    if [ -z "$author" ]; then
+        author=`date +"%Y"`
+        localPackage=`echo "$localPackage" | jq --arg x "$author" '.author = $x'`
+    fi
+    # Update homepage field
+    if [ -z `echo "$localPackage" | jq -r '.homepage | select (. != null)'` ]; then
+        rootHomepage=`echo "$rootPackage" | jq -r '.homepage | select (. != null)' | sed s'/#readme//'`
+        homepage="$rootHomepage/tree/master/$1"
+        localPackage=`echo "$localPackage" | jq --arg x "$homepage" '.homepage = $x'`
+    fi
+    echo "$localPackage" > package.json
+    [ -n "$1" ] && cd $parentScope
+    return 0
+}
+
+"$@"
