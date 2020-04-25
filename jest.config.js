@@ -1,5 +1,9 @@
+const { pathsToModuleNameMapper } = require('ts-jest/utils');
+const { compilerOptions } = require('./tsconfig');
+
 module.exports = {
-    testEnvironment: 'node',
+    rootDir: '.',
+    testEnvironment: 'jsdom',
     transform: {
         '^.+\\.tsx?$': 'ts-jest',
     },
@@ -9,16 +13,17 @@ module.exports = {
         // "lcov",
         'text',
     ],
-    collectCoverageFrom: ['src/**/*.ts', '!src/**/*.spec.ts'],
-    testMatch: ['<rootDir>/src/**/*.spec.ts'],
+    collectCoverageFrom: ['src/**/*.{ts,tsx}', '!src/**/*.spec.{ts,tsx}'],
+    testMatch: ['<rootDir>/src/**/*.spec.{ts,tsx}'],
     moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json'],
     modulePathIgnorePatterns: ['<rootDir>/dist'],
+    moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths, { prefix: '<rootDir>/src/' }),
     globals: {
         'ts-jest': {
             diagnostics: false,
             isolatedModules: true,
             tsConfig: {
-                target: 'esnext',
+                target: 'es2017',
             },
         },
     },

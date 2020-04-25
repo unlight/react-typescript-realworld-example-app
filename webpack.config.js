@@ -4,34 +4,31 @@ const buildPath = path.join(__dirname, 'dist');
 const context = __dirname;
 const title = 'App';
 
-const defaultOptions = {
-    libs: false,
-    style: false,
-    test: false,
-    coverage: false,
-    prod: false,
-    nomin: false,
-    debug: false,
-    get dev() {
-        return !this.prod;
-    },
-    get minimize() {
-        return !this.nomin;
-    },
-    get devtool() {
-        return 'webpack_devtool' in process.env ? process.env.webpack_devtool : 'cheap-source-map';
-    },
-    get sourceMap() {
-        const devtool = this.devtool;
-        return !devtool || devtool === '0' ? false : true;
-    },
-    get mode() {
-        return this.prod ? 'production' : 'development';
-    },
-};
-
-module.exports = (options = {}) => {
-    options = { ...defaultOptions, ...options };
+module.exports = (options = {}, argv) => {
+    options = {
+        libs: false,
+        style: false,
+        test: false,
+        coverage: false,
+        mode: argv.mode ? argv.mode : 'development',
+        debug: false,
+        ...options,
+        get prod() {
+            return this.mode === 'production';
+        },
+        get minimize() {
+            return this.prod;
+        },
+        get devtool() {
+            return 'webpack_devtool' in process.env
+                ? process.env.webpack_devtool
+                : 'cheap-source-map';
+        },
+        get sourceMap() {
+            const devtool = this.devtool;
+            return !devtool || devtool === '0' ? false : true;
+        },
+    };
     for (const [key, value] of Object.entries(options)) process.stdout.write(`${key}:${value} `);
     let config = {
         context,
@@ -51,6 +48,10 @@ module.exports = (options = {}) => {
         })(),
         resolve: {
             extensions: ['.ts', '.tsx', '.js', '.json'],
+            plugins: (() => {
+                const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
+                return [new TsconfigPathsPlugin()];
+            })(),
         },
         devServer: {
             contentBase: [buildPath],
@@ -147,7 +148,7 @@ module.exports = (options = {}) => {
                     title,
                 });
             })(),
-            ...(!options.libs
+            ...(!options.libs && !options.prod
                 ? () => {
                       const DllReferencePlugin = require('webpack/lib/DllReferencePlugin');
                       const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin');
@@ -177,8 +178,8 @@ module.exports = (options = {}) => {
         ].filter(Boolean),
 
         optimization: {
-            namedModules: options.dev || options.debug ? true : false,
-            namedChunks: options.dev || options.debug ? true : false,
+            namedModules: !options.prod || options.debug ? true : false,
+            namedChunks: !options.prod || options.debug ? true : false,
             minimizer: [
                 (options.minimize
                     ? () => {

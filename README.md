@@ -21,6 +21,10 @@ npm ci
 npm run dev
 ```
 
-### Specs
+### Resources
 
 -   https://github.com/gothinkster/realworld/tree/master/spec#frontend-specs
+
+### Todo
+
+-   Config

@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
-    "target": "es2015",
-    "module": "commonjs",
+    "target": "es2017",
+    "module": "esnext",
     "jsx": "react",
     "moduleResolution": "node",
     "importHelpers": true,
@@ -17,7 +17,11 @@
     "declaration": true,
     "declarationMap": true,
     "skipLibCheck": true,
-    "lib": ["dom", "esnext"]
+    "lib": ["dom", "esnext"],
+    "baseUrl": ".",
+    "paths": {
+      "app_modules/*": ["src/app_modules/*"]
+    }
   },
   "include": ["src/**/*.ts", "src/**/*.tsx"]
 }

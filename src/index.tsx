@@ -2,9 +2,8 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 
 function render() {
-    const { App } = require('./app/app');
-    const appElement = <App />;
-    ReactDOM.render(appElement, document.getElementById('main'));
+    const { App } = require('./app/app.component');
+    ReactDOM.render(<App />, document.querySelector('#main'));
 }
 
 render();

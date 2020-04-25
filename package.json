@@ -6,7 +6,7 @@
   "description": "Realworld example app",
   "keywords": [],
   "scripts": {
-    "test": "npm run eslint && npm run tscheck && npm run test:cov && npm run typecov",
+    "test": "npm run eslint && npm run tscheck && npm run test:cov",
     "test:r": "node node_modules/jest/bin/jest --runInBand --verbose",
     "test:w": "npm run test:r -- --watch",
     "test:cov": "npm run test:r -- --collectCoverage",
@@ -18,7 +18,7 @@
     "tsclint": "tsc --noEmit --strict --forceConsistentCasingInFileNames --noImplicitReturns --noImplicitThis --noUnusedLocals --noUnusedParameters",
     "tsclint:w": "npm run tsclint -- --watch",
     "eslint:w": "watchexec -w src \"npm run eslint\"",
-    "eslint": "node node_modules/eslint/bin/eslint src --ext ts",
+    "eslint": "node node_modules/eslint/bin/eslint \"src/**/*.{ts,tsx}\"",
     "eslint:fix": "npm run eslint -- --fix",
     "tslint:fix": "node node_modules/tslint/bin/tslint -p tsconfig.json --fix",
     "lint:w:win32": "sh Taskfile lint_watch",
@@ -26,8 +26,11 @@
     "lint:fix": "npm run tslint:fix || true && npm run eslint:fix",
     "commit": "node node_modules/cz-customizable/standalone.js",
     "cmlint": "sh Taskfile commit_lint",
+    "build:libs": "is-changed -d -t dist/.libs.dat -u \"webpack --env.libs --progress\"",
     "dev": "node node_modules/webpack-dev-server/bin/webpack-dev-server",
+    "predev": "npm run build:libs",
     "build": "sh Taskfile build",
+    "build:prod": "webpack --mode production",
     "bundle": "sh Taskfile bundle",
     "remark": "sh Taskfile remark_run",
     "remark:update": "sh Taskfile remark_run --output"
@@ -35,7 +38,9 @@
   "dependencies": {
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "tslib": "^1.11.1"
+    "react-router-dom": "^5.1.2",
+    "tslib": "^1.11.1",
+    "unstated-next": "^1.1.0"
   },
   "husky": {
     "hooks": {
@@ -47,10 +52,13 @@
   "devDependencies": {
     "@commitlint/cli": "^8.3.5",
     "@commitlint/config-conventional": "^8.3.4",
+    "@testing-library/react": "^10.0.3",
     "@types/jest": "^25.2.1",
     "@types/node": "^13.13.2",
     "@types/react": "^16.9.34",
     "@types/react-dom": "^16.9.6",
+    "@types/react-router-dom": "^5.1.4",
+    "@types/testing-library__react": "^10.0.1",
     "@types/webpack": "^4.41.12",
     "@types/webpack-env": "^1.15.2",
     "@typescript-eslint/eslint-plugin": "^2.29.0",
@@ -65,6 +73,7 @@
     "eslint-plugin-only-warn": "^1.0.2",
     "eslint-plugin-prettier": "^3.1.3",
     "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-react-hooks": "^3.0.0",
     "eslint-plugin-simple-import-sort": "^5.0.2",
     "eslint-plugin-sonarjs": "^0.5.0",
     "eslint-plugin-unicorn": "^18.0.1",
@@ -73,6 +82,7 @@
     "html-loader": "^1.1.0",
     "html-webpack-plugin": "^4.2.0",
     "husky": "^4.2.5",
+    "is-changed": "^3.0.3",
     "istanbul-instrumenter-loader": "^3.0.1",
     "jest": "^25.4.0",
     "npm-run-all": "^4.1.5",
@@ -88,6 +98,7 @@
     "terser-webpack-plugin": "^2.3.5",
     "ts-jest": "^25.4.0",
     "ts-loader": "^7.0.1",
+    "tsconfig-paths-webpack-plugin": "^3.2.0",
     "tslint": "^6.1.1",
     "tslint-clean-code": "^0.2.10",
     "tslint-consistent-codestyle": "^1.16.0",
