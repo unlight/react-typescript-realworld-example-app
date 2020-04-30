@@ -52,6 +52,15 @@ module.exports = (options = {}, argv) => {
                 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
                 return [new TsconfigPathsPlugin()];
             })(),
+            alias: (() => {
+                let result = {};
+                if (options.prod) {
+                    result[path.resolve('src/environments/environment.ts')] = path.resolve(
+                        'src/environments/environment.prod.ts',
+                    );
+                }
+                return result;
+            })(),
         },
         devServer: {
             contentBase: [buildPath],

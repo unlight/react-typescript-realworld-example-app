@@ -13,6 +13,7 @@
     "node_modules/tslint-consistent-codestyle"
   ],
   "rules": {
+    "prefer-type-cast": false,
     "member-ordering": [
       true,
       {
@@ -23,7 +24,9 @@
       "options": [
         {
           "declarations": true,
-          "ignored": {},
+          "ignored": {
+            "^React$": true
+          },
           "imports": true
         }
       ],

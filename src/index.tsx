@@ -1,14 +1,19 @@
-import * as React from 'react';
-import * as ReactDOM from 'react-dom';
+import { ConnectedRouter } from 'connected-react-router';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
+import { Route, Switch } from 'react-router-dom';
 
-function render() {
-    const { App } = require('./app/app.component');
-    ReactDOM.render(<App />, document.querySelector('#main'));
-}
+import { App } from './app/app.component';
+import { history, store } from './app/app.state';
 
-render();
-
-// Hot Module Replacement API.
-if (module.hot) {
-    module.hot.accept('./app/app', render);
-}
+ReactDOM.render(
+    <Provider store={store}>
+        <ConnectedRouter history={history}>
+            <Switch>
+                <Route path="/" component={App} />
+            </Switch>
+        </ConnectedRouter>
+    </Provider>,
+    document.querySelector('main'),
+);

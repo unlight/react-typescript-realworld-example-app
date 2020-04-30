@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { childrenToSlots } from '.';
 
 describe('children slots', () => {

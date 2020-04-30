@@ -1,7 +1,10 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
+import { injectReducer } from '../app.state';
 import { ArticlePreview } from './article/article-preview.component';
-import Tags from './tags';
+import { ConnectedTagList, tagReducer } from './tag';
+
+injectReducer('tag', tagReducer);
 
 export default function HomePage() {
     return (
@@ -36,7 +39,7 @@ export default function HomePage() {
 
                         <div className="col-md-3">
                             <div className="sidebar">
-                                <Tags />
+                                <ConnectedTagList />
                             </div>
                         </div>
                     </div>
