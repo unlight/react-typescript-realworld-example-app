@@ -1,9 +1,13 @@
 import React from 'react';
 
-export function TagItem() {
+type Props = {
+    name: string;
+};
+
+export function TagItem({ name }: Props) {
     return (
         <a href="/tag" className="tag-pill tag-default">
-            programming
+            {name}
         </a>
     );
 }

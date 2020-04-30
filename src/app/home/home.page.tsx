@@ -1,10 +1,11 @@
 import React from 'react';
 
-import { injectReducer } from '../app.state';
-import { ArticlePreview } from './article/article-preview.component';
+import { injectReducers } from '../app.state';
+import { ArticlePreview } from './article/article-preview';
+import { Feed } from './feed/feed';
 import { ConnectedTagList, tagReducer } from './tag';
 
-injectReducer('tag', tagReducer);
+injectReducers({ tag: tagReducer });
 
 export default function HomePage() {
     return (
@@ -20,20 +21,8 @@ export default function HomePage() {
                 <div className="container page">
                     <div className="row">
                         <div className="col-md-9">
-                            <div className="feed-toggle">
-                                <ul className="nav nav-pills outline-active">
-                                    <li className="nav-item">
-                                        <a className="nav-link disabled" href="">
-                                            Your Feed
-                                        </a>
-                                    </li>
-                                    <li className="nav-item">
-                                        <a className="nav-link active" href="">
-                                            Global Feed
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
+                            <Feed />
+                            {/* Many ArticlePreview */}
                             <ArticlePreview />
                         </div>
 

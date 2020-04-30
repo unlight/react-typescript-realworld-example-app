@@ -1,8 +1,8 @@
 import React, { lazy, Suspense } from 'react';
 import { HashRouter as Router, Route, Switch } from 'react-router-dom';
 
-import { Footer } from './footer/footer.component';
-import { Header } from './header/header.component';
+import { Footer } from './footer/footer';
+import { Header } from './header/header';
 
 const Home = lazy(() => import('./home/home.page'));
 

@@ -40,7 +40,7 @@ module.exports = {
         'consistent-return': [1, { treatUndefinedAsUnspecified: true }],
         quotes: [1, 'single', { allowTemplateLiterals: true, avoidEscape: true }],
         semi: [1, 'always'],
-        'max-lines': [1, { max: 200 }],
+        'max-lines': [1, { max: 125 }],
         'max-params': [1, { max: 5 }],
         'no-unneeded-ternary': [1],
         // wix-editor
