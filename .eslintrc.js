@@ -6,41 +6,64 @@ module.exports = {
     },
     extends: [
         'eslint:recommended',
+        'plugin:react/recommended',
         'plugin:@typescript-eslint/recommended',
+        'plugin:@typescript-eslint/recommended-requiring-type-checking',
         'plugin:unicorn/recommended',
         'plugin:promise/recommended',
         'plugin:sonarjs/recommended',
-        'plugin:react-hooks/recommended',
+        'plugin:import/warnings',
+        'plugin:regexp/recommended',
+        'plugin:total-functions/recommended',
+        'plugin:etc/recommended',
+        'plugin:testing-library/dom',
+        'plugin:testing-library/react',
+        'plugin:prettier/recommended',
+        'prettier',
     ],
     parser: '@typescript-eslint/parser',
     parserOptions: {
-        ecmaVersion: 2019,
+        ecmaVersion: 2020,
+        project: 'tsconfig.json',
         sourceType: 'module',
         ecmaFeatures: {
-            jsx: false,
+            jsx: true,
         },
-        project: 'tsconfig.json',
+        warnOnUnsupportedTypeScriptVersion: false,
     },
     plugins: [
+        'react',
         'unicorn',
         'import',
         'wix-editor',
-        '@typescript-eslint/tslint',
+        '@typescript-eslint',
         'prettier',
         'simple-import-sort',
+        'sort-class-members',
+        'total-functions',
         'promise',
         'sonarjs',
-        'react-hooks',
+        'etc',
+        'testing-library',
+        '@kyleshevlin',
         'only-warn',
     ],
+    ignorePatterns: ['@generated/**', '*.config.js', '.*rc.js'],
+    settings: {
+        react: {
+            createClass: 'createReactClass', // Regex for Component Factory to use,
+            // default to "createReactClass"
+            pragma: 'React', // Pragma to use, default to "React"
+            fragment: 'Fragment', // Fragment to use (may be a property of <pragma>), default to "Fragment"
+            version: 'detect', // React version. "detect" automatically picks the version you have installed.
+        },
+    },
     rules: {
         // core
-        'no-unused-vars': 0,
-        'no-undef': 0,
         'consistent-return': [1, { treatUndefinedAsUnspecified: true }],
         quotes: [1, 'single', { allowTemplateLiterals: true, avoidEscape: true }],
         semi: [1, 'always'],
-        'max-lines': [1, { max: 125 }],
+        'max-lines': [1, { max: 300 }],
         'max-params': [1, { max: 5 }],
         'no-unneeded-ternary': [1],
         // wix-editor
@@ -58,36 +81,53 @@ module.exports = {
             1,
             {
                 replacements: {
+                    args: false,
                     err: false,
                     prod: false,
                     ref: false,
                     params: false,
-                    props: false,
+                },
+            },
+        ],
+        'unicorn/filename-case': [
+            1,
+            {
+                cases: {
+                    kebabCase: true,
+                    pascalCase: true,
                 },
             },
         ],
         // import
-        'import/newline-after-import': 0,
-        'import/no-duplicates': 1,
         'import/max-dependencies': [1, { max: 15 }],
-        // sort-imports
-        'simple-import-sort/sort': 1,
-        'prettier/prettier': [1, { endOfLine: 'auto' }],
-        'sort-imports': 'off',
-        'import/order': 'off',
-        // tslint
-        '@typescript-eslint/no-unused-vars': 0,
-        '@typescript-eslint/no-use-before-define': 0,
+        // simple-import-sort with recomended settings
+        'simple-import-sort/imports': 1,
+        'simple-import-sort/exports': 1,
+        'sort-imports': 0,
+        'import/first': 1,
+        'import/newline-after-import': 1,
+        'import/no-duplicates': 1,
+        // typescript-eslint
         '@typescript-eslint/no-floating-promises': 1,
-        '@typescript-eslint/explicit-function-return-type': 0,
-        '@typescript-eslint/ban-ts-ignore': 0,
-        '@typescript-eslint/no-unnecessary-condition': [1, { ignoreRhs: true }],
-        '@typescript-eslint/tslint/config': [
+        '@typescript-eslint/no-unnecessary-condition': 1,
+        // sort-class-members
+        'sort-class-members/sort-class-members': [
             1,
             {
-                lintFile: './tslint.json',
+                order: [
+                    '[static-properties]',
+                    '[static-methods]',
+                    '[properties]',
+                    '[conventional-private-properties]',
+                    'constructor',
+                    '[methods]',
+                    '[conventional-private-methods]',
+                ],
+                accessorPairPositioning: 'getThenSet',
             },
         ],
+        // @kyleshevlin
+        '@kyleshevlin/prefer-custom-hooks': 1,
     },
     overrides: [
         {

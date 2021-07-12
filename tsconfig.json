@@ -1,27 +1,27 @@
 {
-  "compilerOptions": {
-    "target": "es2017",
-    "module": "esnext",
-    "jsx": "react",
-    "moduleResolution": "node",
-    "importHelpers": true,
-    "strict": true,
-    "noImplicitAny": false,
-    "experimentalDecorators": false,
-    "emitDecoratorMetadata": false,
-    "outDir": "dist",
-    "pretty": true,
-    "esModuleInterop": true,
-    "removeComments": false,
-    "sourceMap": true,
-    "declaration": true,
-    "declarationMap": true,
-    "skipLibCheck": true,
-    "lib": ["dom", "esnext"],
-    "baseUrl": ".",
-    "paths": {
-      "app_modules/*": ["src/app_modules/*"]
+  "ts-node": {
+    "transpileOnly": true,
+    "compilerOptions": {
+      "target": "es2018",
+      "module": "commonjs"
     }
   },
-  "include": ["src/**/*.ts", "src/**/*.tsx"]
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "esnext",
+    "lib": ["dom", "esnext"],
+    "allowJs": false,
+    "noUncheckedIndexedAccess": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react"
+  },
+  "include": ["src"]
 }
