@@ -21,7 +21,13 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react"
+    "jsx": "react",
+    "baseUrl": ".",
+    "paths": {
+      "@libs/application": ["./src/libs/application/index.ts"],
+      "@libs/ui": ["./src/libs/ui/index.ts"],
+      "@libs/api": ["./src/libs/api/index.ts"]
+    }
   },
   "include": ["src"]
 }

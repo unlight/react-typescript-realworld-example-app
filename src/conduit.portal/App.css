@@ -1,0 +1,10 @@
+.App {
+    text-align: center;
+}
+
+.example {
+    display: grid;
+    transition: all 0.5s;
+    user-select: none;
+    background: linear-gradient(to bottom, white, black);
+}
