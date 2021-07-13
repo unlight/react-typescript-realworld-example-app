@@ -21,7 +21,10 @@ For more information on how to this works with other frontends/backends, head ov
 
 ## How it works
 
-> Describe the general architecture of your app here
+Layers:
+
+-   App (Pages) -> API -> Application
+-   Common: UI
 
 ## Getting started
 
@@ -39,3 +42,7 @@ npm run dev
 ## Todo
 
 -   https://github.com/gothinkster/realworld-starter-kit/blob/master/FRONTEND_INSTRUCTIONS.md
+
+## Users
+
+-   tetikokucy@mailinator.com rosih

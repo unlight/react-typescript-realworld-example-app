@@ -1,3 +1,1 @@
-export function getTags() {}
-
-function getArticles() {}
+export { UserService } from './user.service';

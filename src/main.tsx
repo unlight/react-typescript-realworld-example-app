@@ -5,7 +5,7 @@ import { injector } from 'njct';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import { App } from './conduit.portal';
+import { App } from './app';
 import { config } from './config';
 
 injector.provide('config', () => config);
