@@ -1,6 +1,15 @@
+import { UserCreateInput } from '@libs/application';
 import React from 'react';
 
-export function Register(): JSX.Element {
+type RegisterViewProps = {
+    errors: Partial<Record<keyof UserCreateInput, { message?: string }>>;
+    onSubmit: React.FormEventHandler;
+    register: (k: keyof UserCreateInput) => any;
+    serverErrorMessage: string;
+};
+
+export function RegisterView(props: RegisterViewProps): JSX.Element {
+    const { errors, onSubmit, register, serverErrorMessage } = props;
     return (
         <div className="auth-page">
             <div className="container page">
@@ -8,35 +17,51 @@ export function Register(): JSX.Element {
                     <div className="col-md-6 offset-md-3 col-xs-12">
                         <h1 className="text-xs-center">Sign up</h1>
                         <p className="text-xs-center">
-                            <a href="">Have an account?</a>
+                            <a href="/login">Have an account?</a>
                         </p>
-
-                        <ul className="error-messages">
-                            <li>That email is already taken</li>
-                        </ul>
-
-                        <form>
+                        <form onSubmit={onSubmit}>
                             <fieldset className="form-group">
                                 <input
                                     className="form-control form-control-lg"
                                     type="text"
                                     placeholder="Your Name"
+                                    {...register('username')}
                                 />
+                                {errors.username?.message && (
+                                    <ul className="error-messages">
+                                        <li>{errors.username.message}</li>
+                                    </ul>
+                                )}
                             </fieldset>
                             <fieldset className="form-group">
                                 <input
                                     className="form-control form-control-lg"
                                     type="text"
                                     placeholder="Email"
+                                    {...register('email')}
                                 />
+                                {errors.email?.message && (
+                                    <ul className="error-messages">
+                                        <li>{errors.email.message}</li>
+                                    </ul>
+                                )}
                             </fieldset>
                             <fieldset className="form-group">
                                 <input
                                     className="form-control form-control-lg"
                                     type="password"
                                     placeholder="Password"
+                                    {...register('password')}
                                 />
+                                {errors.password?.message && (
+                                    <ul className="error-messages">
+                                        <li>{errors.password.message}</li>
+                                    </ul>
+                                )}
                             </fieldset>
+                            {serverErrorMessage && (
+                                <p className="error-messages">{serverErrorMessage}</p>
+                            )}
                             <button className="btn btn-lg btn-primary pull-xs-right">
                                 Sign up
                             </button>

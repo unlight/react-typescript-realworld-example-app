@@ -20,13 +20,17 @@
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
+    "experimentalDecorators": true,
     "noEmit": true,
     "jsx": "react",
     "baseUrl": ".",
     "paths": {
-      "@libs/application": ["./src/libs/application/index.ts"],
-      "@libs/ui": ["./src/libs/ui/index.ts"],
-      "@libs/api": ["./src/libs/api/index.ts"]
+      "@libs/application": ["src/application/index.ts"],
+      "@libs/application/*": ["src/application/*"],
+      "@libs/ui": ["src/ui/index.ts"],
+      "@libs/ui/*": ["src/ui/*"],
+      "@libs/api": ["src/api/index.ts"],
+      "@libs/api/*": ["src/api/*"]
     }
   },
   "include": ["src"]
