@@ -2,24 +2,27 @@ import './App.css';
 
 import { Footer, Navbar } from '@libs/ui';
 import React from 'react';
-import { RecoilRoot } from 'recoil';
 import { Route, Switch } from 'wouter';
 
-import { Home } from './Home';
-import { Register } from './Register';
+import { CreateArticle } from './article';
+import { Home } from './home';
+import { Login } from './login';
+import { Register } from './register';
 
 export function App(): JSX.Element {
     return (
-        <RecoilRoot>
+        <>
             <Navbar />
             <Switch>
                 <Route path="/" component={Home} />
                 <Route path="/register" component={Register} />
+                <Route path="/newpost" component={CreateArticle} />
+                <Route path="/login" component={Login} />
                 <Route>
                     <div className="container page">404, Not Found!</div>
                 </Route>
             </Switch>
             <Footer />
-        </RecoilRoot>
+        </>
     );
 }

@@ -16,7 +16,7 @@ export function Navbar(): JSX.Element {
                     <NavItem name="Home" href="/" active={location === '/'} />
                     <NavItem
                         name="New Post"
-                        href=""
+                        href="/newpost"
                         icon="ion-compose"
                         active={location === '/newpost'}
                     />

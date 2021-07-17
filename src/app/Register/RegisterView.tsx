@@ -1,8 +1,11 @@
 import { UserCreateInput } from '@libs/application';
 import React from 'react';
+import { FieldError } from 'react-hook-form';
 
 type RegisterViewProps = {
-    errors: Partial<Record<keyof UserCreateInput, { message?: string }>>;
+    errors: {
+        [K in keyof UserCreateInput]?: FieldError;
+    };
     onSubmit: React.FormEventHandler;
     register: (k: keyof UserCreateInput) => any;
     serverErrorMessage: string;
@@ -15,7 +18,7 @@ export function RegisterView(props: RegisterViewProps): JSX.Element {
             <div className="container page">
                 <div className="row">
                     <div className="col-md-6 offset-md-3 col-xs-12">
-                        <h1 className="text-xs-center">Sign up</h1>
+                        <h1 className="text-xs-center font-bold">Sign up</h1>
                         <p className="text-xs-center">
                             <a href="/login">Have an account?</a>
                         </p>

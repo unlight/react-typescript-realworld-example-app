@@ -23,7 +23,7 @@ For more information on how to this works with other frontends/backends, head ov
 
 Layers:
 
--   App (Pages) -> API -> Application
+-   App (Pages) -> Application <- (via interface) <- API (Services, Infrastructure)
 -   Common: UI
 
 ## Getting started
@@ -42,8 +42,12 @@ npm run dev
 ## Todo
 
 -   https://github.com/gothinkster/realworld-starter-kit/blob/master/FRONTEND_INSTRUCTIONS.md
+-   https://github.com/gothinkster/realworld/tree/master/api
 -   Configure eslint import rules (dependency direction)
+-   Hash navigation
 
 ## Users
 
--   tetikokucy@mailinator.com rosih
+-   tetikokucy@mailinator.com
+-   mynesy@mailinator.com
+-   gymynaxeru@mailinator.com
