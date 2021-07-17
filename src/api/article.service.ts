@@ -52,8 +52,9 @@ export class ArticleService implements Interface.ArticleService {
     }
 
     async findOne(slug: string): Promise<Article> {
-        return await this.http
-            .get(`${this.config.apiBase}/article/${slug}`)
-            .json<Article>();
+        const envelope = await this.http
+            .get(`${this.config.apiBase}/articles/${slug}`)
+            .json<ArticleEnvelope<Article>>();
+        return envelope.article;
     }
 }

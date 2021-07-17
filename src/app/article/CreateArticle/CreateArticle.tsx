@@ -32,7 +32,7 @@ export function CreateArticle(): JSX.Element {
     const onSubmit = handleSubmit(async data => {
         try {
             const article = await articleService.create(data);
-            navigateTo(`/arcticle/${article.slug}`);
+            navigateTo(`/article/${article.slug}`);
         } catch (err) {
             setServerErrorMessage(err?.message || 'Unknown error');
         }
