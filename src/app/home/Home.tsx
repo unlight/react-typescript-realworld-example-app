@@ -1,9 +1,9 @@
+import { Interface } from '@libs/application';
+import { ArticleList } from '@libs/application/article';
+import { inject } from 'njct';
 import React, { useEffect, useState } from 'react';
 
 import { HomeView } from './HomeView';
-import { Interface } from '@libs/application';
-import { inject } from 'njct';
-import { ArticleList } from '@libs/application/article';
 
 export function Home(): JSX.Element {
     const articleService = inject<Interface.ArticleService>('articleservice');
@@ -14,7 +14,7 @@ export function Home(): JSX.Element {
                 articleList => {
                     setArticleList(articleList);
                 },
-                err => {
+                (err: unknown) => {
                     console.log('err', err);
                 },
             );

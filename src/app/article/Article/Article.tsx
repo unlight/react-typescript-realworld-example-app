@@ -17,7 +17,7 @@ export function Article({ params }: RouteComponentProps): JSX.Element {
         async slug => {
             debugger;
             console.log('slug2', slug);
-            const article = await articleService.findOne(slug!);
+            const article = await articleService.findOne(slug);
             setArticle(article);
         },
         [articleService],
