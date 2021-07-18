@@ -1,6 +1,7 @@
 import { classValidatorResolver } from '@hookform/resolvers/class-validator';
 import { Interface } from '@libs/application';
 import { ArticleCreateInput } from '@libs/application/article';
+import { ArticleCreateCommand } from '@libs/application/article/commands/article-create.command';
 import { inject } from 'njct';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -24,18 +25,20 @@ export function CreateArticle(): JSX.Element {
         reValidateMode: 'onBlur',
         criteriaMode: 'all',
     });
+    const command = new ArticleCreateCommand(articleService, authenticationService);
 
     if (!authenticationService.isLoggedIn()) {
         return <Redirect to="/login" />;
     }
 
     const onSubmit = handleSubmit(async data => {
-        try {
-            const article = await articleService.create(data);
-            navigateTo(`/article/${article.slug}`);
-        } catch (err) {
-            setServerErrorMessage(err?.message || 'Unknown error');
+        const result = await command.execute(data);
+        if (result.isErr()) {
+            setServerErrorMessage(result.unwrapErr().message);
+            return;
         }
+        const article = result.unwrap();
+        navigateTo(`/article/${article.slug}`);
     });
 
     return (

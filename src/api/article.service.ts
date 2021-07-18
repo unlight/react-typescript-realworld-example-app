@@ -1,7 +1,6 @@
 import type { AppConfig, Interface } from '@libs/application';
 import type {
     Article,
-    ArticleCreatedEvent,
     ArticleCreateInput,
     ArticleEnvelope,
 } from '@libs/application/article';
@@ -18,7 +17,7 @@ export class ArticleService implements Interface.ArticleService {
         private readonly config: AppConfig = inject('config'),
     ) {}
 
-    async create(article: ArticleCreateInput): Promise<ArticleCreatedEvent> {
+    async create(article: ArticleCreateInput): Promise<Article> {
         const url = `${this.config.apiBase}/articles`;
         const articleEnvelope = await this.http
             .extend({
@@ -29,6 +28,13 @@ export class ArticleService implements Interface.ArticleService {
             .post(url, { json: { article } })
             .json<ArticleEnvelope<Article>>();
         return articleEnvelope.article;
+    }
+
+    async findOne(slug: string): Promise<Article> {
+        const envelope = await this.http
+            .get(`${this.config.apiBase}/articles/${slug}`)
+            .json<ArticleEnvelope<Article>>();
+        return envelope.article;
     }
 
     update(data: any): Promise<Article> {
@@ -49,12 +55,5 @@ export class ArticleService implements Interface.ArticleService {
 
     unfavorite(articleId: string): Promise<true> {
         throw new Error('Method not implemented.');
-    }
-
-    async findOne(slug: string): Promise<Article> {
-        const envelope = await this.http
-            .get(`${this.config.apiBase}/articles/${slug}`)
-            .json<ArticleEnvelope<Article>>();
-        return envelope.article;
     }
 }

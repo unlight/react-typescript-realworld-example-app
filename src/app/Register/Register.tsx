@@ -1,5 +1,6 @@
 import { classValidatorResolver } from '@hookform/resolvers/class-validator';
 import { Interface, UserCreateInput } from '@libs/application';
+import { UserRegisterCommand } from '@libs/application/user/commands';
 import { inject } from 'njct';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -20,18 +21,22 @@ export function Register(): JSX.Element {
         reValidateMode: 'onBlur',
         criteriaMode: 'all',
     });
+    const command = new UserRegisterCommand(userService);
 
     if (userService.isAlreadyRegistered()) {
         return <Redirect to="/" />;
     }
 
     const onSubmit = handleSubmit(async data => {
-        try {
-            await userService.register(data);
-            navigateTo('/');
-        } catch (err: any) {
-            setServerErrorMessage(err?.message || 'Unknown error');
-        }
+        const result = await command.execute(data);
+        result.match({
+            ok: () => {
+                navigateTo('/');
+            },
+            err: error => {
+                setServerErrorMessage(error.message);
+            },
+        });
     });
 
     return (

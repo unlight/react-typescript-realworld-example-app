@@ -18,8 +18,10 @@
   },
   "dependencies": {
     "@hookform/resolvers": "^2.6.1",
+    "@hqoss/monads": "^0.5.0",
     "class-transformer": "^0.4.0",
     "class-validator": "^0.13.1",
+    "ensure-error": "^3.0.1",
     "jwt-decode": "^3.1.2",
     "ky": "^0.28.5",
     "njct": "^8.1.0",
@@ -27,6 +29,8 @@
     "react-dom": "^17.0.2",
     "react-hook-form": "^7.11.0",
     "recoil": "^0.3.1",
+    "rerror": "^2.0.0",
+    "ts-util-is": "^1.2.1",
     "wouter": "^2.7.4"
   },
   "devDependencies": {

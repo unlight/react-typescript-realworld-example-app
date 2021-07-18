@@ -3,7 +3,7 @@
  */
 import { ObjectType } from 'simplytyped';
 
-import { Article, ArticleCreatedEvent } from '../article';
+import { Article } from '../article';
 import { FindManyArgs } from '../types';
 import { User, UserCreateInput } from '../user';
 
@@ -38,7 +38,7 @@ export interface AuthenticationService {
 }
 
 export interface ArticleService {
-    create(data: any): Promise<ArticleCreatedEvent>;
+    create(data: any): Promise<Article>;
     update(data: any): Promise<Article>;
     delete(data: any): Promise<void>;
     findMany(findManyArgs: FindManyArgs): Promise<Article[]>;

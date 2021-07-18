@@ -1,11 +1,17 @@
+import { Article as SingleArticle } from '@libs/application/article';
 import React from 'react';
 
-export function ArticleView() {
-    return (
+type ArticleViewProps = {
+    article?: SingleArticle;
+};
+
+export function ArticleView(props: ArticleViewProps): JSX.Element {
+    const { article } = props;
+    return article ? (
         <div className="article-page">
             <div className="banner">
                 <div className="container">
-                    <h1>How to build webapps that scale</h1>
+                    <h1>{article.title}</h1>
 
                     <div className="article-meta">
                         <a href="">
@@ -144,5 +150,7 @@ export function ArticleView() {
                 </div>
             </div>
         </div>
+    ) : (
+        <p>Loading...</p>
     );
 }

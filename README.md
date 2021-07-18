@@ -21,10 +21,15 @@ For more information on how to this works with other frontends/backends, head ov
 
 ## How it works
 
-Layers:
+### Layers:
 
 -   App (Pages) -> Application <- (via interface) <- API (Services, Infrastructure)
 -   Common: UI
+
+### Architecture notes
+
+-   use case it is command in application/feature/commands
+-   src/ui: reusable components
 
 ## Getting started
 
