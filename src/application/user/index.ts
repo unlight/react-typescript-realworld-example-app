@@ -1,3 +1,4 @@
+export type { Author } from './author';
 export type { User } from './user';
 export { UserCreateInput } from './user-create-input';
 export type { UserLogin } from './user-login';

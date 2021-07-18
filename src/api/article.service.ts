@@ -1,10 +1,11 @@
 import type { AppConfig, Interface } from '@libs/application';
-import type {
+import {
     Article,
     ArticleCreateInput,
     ArticleEnvelope,
+    ArticleFindManyArgs,
+    ArticleList,
 } from '@libs/application/article';
-import type { FindManyArgs } from '@libs/application/types';
 import ky from 'ky';
 import { inject } from 'njct';
 
@@ -45,8 +46,20 @@ export class ArticleService implements Interface.ArticleService {
         throw new Error('Method not implemented.');
     }
 
-    findMany(findManyArgs: FindManyArgs): Promise<Article[]> {
-        throw new Error('Method not implemented.');
+    async findMany(args: ArticleFindManyArgs = {}): Promise<ArticleList> {
+        return await this.http
+            .extend({
+                headers: {
+                    Authorization: `Token ${this.authenticationService.getToken()}`,
+                },
+            })
+            .get(`${this.config.apiBase}/articles`, {
+                searchParams: {
+                    limit: args.take ?? 5,
+                    skip: args.skip ?? 0,
+                },
+            })
+            .json<ArticleList>();
     }
 
     favorite(articleId: string): Promise<true> {

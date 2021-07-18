@@ -1,6 +1,12 @@
+import { Author } from '@libs/application/user';
 import React from 'react';
 
-export function ArticleMeta(): JSX.Element {
+type ArticleMetaProps = {
+    author: Author;
+};
+
+export function ArticleMeta(props: ArticleMetaProps): JSX.Element {
+    const { author } = props;
     return (
         <div className="article-meta">
             <a href="">

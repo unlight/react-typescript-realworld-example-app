@@ -3,8 +3,7 @@
  */
 import { ObjectType } from 'simplytyped';
 
-import { Article } from '../article';
-import { FindManyArgs } from '../types';
+import { Article, ArticleFindManyArgs, ArticleList } from '../article';
 import { User, UserCreateInput } from '../user';
 
 // Interfaces which we use in application
@@ -41,7 +40,7 @@ export interface ArticleService {
     create(data: any): Promise<Article>;
     update(data: any): Promise<Article>;
     delete(data: any): Promise<void>;
-    findMany(findManyArgs: FindManyArgs): Promise<Article[]>;
+    findMany(args?: ArticleFindManyArgs): Promise<ArticleList>;
     favorite(articleId: string): Promise<true>;
     unfavorite(articleId: string): Promise<true>;
     findOne(articleId: string): Promise<Article>;
