@@ -69,4 +69,20 @@ export class ArticleService implements Interface.ArticleService {
     unfavorite(articleId: string): Promise<true> {
         throw new Error('Method not implemented.');
     }
+
+    async feed(args: ArticleFindManyArgs): Promise<ArticleList> {
+        return await this.http
+            .extend({
+                headers: {
+                    Authorization: `Token ${this.authenticationService.getToken()}`,
+                },
+            })
+            .get(`${this.config.apiBase}/articles/feed`, {
+                searchParams: {
+                    limit: args.take ?? 5,
+                    skip: args.skip ?? 0,
+                },
+            })
+            .json<ArticleList>();
+    }
 }

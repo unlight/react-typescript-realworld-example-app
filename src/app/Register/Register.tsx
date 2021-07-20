@@ -4,13 +4,13 @@ import { UserRegisterCommand } from '@libs/application/user/commands';
 import { inject } from 'njct';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Redirect, useLocation } from 'wouter';
+import { Redirect, useHistory } from 'react-router-dom';
 
 import { RegisterView } from './RegisterView';
 
 export function Register(): JSX.Element {
     const userService = inject<Interface.UserRegisterService>('userregisterservice');
-    const { 1: navigateTo } = useLocation();
+    const { push } = useHistory();
     const [serverErrorMessage, setServerErrorMessage] = useState('');
     const {
         register,
@@ -31,7 +31,7 @@ export function Register(): JSX.Element {
         const result = await command.execute(data);
         result.match({
             ok: () => {
-                navigateTo('/');
+                push('/');
             },
             err: error => {
                 setServerErrorMessage(error.message);

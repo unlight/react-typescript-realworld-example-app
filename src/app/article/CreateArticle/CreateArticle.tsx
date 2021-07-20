@@ -5,7 +5,7 @@ import { ArticleCreateCommand } from '@libs/application/article/commands/article
 import { inject } from 'njct';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Redirect, useLocation } from 'wouter';
+import { Redirect, useHistory } from 'react-router-dom';
 
 import { CreateArticleView } from './CreateArticleView';
 
@@ -14,7 +14,7 @@ export function CreateArticle(): JSX.Element {
     const authenticationService = inject<Interface.AuthenticationService>(
         'authenticationservice',
     );
-    const { 1: navigateTo } = useLocation();
+    const { push } = useHistory();
     const [serverErrorMessage, setServerErrorMessage] = useState('');
     const {
         register,
@@ -38,7 +38,7 @@ export function CreateArticle(): JSX.Element {
             return;
         }
         const article = result.unwrap();
-        navigateTo(`/article/${article.slug}`);
+        push(`/article/${article.slug}`);
     });
 
     return (

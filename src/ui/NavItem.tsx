@@ -1,19 +1,19 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom';
 
 export function NavItem(props: {
     name: string;
     href: string;
     icon?: string;
-    active?: boolean;
-}) {
-    const { name, href, icon, active } = props;
+}): JSX.Element {
+    const { name, href, icon } = props;
 
     return (
         <li className="nav-item">
-            <a className={`nav-link${active ? ' active' : ''}`} href={href}>
+            <NavLink to={href} activeClassName="active" className="nav-link">
                 {icon && [<i className={icon} key={icon}></i>, ' ']}
                 {name}
-            </a>
+            </NavLink>
         </li>
     );
 }

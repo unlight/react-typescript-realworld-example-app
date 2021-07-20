@@ -30,7 +30,8 @@
       "@libs/ui": ["src/ui/index.ts"],
       "@libs/ui/*": ["src/ui/*"],
       "@libs/api": ["src/api/index.ts"],
-      "@libs/api/*": ["src/api/*"]
+      "@libs/api/*": ["src/api/*"],
+      "@app_modules/*": ["src/app_modules/*"]
     }
   },
   "include": ["src"]

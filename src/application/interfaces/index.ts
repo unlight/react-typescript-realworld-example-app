@@ -44,6 +44,7 @@ export interface ArticleService {
     favorite(articleId: string): Promise<true>;
     unfavorite(articleId: string): Promise<true>;
     findOne(articleId: string): Promise<Article>;
+    feed(args: ArticleFindManyArgs): Promise<ArticleList>;
 }
 
 // export interface NotificationService {
