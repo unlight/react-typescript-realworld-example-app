@@ -2,7 +2,7 @@ import './App.css';
 
 import { Footer, Navbar } from '@libs/ui';
 import React from 'react';
-import { HashRouter, Route, Router, Switch } from 'react-router-dom';
+import { HashRouter, Route, Switch } from 'react-router-dom';
 
 import { Article, CreateArticle } from './article';
 import { Home } from './home';

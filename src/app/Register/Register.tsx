@@ -1,5 +1,6 @@
 import { classValidatorResolver } from '@hookform/resolvers/class-validator';
-import { Interface, UserCreateInput } from '@libs/application';
+import { Interface } from '@libs/application';
+import { UserCreateInput } from '@libs/application/user';
 import { UserRegisterCommand } from '@libs/application/user/commands';
 import { inject } from 'njct';
 import React, { useState } from 'react';

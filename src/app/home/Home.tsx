@@ -1,26 +1,27 @@
 import { Interface } from '@libs/application';
 import { ArticleList } from '@libs/application/article';
-import { ArticleListHandler } from '@libs/application/article/queries';
+import { ArticleListHandler, TagListHandler } from '@libs/application/article/queries';
+import { Tag } from '@libs/application/tag';
 import { inject } from 'njct';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
+import useSWR from 'swr';
 
 import { HomeView } from './HomeView';
 
 export function Home(): JSX.Element {
-    const articleService = inject<Interface.ArticleService>('articleservice');
-    const [articleList, setArticleList] = useState<ArticleList | undefined>(undefined);
-    useEffect(() => {
-        const handler = new ArticleListHandler(articleService);
-        handler
-            .execute({})
-            .then(articleList => {
-                setArticleList(articleList);
-            })
-            .catch((err: unknown) => {
-                console.log('err', err);
-                setArticleList(undefined);
-            });
-    }, [articleService]);
+    const articleService = inject<Interface.ArticleService & Interface.TagService>(
+        'articleservice',
+    );
+    const { data: articleList, error } = useSWR<ArticleList>('home/articles', () => {
+        return new ArticleListHandler(articleService).execute();
+    });
+    const { data: tagList } = useSWR<Tag[]>('home/populartags', () => {
+        return new TagListHandler(articleService).execute();
+    });
 
-    return <HomeView articles={articleList?.articles} />;
+    if (error) {
+        return <p>{error}</p>;
+    }
+
+    return <HomeView articles={articleList?.articles} tags={tagList} />;
 }

@@ -1,4 +1,1 @@
-export class Tag {
-    id!: number;
-    name!: string;
-}
+export type Tag = string;

@@ -10,7 +10,7 @@ export function NavItem(props: {
 
     return (
         <li className="nav-item">
-            <NavLink to={href} activeClassName="active" className="nav-link">
+            <NavLink to={href} activeClassName="active" className="nav-link" exact>
                 {icon && [<i className={icon} key={icon}></i>, ' ']}
                 {name}
             </NavLink>

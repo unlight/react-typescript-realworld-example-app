@@ -31,7 +31,8 @@
     "react-hook-form": "^7.11.0",
     "react-router-dom": "^5.2.0",
     "recoil": "^0.3.1",
-    "rerror": "^2.0.0"
+    "rerror": "^2.0.0",
+    "swr": "^0.5.6"
   },
   "devDependencies": {
     "@kyleshevlin/eslint-plugin": "^1.3.0",

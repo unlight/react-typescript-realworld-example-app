@@ -12,7 +12,7 @@ export function Navbar(): JSX.Element {
                 <ul className="nav navbar-nav pull-xs-right">
                     <NavItem name="Home" href="/" />
                     <NavItem name="New Post" href="/newpost" icon="ion-compose" />
-                    <NavItem name="Settings" href="" icon="ion-gear-a" />
+                    <NavItem name="Settings" href="/settings" icon="ion-gear-a" />
                     <NavItem name="Sign up" href="/register" />
                 </ul>
             </div>

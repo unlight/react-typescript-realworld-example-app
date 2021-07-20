@@ -6,10 +6,20 @@ import {
     ArticleFindManyArgs,
     ArticleList,
 } from '@libs/application/article';
+import { Tag } from '@libs/application/tag';
 import ky from 'ky';
 import { inject } from 'njct';
 
-export class ArticleService implements Interface.ArticleService {
+export class ArticleService implements Interface.ArticleService, Interface.TagService {
+    private authorization = () => {
+        const token = this.authenticationService.getToken();
+        return {
+            headers: {
+                Authorization: token ? `Token ${token}` : undefined,
+            },
+        };
+    };
+
     constructor(
         private readonly authenticationService: Interface.AuthenticationService = inject(
             'authenticationservice',
@@ -21,11 +31,7 @@ export class ArticleService implements Interface.ArticleService {
     async create(article: ArticleCreateInput): Promise<Article> {
         const url = `${this.config.apiBase}/articles`;
         const articleEnvelope = await this.http
-            .extend({
-                headers: {
-                    Authorization: `Token ${this.authenticationService.getToken()}`,
-                },
-            })
+            .extend(this.authorization())
             .post(url, { json: { article } })
             .json<ArticleEnvelope<Article>>();
         return articleEnvelope.article;
@@ -48,11 +54,7 @@ export class ArticleService implements Interface.ArticleService {
 
     async findMany(args: ArticleFindManyArgs = {}): Promise<ArticleList> {
         return await this.http
-            .extend({
-                headers: {
-                    Authorization: `Token ${this.authenticationService.getToken()}`,
-                },
-            })
+            .extend(this.authorization())
             .get(`${this.config.apiBase}/articles`, {
                 searchParams: {
                     limit: args.take ?? 5,
@@ -72,11 +74,7 @@ export class ArticleService implements Interface.ArticleService {
 
     async feed(args: ArticleFindManyArgs): Promise<ArticleList> {
         return await this.http
-            .extend({
-                headers: {
-                    Authorization: `Token ${this.authenticationService.getToken()}`,
-                },
-            })
+            .extend(this.authorization())
             .get(`${this.config.apiBase}/articles/feed`, {
                 searchParams: {
                     limit: args.take ?? 5,
@@ -84,5 +82,12 @@ export class ArticleService implements Interface.ArticleService {
                 },
             })
             .json<ArticleList>();
+    }
+
+    async getAllTags(): Promise<Tag[]> {
+        const envelope = await this.http
+            .get(`${this.config.apiBase}/tags`)
+            .json<{ tags: Tag[] }>();
+        return envelope.tags;
     }
 }

@@ -40,6 +40,7 @@ npm run dev
 
 ## Resources
 
+-   https://demo.realworld.io/
 -   https://github.com/gothinkster/realworld/tree/master/spec#frontend-specs
 -   https://github.com/recoil-world/react-recoil-realworld-example-app
 -   https://gist.github.com/unlight/68a69ba19c06512f18f254ff702a9e38 - frontend architecture layers
