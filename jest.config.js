@@ -1,11 +1,11 @@
-const { pathsToModuleNameMapper } = require('ts-jest/utils');
-const { compilerOptions } = require('./tsconfig');
+const getJestMappersFromTSConfig = require('tsconfig-paths-jest-mapper');
 
 module.exports = {
     testEnvironment: 'jsdom',
     transform: {
         '^.+\\.tsx?$': 'ts-jest',
     },
+    setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
     collectCoverage: false,
     coverageDirectory: 'coverage',
     coverageReporters: [
@@ -22,8 +22,7 @@ module.exports = {
     moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json'],
     modulePathIgnorePatterns: ['<rootDir>/dist'],
     moduleNameMapper: {
-        // This ensures any path aliases in tsconfig also work in jest
-        ...pathsToModuleNameMapper(compilerOptions.paths || {}),
+        ...getJestMappersFromTSConfig(),
         '\\.(css|less|sass|scss)$': 'identity-obj-proxy',
         '\\.(gif|ttf|eot|svg|png|jpg|jpeg)$': 'jest-transform-stub',
     },

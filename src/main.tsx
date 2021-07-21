@@ -12,6 +12,7 @@ import { config } from './config';
 injector.provide('config', () => config);
 injector.provide('userregisterservice', () => inject.service(UserService));
 injector.provide('articleservice', () => inject.service(ArticleService));
+injector.provide('tagservice', () => inject.service(ArticleService));
 injector.provide('authenticationservice', () => inject.service(AuthenticationService));
 
 ReactDOM.render(

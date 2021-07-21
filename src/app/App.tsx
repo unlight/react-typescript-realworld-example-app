@@ -16,6 +16,7 @@ export function App(): JSX.Element {
                 <Navbar />
                 <Switch>
                     <Route path="/" component={Home} exact />
+                    <Route path="/feed" component={Home} exact />
                     <Route path="/article/:slug" component={Article}></Route>
                     <Route path="/register" component={Register} />
                     <Route path="/newpost" component={CreateArticle} />

@@ -1,17 +1,16 @@
 import { Article } from '@libs/application/article';
-import { Tag } from '@libs/application/tag';
-import { PopularTags } from '@libs/ui';
 import React from 'react';
+import { NavLink } from 'react-router-dom';
 
 import { ArticlePreview } from '../article/Article';
+import { PopularTags } from './PopularTags';
 
 type HomeViewProps = {
     articles?: Article[];
-    tags?: Tag[];
 };
 
 export function HomeView(props: HomeViewProps): JSX.Element {
-    const { articles, tags } = props;
+    const { articles } = props;
     return (
         <div className="home-page">
             {/*<div className="banner">
@@ -26,14 +25,24 @@ export function HomeView(props: HomeViewProps): JSX.Element {
                         <div className="feed-toggle">
                             <ul className="nav nav-pills outline-active">
                                 <li className="nav-item">
-                                    <a className="nav-link disabled" href="">
+                                    <NavLink
+                                        to="/feed"
+                                        activeClassName="active"
+                                        className="nav-link"
+                                        exact
+                                    >
                                         Your Feed
-                                    </a>
+                                    </NavLink>
                                 </li>
-                                <li className="nav-item">
-                                    <a className="nav-link active" href="">
+                                <li>
+                                    <NavLink
+                                        to="/"
+                                        activeClassName="active"
+                                        className="nav-link"
+                                        exact
+                                    >
                                         Global Feed
-                                    </a>
+                                    </NavLink>
                                 </li>
                             </ul>
                         </div>
@@ -43,7 +52,7 @@ export function HomeView(props: HomeViewProps): JSX.Element {
                     </div>
                     {/*todo: pagination*/}
                     <div className="col-md-3">
-                        <PopularTags tags={tags} />
+                        <PopularTags />
                     </div>
                 </div>
             </div>

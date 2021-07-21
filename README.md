@@ -50,7 +50,6 @@ npm run dev
 -   https://github.com/gothinkster/realworld-starter-kit/blob/master/FRONTEND_INSTRUCTIONS.md
 -   https://github.com/gothinkster/realworld/tree/master/api
 -   Configure eslint import rules (dependency direction)
--   Hash navigation
 
 ## Users
 

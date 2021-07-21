@@ -132,6 +132,8 @@ module.exports = {
         ],
         // @kyleshevlin
         '@kyleshevlin/prefer-custom-hooks': 1,
+        // testing-library
+        'testing-library/render-result-naming-convention': 0,
     },
     overrides: [
         {
