@@ -9,16 +9,17 @@ import { UserCreateInput } from '../user';
 
 // Interfaces which we use in application
 
-export interface UserRegisterService {
-    isAlreadyRegistered(): boolean;
+export interface UserService {
+    isLoggedIn(): boolean;
     register(data: ObjectType<UserCreateInput>): Promise<void>;
 }
 
-export interface AuthenticationService {
+export interface SessionService {
     login(data: { email: string; password: string }): Promise<void>;
     isLoggedIn(): boolean;
     update(token: string): void;
     getToken(): string | undefined;
+    getUser(): undefined | { id: number; username: string };
 }
 
 export interface ArticleService {

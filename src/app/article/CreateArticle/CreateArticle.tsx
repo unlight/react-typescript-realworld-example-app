@@ -11,9 +11,7 @@ import { CreateArticleView } from './CreateArticleView';
 
 export function CreateArticle(): JSX.Element {
     const articleService = inject<Interface.ArticleService>('articleservice');
-    const authenticationService = inject<Interface.AuthenticationService>(
-        'authenticationservice',
-    );
+    const sessionService = inject<Interface.SessionService>('sessionservice');
     const { push } = useHistory();
     const [serverErrorMessage, setServerErrorMessage] = useState('');
     const {
@@ -25,9 +23,9 @@ export function CreateArticle(): JSX.Element {
         reValidateMode: 'onBlur',
         criteriaMode: 'all',
     });
-    const command = new ArticleCreateCommand(articleService, authenticationService);
+    const command = new ArticleCreateCommand(articleService, sessionService);
 
-    if (!authenticationService.isLoggedIn()) {
+    if (!sessionService.isLoggedIn()) {
         return <Redirect to="/login" />;
     }
 

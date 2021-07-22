@@ -2,16 +2,16 @@ import { Err, Ok, Result } from '@hqoss/monads';
 import ensureError from 'ensure-error';
 import Exception from 'rerror';
 
-import { UserRegisterService } from '../../interfaces';
+import { UserService } from '../../interfaces';
 import { UserCreateInput } from '../user-create-input';
 
 export class UserRegisterCommand {
-    constructor(private readonly userRegisterService: UserRegisterService) {}
+    constructor(private readonly userService: UserService) {}
 
     async execute(data: UserCreateInput): Promise<Result<void, Exception>> {
         let result: Result<void, Exception>;
         try {
-            result = Ok(await this.userRegisterService.register(data));
+            result = Ok(await this.userService.register(data));
         } catch (error) {
             const innerError = ensureError(error);
             result = Err(

@@ -114,6 +114,7 @@ module.exports = {
         // typescript-eslint
         '@typescript-eslint/no-floating-promises': 1,
         '@typescript-eslint/no-unnecessary-condition': 1,
+        '@typescript-eslint/explicit-module-boundary-types': 0,
         // sort-class-members
         'sort-class-members/sort-class-members': [
             1,

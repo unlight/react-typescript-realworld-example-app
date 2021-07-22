@@ -4,7 +4,7 @@ import jwtDecode, { JwtPayload } from 'jwt-decode';
 import ky from 'ky';
 import { inject } from 'njct';
 
-export class AuthenticationService implements Interface.AuthenticationService {
+export class SessionService implements Interface.SessionService {
     constructor(
         private readonly storage: Storage = inject('Storage', () => localStorage),
         private readonly http = inject('httpclient', () => ky),
@@ -32,14 +32,14 @@ export class AuthenticationService implements Interface.AuthenticationService {
         return result ? result : undefined;
     }
 
-    private getUser() {
+    getUser() {
         const token = this.storage.getItem('user_token_v1');
         if (!token) {
             return undefined;
         }
-        let payload: JwtPayload;
+        let payload: JwtPayload & { id: number; username: string };
         try {
-            payload = jwtDecode<JwtPayload>(token);
+            payload = jwtDecode(token);
         } catch {
             return undefined;
         }
@@ -48,6 +48,6 @@ export class AuthenticationService implements Interface.AuthenticationService {
             return undefined;
         }
 
-        return payload as { id: number; username: string };
+        return payload;
     }
 }

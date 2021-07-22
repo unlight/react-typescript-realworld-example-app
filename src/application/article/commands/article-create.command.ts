@@ -8,12 +8,12 @@ import { Article, ArticleCreateInput } from '..';
 export class ArticleCreateCommand {
     constructor(
         private readonly articleService: Interface.ArticleService,
-        private readonly authenticationService: Interface.AuthenticationService,
+        private readonly sessionService: Interface.SessionService,
     ) {}
 
     async execute(data: ArticleCreateInput): Promise<Result<Article, Exception>> {
         let result: Result<Article, Exception>;
-        if (!this.authenticationService.isLoggedIn()) {
+        if (!this.sessionService.isLoggedIn()) {
             return Err(
                 new Exception({
                     name: 'Unauthorized',

@@ -6,7 +6,7 @@ export function Settings(): JSX.Element {
             <div className="container page">
                 <div className="row">
                     <div className="col-md-6 offset-md-3 col-xs-12">
-                        <h1 className="text-xs-center">Your Settings</h1>
+                        <h1 className="text-xs-center font-bold py-2">Your Settings</h1>
 
                         <form>
                             <fieldset>

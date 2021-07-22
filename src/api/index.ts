@@ -1,3 +1,3 @@
 export { ArticleService } from './article.service';
-export { AuthenticationService } from './authentication.service';
+export { SessionService } from './authentication.service';
 export { UserService } from './user.service';

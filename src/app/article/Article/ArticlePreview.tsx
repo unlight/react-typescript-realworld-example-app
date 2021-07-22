@@ -1,4 +1,5 @@
 import { Article } from '@libs/application/article';
+import classNames from '@sindresorhus/class-names';
 import React from 'react';
 
 type ArticlePreviewProps = {
@@ -6,8 +7,13 @@ type ArticlePreviewProps = {
 };
 
 export function ArticlePreview(props: ArticlePreviewProps): JSX.Element {
-    const { author, description, title, slug, createdAt, favoritesCount } =
+    const { author, description, title, slug, createdAt, favoritesCount, favorited } =
         props.article;
+    const favoriteButtonClass = classNames(
+        'btn btn-sm pull-xs-right',
+        favorited ? 'btn-primary' : 'btn-outline-primary',
+    );
+
     return (
         <div className="article-preview">
             <div className="article-meta">
@@ -20,7 +26,7 @@ export function ArticlePreview(props: ArticlePreviewProps): JSX.Element {
                     </a>
                     <span className="date">{createdAt}</span>
                 </div>
-                <button className="btn btn-outline-primary btn-sm pull-xs-right">
+                <button className={favoriteButtonClass}>
                     <i className="ion-heart"></i> {favoritesCount}
                 </button>
             </div>

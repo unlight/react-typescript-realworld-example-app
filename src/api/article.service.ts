@@ -12,7 +12,7 @@ import { inject } from 'njct';
 
 export class ArticleService implements Interface.ArticleService, Interface.TagService {
     private authorization = () => {
-        const token = this.authenticationService.getToken();
+        const token = this.sessionService.getToken();
         return {
             headers: {
                 Authorization: token ? `Token ${token}` : undefined,
@@ -21,8 +21,8 @@ export class ArticleService implements Interface.ArticleService, Interface.TagSe
     };
 
     constructor(
-        private readonly authenticationService: Interface.AuthenticationService = inject(
-            'authenticationservice',
+        private readonly sessionService: Interface.SessionService = inject(
+            'sessionservice',
         ),
         private readonly http = inject('httpclient', () => ky),
         private readonly config: AppConfig = inject('config'),

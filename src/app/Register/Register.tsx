@@ -10,7 +10,7 @@ import { Redirect, useHistory } from 'react-router-dom';
 import { RegisterView } from './RegisterView';
 
 export function Register(): JSX.Element {
-    const userService = inject<Interface.UserRegisterService>('userregisterservice');
+    const userService = inject<Interface.UserService>('userservice');
     const { push } = useHistory();
     const [serverErrorMessage, setServerErrorMessage] = useState('');
     const {
@@ -24,7 +24,7 @@ export function Register(): JSX.Element {
     });
     const command = new UserRegisterCommand(userService);
 
-    if (userService.isAlreadyRegistered()) {
+    if (userService.isLoggedIn()) {
         return <Redirect to="/" />;
     }
 

@@ -1,16 +1,18 @@
 import { Article } from '@libs/application/article';
+import { Location } from 'history';
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { match, NavLink } from 'react-router-dom';
 
 import { ArticlePreview } from '../article/Article';
 import { PopularTags } from './PopularTags';
 
 type HomeViewProps = {
     articles?: Article[];
+    feed: 'global' | 'mine';
 };
 
 export function HomeView(props: HomeViewProps): JSX.Element {
-    const { articles } = props;
+    const { articles, feed } = props;
     return (
         <div className="home-page">
             {/*<div className="banner">
@@ -26,9 +28,12 @@ export function HomeView(props: HomeViewProps): JSX.Element {
                             <ul className="nav nav-pills outline-active">
                                 <li className="nav-item">
                                     <NavLink
-                                        to="/feed"
+                                        isActive={() => feed === 'mine'}
+                                        to={updateSearchParameter('mine')}
                                         activeClassName="active"
-                                        className="nav-link"
+                                        className={`nav-link ${
+                                            feed === 'mine' ? 'pointer-events-none' : ''
+                                        }`}
                                         exact
                                     >
                                         Your Feed
@@ -36,7 +41,8 @@ export function HomeView(props: HomeViewProps): JSX.Element {
                                 </li>
                                 <li>
                                     <NavLink
-                                        to="/"
+                                        isActive={() => feed === 'global'}
+                                        to={updateSearchParameter('global')}
                                         activeClassName="active"
                                         className="nav-link"
                                         exact
@@ -46,11 +52,24 @@ export function HomeView(props: HomeViewProps): JSX.Element {
                                 </li>
                             </ul>
                         </div>
-                        {articles?.map(article => (
-                            <ArticlePreview key={article.slug} article={article} />
-                        ))}
+                        {articles ? (
+                            articles.map(article => (
+                                <ArticlePreview key={article.slug} article={article} />
+                            ))
+                        ) : (
+                            <p className="text-center">Loading...</p>
+                        )}
+
+                        {/*todo: pagination*/}
+                        <ul className="pagination">
+                            <li className="page-item ng-scope active">
+                                <a className="page-link ng-binding" href="">
+                                    1
+                                </a>
+                            </li>
+                        </ul>
                     </div>
-                    {/*todo: pagination*/}
+
                     <div className="col-md-3">
                         <PopularTags />
                     </div>
@@ -58,4 +77,12 @@ export function HomeView(props: HomeViewProps): JSX.Element {
             </div>
         </div>
     );
+}
+
+function updateSearchParameter(name: string) {
+    return function (location: Location) {
+        const search = new URLSearchParams(location.search);
+        search.set('feed', name);
+        return '?' + search.toString();
+    };
 }

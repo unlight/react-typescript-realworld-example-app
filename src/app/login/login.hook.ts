@@ -7,15 +7,13 @@ import { useHistory } from 'react-router-dom';
 import { LoginFormData } from './types';
 
 export function useLogin() {
-    const authenticationService = inject<Interface.AuthenticationService>(
-        'authenticationservice',
-    );
+    const sessionService = inject<Interface.SessionService>('sessionservice');
     const { push } = useHistory();
     const [serverErrorMessage, setServerErrorMessage] = useState('');
     const { register, handleSubmit } = useForm<LoginFormData>();
     const onSubmit = handleSubmit(async data => {
         try {
-            await authenticationService.login(data);
+            await sessionService.login(data);
             push('/');
         } catch (err) {
             setServerErrorMessage(err.message);
