@@ -5,13 +5,15 @@ import { ObjectType } from 'simplytyped';
 
 import { Article, ArticleFindManyArgs, ArticleList } from '../article';
 import { Tag } from '../tag';
-import { UserCreateInput } from '../user';
+import { UserCreateInput, UserRegistration, UserSettingsInput } from '../user';
 
 // Interfaces which we use in application
 
 export interface UserService {
     isLoggedIn(): boolean;
     register(data: ObjectType<UserCreateInput>): Promise<void>;
+    getCurrentUser(): Promise<UserRegistration>;
+    updateCurrentUser(data: UserSettingsInput): Promise<UserRegistration>;
 }
 
 export interface SessionService {

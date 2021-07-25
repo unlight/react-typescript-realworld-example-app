@@ -8,6 +8,7 @@ import { HashRouter, Route, Switch } from 'react-router-dom';
 
 import { Article, CreateArticle } from './article';
 import { Home } from './home';
+import { Feed } from './home/Feed';
 import { Login } from './login';
 import { Register } from './register';
 import { Settings } from './settings';
@@ -20,6 +21,7 @@ export function App(): JSX.Element {
                 <Navbar user={user} />
                 <Switch>
                     <Route path="/" component={Home} exact />
+                    <Route path="/feed" component={Feed} exact />
                     <Route path="/article/:slug" component={Article}></Route>
                     <Route path="/register" component={Register} />
                     <Route path="/newpost" component={CreateArticle} />

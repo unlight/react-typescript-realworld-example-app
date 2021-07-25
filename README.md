@@ -50,6 +50,9 @@ npm run dev
 -   https://github.com/gothinkster/realworld-starter-kit/blob/master/FRONTEND_INSTRUCTIONS.md
 -   https://github.com/gothinkster/realworld/tree/master/api
 -   Configure eslint import rules (dependency direction)
+-   pagination
+-   use https://github.com/erictooth/react-stateful-tabs
+-   use 2 components for tabs do not use feed query param
 
 ## Users
 

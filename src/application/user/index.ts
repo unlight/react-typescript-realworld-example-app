@@ -4,3 +4,4 @@ export { UserCreateInput } from './user-create-input';
 export type { UserLogin } from './user-login';
 export type { UserLoginEnvelope } from './user-login-envelope';
 export type { UserRegistration } from './user-registration';
+export { UserSettingsInput } from './user-settings-input';

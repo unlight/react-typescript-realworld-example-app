@@ -1,58 +1,51 @@
+import { classValidatorResolver } from '@hookform/resolvers/class-validator';
+import { Interface } from '@libs/application';
+import { UserSettingsInput } from '@libs/application/user';
+import { UserSettingsUpdateCommand } from '@libs/application/user/commands';
+import { UserSettingsHandler } from '@libs/application/user/queries';
+import { inject } from 'njct';
 import React from 'react';
+import { useForm } from 'react-hook-form';
+import useSWR from 'swr';
+
+import { SettingsView } from './SettingsView';
 
 export function Settings(): JSX.Element {
-    return (
-        <div className="settings-page">
-            <div className="container page">
-                <div className="row">
-                    <div className="col-md-6 offset-md-3 col-xs-12">
-                        <h1 className="text-xs-center font-bold py-2">Your Settings</h1>
+    const userService = inject<Interface.UserService>('userservice');
+    const {
+        setError,
+        register,
+        reset,
+        handleSubmit,
+        formState: { errors },
+    } = useForm<UserSettingsInput & { serverError: string }>({
+        resolver: classValidatorResolver(UserSettingsInput),
+        reValidateMode: 'onBlur',
+        criteriaMode: 'all',
+    });
+    const { revalidate } = useSWR<void>('user/settings', async () => {
+        const query = new UserSettingsHandler(userService);
+        const data = await query.execute();
+        reset(data);
+    });
+    const onSubmit = handleSubmit(async data => {
+        const command = new UserSettingsUpdateCommand(userService);
+        const result = await command.execute(data);
+        result.match({
+            ok: () => {
+                void revalidate();
+                // return revalidate();
+                // push('/');
+            },
+            err: error => {
+                for (const [field, messages] of Object.entries(error.errors)) {
+                    setError(field as any, {
+                        message: messages[0],
+                    });
+                }
+            },
+        });
+    });
 
-                        <form>
-                            <fieldset>
-                                <fieldset className="form-group">
-                                    <input
-                                        className="form-control"
-                                        type="text"
-                                        placeholder="URL of profile picture"
-                                    />
-                                </fieldset>
-                                <fieldset className="form-group">
-                                    <input
-                                        className="form-control form-control-lg"
-                                        type="text"
-                                        placeholder="Your Name"
-                                    />
-                                </fieldset>
-                                <fieldset className="form-group">
-                                    <textarea
-                                        className="form-control form-control-lg"
-                                        rows={8}
-                                        placeholder="Short bio about you"
-                                    ></textarea>
-                                </fieldset>
-                                <fieldset className="form-group">
-                                    <input
-                                        className="form-control form-control-lg"
-                                        type="text"
-                                        placeholder="Email"
-                                    />
-                                </fieldset>
-                                <fieldset className="form-group">
-                                    <input
-                                        className="form-control form-control-lg"
-                                        type="password"
-                                        placeholder="Password"
-                                    />
-                                </fieldset>
-                                <button className="btn btn-lg btn-primary pull-xs-right">
-                                    Update Settings
-                                </button>
-                            </fieldset>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    );
+    return <SettingsView errors={errors} register={register} onSubmit={onSubmit} />;
 }

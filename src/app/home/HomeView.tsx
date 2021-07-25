@@ -8,11 +8,10 @@ import { PopularTags } from './PopularTags';
 
 type HomeViewProps = {
     articles?: Article[];
-    feed: 'global' | 'mine';
 };
 
 export function HomeView(props: HomeViewProps): JSX.Element {
-    const { articles, feed } = props;
+    const { articles } = props;
     return (
         <div className="home-page">
             {/*<div className="banner">
@@ -28,22 +27,18 @@ export function HomeView(props: HomeViewProps): JSX.Element {
                             <ul className="nav nav-pills outline-active">
                                 <li className="nav-item">
                                     <NavLink
-                                        isActive={() => feed === 'mine'}
-                                        to={updateSearchParameter('mine')}
+                                        to="/feed"
                                         activeClassName="active"
-                                        className={`nav-link ${
-                                            feed === 'mine' ? 'pointer-events-none' : ''
-                                        }`}
+                                        className="nav-link"
                                         exact
                                     >
                                         Your Feed
                                     </NavLink>
                                 </li>
-                                <li>
+                                <li className="nav-item">
                                     <NavLink
-                                        isActive={() => feed === 'global'}
-                                        to={updateSearchParameter('global')}
                                         activeClassName="active"
+                                        to="/"
                                         className="nav-link"
                                         exact
                                     >
