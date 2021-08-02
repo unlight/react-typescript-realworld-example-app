@@ -1,7 +1,9 @@
-import type { AppConfig, Interface } from '@libs/application';
+import type { Interface } from '@libs/application';
 import type { UserRegistration, UserSettingsInput } from '@libs/application/user';
 import ky from 'ky';
 import { inject } from 'njct';
+
+import { AppConfig } from './types';
 
 export class UserService implements Interface.UserService {
     private authorization = () => {

@@ -1,3 +1,4 @@
 export { ArticleService } from './article.service';
-export { SessionService } from './authentication.service';
+export { config } from './config';
+export { SessionService } from './session.service';
 export { UserService } from './user.service';

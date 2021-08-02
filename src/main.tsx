@@ -1,13 +1,14 @@
 /// <reference types="vite/client" />
 import './index.css';
 
-import { ArticleService, SessionService, UserService } from '@libs/api';
+import { ArticleService, config, SessionService, UserService } from '@libs/api';
+import { Loader } from '@libs/ui/Loader';
 import { inject, injector } from 'njct';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
 import { App } from './app';
-import { config } from './config';
+import { RecoilRoot } from 'recoil';
 
 injector.provide('config', () => config);
 injector.provide('userservice', () => inject.service(UserService));
@@ -17,7 +18,10 @@ injector.provide('sessionservice', () => inject.service(SessionService));
 
 ReactDOM.render(
     <React.StrictMode>
-        <App />
+        <RecoilRoot>
+            <App />
+            <Loader />
+        </RecoilRoot>
     </React.StrictMode>,
     document.querySelector('#app'),
 );

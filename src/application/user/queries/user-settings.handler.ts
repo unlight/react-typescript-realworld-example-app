@@ -1,10 +1,16 @@
 import { Interface } from '@libs/application';
-import { UserRegistration } from '@libs/application/user';
 
 export class UserSettingsHandler {
-    constructor(private readonly userService: Interface.UserService) {}
+    constructor(
+        private readonly userService: Interface.UserService,
+        private readonly notifyError: any,
+    ) {}
 
-    async execute(): Promise<UserRegistration> {
-        return await this.userService.getCurrentUser();
+    async execute() {
+        try {
+            return await this.userService.getCurrentUser();
+        } catch (error) {
+            this.notifyError(error.message);
+        }
     }
 }

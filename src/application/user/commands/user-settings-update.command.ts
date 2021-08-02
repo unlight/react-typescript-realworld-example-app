@@ -1,6 +1,4 @@
 import { Err, Ok, Result } from '@hqoss/monads';
-import ensureError from 'ensure-error';
-import Exception from 'rerror';
 
 import { UserService } from '../../interfaces';
 import { UserRegistration } from '../user-registration';

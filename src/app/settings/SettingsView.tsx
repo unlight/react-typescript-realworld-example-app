@@ -8,10 +8,12 @@ type SettingsViewProps = {
     };
     onSubmit: React.FormEventHandler;
     register: (k: keyof UserSettingsInput) => any;
+    disabled: boolean;
 };
 
 export function SettingsView(props: SettingsViewProps): JSX.Element {
-    const { errors, register, onSubmit } = props;
+    const { errors, register, onSubmit, disabled } = props;
+    console.log('errors', errors);
     return (
         <div className="settings-page">
             <div className="container page">
@@ -26,6 +28,7 @@ export function SettingsView(props: SettingsViewProps): JSX.Element {
                                         className="form-control"
                                         type="text"
                                         placeholder="URL of profile picture"
+                                        disabled={disabled}
                                         {...register('image')}
                                     />
                                     {errors.image?.message && (
@@ -39,6 +42,7 @@ export function SettingsView(props: SettingsViewProps): JSX.Element {
                                         className="form-control form-control-lg"
                                         type="text"
                                         placeholder="Your Name"
+                                        disabled={disabled}
                                         {...register('username')}
                                     />
                                     {errors.username?.message && (
@@ -52,6 +56,7 @@ export function SettingsView(props: SettingsViewProps): JSX.Element {
                                         className="form-control form-control-lg"
                                         rows={8}
                                         placeholder="Short bio about you"
+                                        disabled={disabled}
                                         {...register('bio')}
                                     ></textarea>
                                     {errors.bio?.message && (
@@ -65,6 +70,7 @@ export function SettingsView(props: SettingsViewProps): JSX.Element {
                                         className="form-control form-control-lg"
                                         type="text"
                                         placeholder="Email"
+                                        disabled={disabled}
                                         {...register('email')}
                                     />
 
@@ -79,6 +85,7 @@ export function SettingsView(props: SettingsViewProps): JSX.Element {
                                         className="form-control form-control-lg"
                                         type="password"
                                         placeholder="Password"
+                                        disabled={disabled}
                                         {...register('password')}
                                     />
                                     {errors.password?.message && (
@@ -87,21 +94,29 @@ export function SettingsView(props: SettingsViewProps): JSX.Element {
                                         </ul>
                                     )}
                                 </fieldset>
-                                <button className="btn btn-lg btn-primary pull-xs-right">
+                                {errors.serverError && (
+                                    <p className="error-messages">
+                                        {errors.serverError.message}
+                                    </p>
+                                )}
+                                <button
+                                    className={`btn btn-lg btn-primary pull-xs-right ${
+                                        disabled ? ' disabled' : ''
+                                    }`}
+                                    disabled={disabled}
+                                >
                                     Update Settings
                                 </button>
                             </fieldset>
-                            {errors.serverError && (
-                                <p className="error-messages">
-                                    {errors.serverError.message}
-                                </p>
-                            )}
                         </form>
 
                         <hr className="my-4" />
 
                         <button
-                            className="btn btn-outline-danger"
+                            disabled={disabled}
+                            className={`btn btn-outline-danger ${
+                                disabled ? ' disabled' : ''
+                            }`}
                             ng-click="$ctrl.logout() todo: implement me"
                         >
                             Or click here to logout.
