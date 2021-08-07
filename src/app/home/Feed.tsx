@@ -5,7 +5,7 @@ import usePromise from 'react-use-promise';
 
 import { HomeView } from './HomeView';
 
-function useFeed() {
+function useData() {
     const [articleList] = usePromise(() => {
         return new ArticleFeedHandler().execute();
     }, []);
@@ -15,7 +15,7 @@ function useFeed() {
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export function Feed(_: RouteComponentProps): JSX.Element {
-    const { articleList } = useFeed();
+    const { articleList } = useData();
 
     return <HomeView articles={articleList?.articles} />;
 }

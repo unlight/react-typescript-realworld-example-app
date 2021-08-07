@@ -5,7 +5,7 @@ import usePromise from 'react-use-promise';
 
 import { HomeView } from './HomeView';
 
-function useHome() {
+function useData() {
     const [articleList] = usePromise(() => {
         return new ArticleListHandler().execute();
     }, []);
@@ -14,7 +14,7 @@ function useHome() {
 }
 
 export function Home(props: RouteComponentProps): JSX.Element {
-    const { articleList } = useHome();
+    const { articleList } = useData();
 
     return <HomeView articles={articleList?.articles} />;
 }

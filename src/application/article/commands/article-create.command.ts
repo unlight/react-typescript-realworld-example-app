@@ -1,7 +1,5 @@
 import { Err, Ok, Result } from '@hqoss/monads';
-import ensureError from 'ensure-error';
 import { inject } from 'njct';
-import Exception from 'rerror';
 
 import { Interface } from '../..';
 import { Article, ArticleCreateInput } from '..';
@@ -16,25 +14,16 @@ export class ArticleCreateCommand {
         ),
     ) {}
 
-    async execute(data: ArticleCreateInput): Promise<Result<Article, Exception>> {
-        let result: Result<Article, Exception>;
+    async execute(data: ArticleCreateInput): Promise<Result<Article, Error>> {
+        let result: Result<Article, Error>;
         if (!this.sessionService.isLoggedIn()) {
-            return Err(
-                new Exception({
-                    name: 'Unauthorized',
-                }),
-            );
+            return Err(new Error('Unauthorized'));
         }
         try {
             result = Ok(await this.articleService.create(data));
         } catch (error) {
-            const innerError = ensureError(error);
-            result = Err(
-                new Exception({
-                    name: 'ArticleCreate',
-                    cause: innerError,
-                }),
-            );
+            // const innerError = ensureError(error);
+            result = Err(new Error('ArticleCreate'));
         }
         return result;
     }

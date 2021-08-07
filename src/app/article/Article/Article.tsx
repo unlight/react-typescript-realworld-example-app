@@ -6,9 +6,9 @@ import { RouteComponentProps } from 'react-router-dom';
 
 import { ArticleView } from './ArticleView';
 
-export function Article({ match }: RouteComponentProps<{ slug: string }>): JSX.Element {
+function useData(parameters: { slug: string }) {
+    const { slug } = parameters;
     const articleService = inject<Interface.ArticleService>('articleservice');
-    const { slug } = match.params;
     const [article, setArticle] = useState<SingleArticle | undefined>(undefined);
 
     const getArticle = useCallback(
@@ -22,6 +22,12 @@ export function Article({ match }: RouteComponentProps<{ slug: string }>): JSX.E
     useEffect(() => {
         void getArticle(slug);
     }, [slug, getArticle]);
+
+    return { article };
+}
+
+export function Article({ match }: RouteComponentProps<{ slug: string }>): JSX.Element {
+    const { article } = useData({ slug: match.params.slug });
 
     return <ArticleView article={article} />;
 }

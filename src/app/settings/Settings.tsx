@@ -28,6 +28,16 @@ function useSettings() {
     });
     const [serverError, setServerError] = useState('');
 
+    const onSubmit = handleSubmit(async data => {
+        setIsLoading(true);
+        const result = await new UserSettingsUpdateCommand().execute(data);
+        setIsLoading(false);
+        if (result.isErr()) {
+            const { code } = result.unwrapErr();
+            setServerError(`Failed to update settings, error code ${code}`);
+        }
+    });
+
     useEffect(() => {
         setIsLoading(!result);
         if (result?.isOk()) {
@@ -44,28 +54,12 @@ function useSettings() {
         setError,
         serverError,
         setServerError,
+        onSubmit,
     };
 }
 
 export function Settings(): JSX.Element {
-    const {
-        settingsResult,
-        setIsLoading,
-        errors,
-        register,
-        handleSubmit,
-        serverError,
-        setServerError,
-    } = useSettings();
-    const onSubmit = handleSubmit(async data => {
-        setIsLoading(true);
-        const result = await new UserSettingsUpdateCommand().execute(data);
-        setIsLoading(false);
-        if (result.isErr()) {
-            const { code } = result.unwrapErr();
-            setServerError(`Failed to update settings, error code ${code}`);
-        }
-    });
+    const { settingsResult, errors, register, serverError, onSubmit } = useSettings();
 
     return (
         <SettingsView

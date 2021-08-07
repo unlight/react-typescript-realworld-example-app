@@ -9,7 +9,7 @@ import { Redirect, useHistory } from 'react-router-dom';
 
 import { RegisterView } from './RegisterView';
 
-export function Register(): JSX.Element {
+function useData() {
     const userService = inject<Interface.UserService>('userservice');
     const { push } = useHistory();
     const [serverErrorMessage, setServerErrorMessage] = useState('');
@@ -22,13 +22,8 @@ export function Register(): JSX.Element {
         reValidateMode: 'onBlur',
         criteriaMode: 'all',
     });
-    const command = new UserRegisterCommand(userService);
-
-    if (userService.isLoggedIn()) {
-        return <Redirect to="/" />;
-    }
-
     const onSubmit = handleSubmit(async data => {
+        const command = new UserRegisterCommand(userService);
         const result = await command.execute(data);
         result.match({
             ok: () => {
@@ -39,6 +34,23 @@ export function Register(): JSX.Element {
             },
         });
     });
+    const isLoggedIn = userService.isLoggedIn();
+
+    return {
+        isLoggedIn,
+        onSubmit,
+        errors,
+        register,
+        serverErrorMessage,
+    };
+}
+
+export function Register(): JSX.Element {
+    const { onSubmit, errors, register, serverErrorMessage, isLoggedIn } = useData();
+
+    if (!isLoggedIn) {
+        return <Redirect to="/" />;
+    }
 
     return (
         <RegisterView
