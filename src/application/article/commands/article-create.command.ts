@@ -1,5 +1,6 @@
 import { Err, Ok, Result } from '@hqoss/monads';
 import ensureError from 'ensure-error';
+import { inject } from 'njct';
 import Exception from 'rerror';
 
 import { Interface } from '../..';
@@ -7,8 +8,12 @@ import { Article, ArticleCreateInput } from '..';
 
 export class ArticleCreateCommand {
     constructor(
-        private readonly articleService: Interface.ArticleService,
-        private readonly sessionService: Interface.SessionService,
+        private readonly articleService = inject<Interface.ArticleService>(
+            'articleservice',
+        ),
+        private readonly sessionService = inject<Interface.SessionService>(
+            'sessionservice',
+        ),
     ) {}
 
     async execute(data: ArticleCreateInput): Promise<Result<Article, Exception>> {

@@ -1,4 +1,5 @@
 import { Err, Ok, Result } from '@hqoss/monads';
+import { inject } from 'njct';
 
 import { UserService } from '../../interfaces';
 import { UserRegistration } from '../user-registration';
@@ -6,7 +7,9 @@ import { UserSettingsInput } from '../user-settings-input';
 
 export class UserSettingsUpdateCommand {
     // maybe create service for notify errors
-    constructor(private readonly userService: UserService) {}
+    constructor(
+        private readonly userService: UserService = inject<UserService>('userservice'),
+    ) {}
 
     async execute(data: UserSettingsInput) {
         let result: Result<

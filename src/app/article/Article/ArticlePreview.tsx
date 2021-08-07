@@ -1,5 +1,5 @@
 import { Article } from '@libs/application/article';
-import classNames from '@sindresorhus/class-names';
+import classNames from 'clsx';
 import React from 'react';
 
 type ArticlePreviewProps = {

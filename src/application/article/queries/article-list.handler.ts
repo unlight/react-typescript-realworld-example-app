@@ -1,10 +1,15 @@
-import { Interface } from '@libs/application';
+import { ArticleService } from '@libs/application/interfaces';
+import { inject } from 'njct';
 
 import { ArticleList } from '../article-list';
 import { ArticleListQuery } from './article-list.query';
 
 export class ArticleListHandler {
-    constructor(private readonly articleService: Interface.ArticleService) {}
+    constructor(
+        private readonly articleService: ArticleService = inject<ArticleService>(
+            'articleservice',
+        ),
+    ) {}
 
     async execute(data: ArticleListQuery = {}): Promise<ArticleList> {
         return await this.articleService.findMany({

@@ -1,30 +1,30 @@
-import { Interface } from '@libs/application';
 import { TagListHandler } from '@libs/application/article/queries';
-import { Tag } from '@libs/application/tag';
-import { inject } from 'njct';
 import React from 'react';
-import useSWR from 'swr';
+import usePromise from 'react-use-promise';
 
 type PopularTagsProps = {};
 
+function useData() {
+    const [tagList] = usePromise(() => {
+        return new TagListHandler().execute();
+    }, []);
+
+    return { tagList };
+}
+
 export function PopularTags(props: PopularTagsProps): JSX.Element {
-    const tagService = inject<Interface.TagService>('tagservice');
-    const { data: tags, error } = useSWR<Tag[]>('home/populartags', () => {
-        return new TagListHandler(tagService).execute();
-    });
+    const { tagList } = useData();
 
     return (
         <div className="sidebar">
             <p>Popular Tags</p>
             <div className="tag-list">
-                {tags ? (
-                    tags.map(tag => (
+                {tagList ? (
+                    tagList.map(tag => (
                         <a key={tag} href="" className="tag-pill tag-default">
                             {tag}
                         </a>
                     ))
-                ) : error ? (
-                    <p>ERROR</p>
                 ) : (
                     <p>Loading...</p>
                 )}

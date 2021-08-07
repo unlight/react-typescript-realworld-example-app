@@ -4,22 +4,22 @@ import { FieldError } from 'react-hook-form';
 
 type SettingsViewProps = {
     errors: {
-        [K in keyof UserSettingsInput | 'serverError']?: FieldError;
+        [K in keyof UserSettingsInput]?: FieldError;
     };
+    serverError: string;
     onSubmit: React.FormEventHandler;
     register: (k: keyof UserSettingsInput) => any;
     disabled: boolean;
 };
 
 export function SettingsView(props: SettingsViewProps): JSX.Element {
-    const { errors, register, onSubmit, disabled } = props;
-    console.log('errors', errors);
+    const { errors, register, onSubmit, disabled, serverError } = props;
     return (
         <div className="settings-page">
             <div className="container page">
                 <div className="row">
                     <div className="col-md-6 offset-md-3 col-xs-12">
-                        <h1 className="text-xs-center font-bold py-2">Your Settings</h1>
+                        <h1 className="text-xs-center font-bold mb-4">Your Settings</h1>
 
                         <form onSubmit={onSubmit}>
                             <fieldset>
@@ -32,7 +32,7 @@ export function SettingsView(props: SettingsViewProps): JSX.Element {
                                         {...register('image')}
                                     />
                                     {errors.image?.message && (
-                                        <ul className="error-messages">
+                                        <ul className="error-messages text-sm">
                                             <li>{errors.image.message}</li>
                                         </ul>
                                     )}
@@ -46,7 +46,7 @@ export function SettingsView(props: SettingsViewProps): JSX.Element {
                                         {...register('username')}
                                     />
                                     {errors.username?.message && (
-                                        <ul className="error-messages">
+                                        <ul className="error-messages text-sm">
                                             <li>{errors.username.message}</li>
                                         </ul>
                                     )}
@@ -60,7 +60,7 @@ export function SettingsView(props: SettingsViewProps): JSX.Element {
                                         {...register('bio')}
                                     ></textarea>
                                     {errors.bio?.message && (
-                                        <ul className="error-messages">
+                                        <ul className="error-messages text-sm">
                                             <li>{errors.bio.message}</li>
                                         </ul>
                                     )}
@@ -75,7 +75,7 @@ export function SettingsView(props: SettingsViewProps): JSX.Element {
                                     />
 
                                     {errors.email?.message && (
-                                        <ul className="error-messages">
+                                        <ul className="error-messages text-sm">
                                             <li>{errors.email.message}</li>
                                         </ul>
                                     )}
@@ -89,14 +89,14 @@ export function SettingsView(props: SettingsViewProps): JSX.Element {
                                         {...register('password')}
                                     />
                                     {errors.password?.message && (
-                                        <ul className="error-messages">
+                                        <ul className="error-messages text-sm">
                                             <li>{errors.password.message}</li>
                                         </ul>
                                     )}
                                 </fieldset>
-                                {errors.serverError && (
-                                    <p className="error-messages">
-                                        {errors.serverError.message}
+                                {serverError && (
+                                    <p className="error-messages text-sm my-4">
+                                        {serverError}
                                     </p>
                                 )}
                                 <button

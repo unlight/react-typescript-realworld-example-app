@@ -6,9 +6,9 @@ import { Loader } from '@libs/ui/Loader';
 import { inject, injector } from 'njct';
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { RecoilRoot } from 'recoil';
 
 import { App } from './app';
-import { RecoilRoot } from 'recoil';
 
 injector.provide('config', () => config);
 injector.provide('userservice', () => inject.service(UserService));

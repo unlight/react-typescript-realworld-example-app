@@ -1,23 +1,21 @@
-import { Interface } from '@libs/application';
-import { ArticleList } from '@libs/application/article';
 import { ArticleFeedHandler } from '@libs/application/article/queries';
-import { inject } from 'njct';
 import React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
-import useSWR from 'swr';
+import usePromise from 'react-use-promise';
 
 import { HomeView } from './HomeView';
 
-export function Feed(props: RouteComponentProps): JSX.Element {
-    const articleService = inject<Interface.ArticleService>('articleservice');
-    const { data: articleList, error } = useSWR<ArticleList>('articles/feed', () => {
-        const query = new ArticleFeedHandler(articleService);
-        return query.execute();
-    });
+function useFeed() {
+    const [articleList] = usePromise(() => {
+        return new ArticleFeedHandler().execute();
+    }, []);
 
-    if (error) {
-        return <p>{error}</p>;
-    }
+    return { articleList };
+}
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export function Feed(_: RouteComponentProps): JSX.Element {
+    const { articleList } = useFeed();
 
     return <HomeView articles={articleList?.articles} />;
 }

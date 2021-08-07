@@ -53,9 +53,11 @@ export class UserService implements Interface.UserService {
                 hooks: {
                     afterResponse: [
                         async (_request, _options, response) => {
-                            const code = response.status;
-                            const { errors } = await response.json();
-                            return Promise.reject({ code, errors });
+                            if (!response.ok) {
+                                const code = response.status;
+                                const { errors } = await response.json();
+                                return Promise.reject({ code, errors });
+                            }
                         },
                     ],
                 },

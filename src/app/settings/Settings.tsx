@@ -1,73 +1,79 @@
 import { classValidatorResolver } from '@hookform/resolvers/class-validator';
-import { Interface } from '@libs/application';
 import { UserSettingsInput } from '@libs/application/user';
 import { UserSettingsUpdateCommand } from '@libs/application/user/commands';
 import { UserSettingsHandler } from '@libs/application/user/queries';
-import { inject } from 'njct';
-import React, { useEffect } from 'react';
-import { useForm } from 'react-hook-form';
-import { useRecoilState } from 'recoil';
-import useSWR from 'swr';
 import { isLoading } from '@libs/ui/Loader';
+import React, { useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import usePromise from 'react-use-promise';
+import { useSetRecoilState } from 'recoil';
 
 import { SettingsView } from './SettingsView';
 
-export function Settings(): JSX.Element {
-    const [isLoadingValue, setIsLoading] = useRecoilState(isLoading);
-    const userService = inject<Interface.UserService>('userservice');
-    const { error, data, revalidate } = useSWR('user/settings', async () => {
-        const query = new UserSettingsHandler(userService, notifyError);
-        const data = await query.execute();
-        return data;
-    });
+function useSettings() {
+    const setIsLoading = useSetRecoilState(isLoading);
+    const [result] = usePromise(() => {
+        return new UserSettingsHandler().execute();
+    }, []);
     const {
         setError,
         register,
         handleSubmit,
         reset,
-        control,
         formState: { errors },
-    } = useForm<UserSettingsInput & { serverError: string }>({
+    } = useForm<UserSettingsInput>({
         resolver: classValidatorResolver(UserSettingsInput),
         reValidateMode: 'onBlur',
         criteriaMode: 'all',
     });
-    const notifyError = (message: string) => setError('serverError', { message });
+    const [serverError, setServerError] = useState('');
 
     useEffect(() => {
-        if (data) {
-            setIsLoading(false);
-            reset(data);
-        } else {
-            setIsLoading(true);
+        setIsLoading(!result);
+        if (result?.isOk()) {
+            reset(result.unwrap());
         }
-    }, [reset, data]);
+    }, [reset, result, setIsLoading]);
 
+    return {
+        settingsResult: result,
+        setIsLoading,
+        register,
+        errors,
+        handleSubmit,
+        setError,
+        serverError,
+        setServerError,
+    };
+}
+
+export function Settings(): JSX.Element {
+    const {
+        settingsResult,
+        setIsLoading,
+        errors,
+        register,
+        handleSubmit,
+        serverError,
+        setServerError,
+    } = useSettings();
     const onSubmit = handleSubmit(async data => {
-        const command = new UserSettingsUpdateCommand(userService);
-        const result = await command.execute(data);
-        result.match({
-            ok: () => {
-                void revalidate();
-                // return revalidate();
-                // push('/');
-            },
-            err: error => {
-                for (const [field, messages] of Object.entries(error.errors)) {
-                    setError(field as any, {
-                        message: messages[0],
-                    });
-                }
-            },
-        });
+        setIsLoading(true);
+        const result = await new UserSettingsUpdateCommand().execute(data);
+        setIsLoading(false);
+        if (result.isErr()) {
+            const { code } = result.unwrapErr();
+            setServerError(`Failed to update settings, error code ${code}`);
+        }
     });
 
     return (
         <SettingsView
+            serverError={serverError}
             errors={errors}
             register={register}
             onSubmit={onSubmit}
-            disabled={!data}
+            disabled={!settingsResult}
         />
     );
 }

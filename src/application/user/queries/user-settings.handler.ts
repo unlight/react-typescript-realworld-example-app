@@ -1,16 +1,21 @@
-import { Interface } from '@libs/application';
+import { Err, Ok, Result } from '@hqoss/monads';
+import { UserRegistration } from '@libs/application/user';
+import { inject } from 'njct';
+
+import { UserService } from '../../interfaces';
 
 export class UserSettingsHandler {
     constructor(
-        private readonly userService: Interface.UserService,
-        private readonly notifyError: any,
+        private readonly userService: UserService = inject<UserService>('userservice'),
     ) {}
 
     async execute() {
+        let result: Result<UserRegistration, Error>;
         try {
-            return await this.userService.getCurrentUser();
+            result = Ok(await this.userService.getCurrentUser());
         } catch (error) {
-            this.notifyError(error.message);
+            result = Err(error);
         }
+        return result;
     }
 }
