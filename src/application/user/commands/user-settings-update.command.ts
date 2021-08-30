@@ -23,8 +23,8 @@ export class UserSettingsUpdateCommand {
 
         try {
             result = Ok(await this.userService.updateCurrentUser(data));
-        } catch (error) {
-            result = Err(error);
+        } catch (err: any) {
+            result = Err(err);
         }
         return result;
     }

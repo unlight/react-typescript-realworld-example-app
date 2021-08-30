@@ -13,7 +13,7 @@ export class UserSettingsHandler {
         let result: Result<UserRegistration, Error>;
         try {
             result = Ok(await this.userService.getCurrentUser());
-        } catch (error) {
+        } catch (error: any) {
             result = Err(error);
         }
         return result;

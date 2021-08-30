@@ -38,8 +38,7 @@ function useData() {
 
 export function CreateArticle(): JSX.Element {
     const sessionService = inject<Interface.SessionService>('sessionservice');
-    // eslint-disable-next-line @typescript-eslint/unbound-method
-    const { push } = useHistory();
+    const history = useHistory();
     const {
         register,
         handleSubmit,
@@ -65,7 +64,7 @@ export function CreateArticle(): JSX.Element {
             return;
         }
         const article = result.unwrap();
-        push(`/article/${article.slug}`);
+        history.push(`/article/${article.slug}`);
     });
 
     return (

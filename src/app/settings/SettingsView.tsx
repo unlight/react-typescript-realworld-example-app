@@ -1,4 +1,5 @@
 import { UserSettingsInput } from '@libs/application/user';
+import classNames from 'clsx';
 import React from 'react';
 import { FieldError } from 'react-hook-form';
 
@@ -10,10 +11,11 @@ type SettingsViewProps = {
     onSubmit: React.FormEventHandler;
     register: (k: keyof UserSettingsInput) => any;
     disabled: boolean;
+    logout: (event: React.BaseSyntheticEvent) => void;
 };
 
 export function SettingsView(props: SettingsViewProps): JSX.Element {
-    const { errors, register, onSubmit, disabled, serverError } = props;
+    const { errors, register, onSubmit, disabled, logout, serverError } = props;
     return (
         <div className="settings-page">
             <div className="container page">
@@ -114,10 +116,10 @@ export function SettingsView(props: SettingsViewProps): JSX.Element {
 
                         <button
                             disabled={disabled}
-                            className={`btn btn-outline-danger ${
-                                disabled ? ' disabled' : ''
-                            }`}
-                            ng-click="$ctrl.logout() todo: implement me"
+                            className={classNames('btn btn-outline-danger', {
+                                disabled,
+                            })}
+                            onClick={logout}
                         >
                             Or click here to logout.
                         </button>

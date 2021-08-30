@@ -21,7 +21,7 @@ export class ArticleCreateCommand {
         }
         try {
             result = Ok(await this.articleService.create(data));
-        } catch (error) {
+        } catch {
             // const innerError = ensureError(error);
             result = Err(new Error('ArticleCreate'));
         }

@@ -1,6 +1,7 @@
 import { UserCreateInput } from '@libs/application/user';
 import React from 'react';
 import { FieldError } from 'react-hook-form';
+import { Link } from 'react-router-dom';
 
 type RegisterViewProps = {
     errors: {
@@ -20,7 +21,7 @@ export function RegisterView(props: RegisterViewProps): JSX.Element {
                     <div className="col-md-6 offset-md-3 col-xs-12">
                         <h1 className="text-xs-center font-bold">Sign up</h1>
                         <p className="text-xs-center">
-                            <a href="/login">Have an account?</a>
+                            <Link to="/login">Have an account?</Link>
                         </p>
                         <form onSubmit={onSubmit}>
                             <fieldset className="form-group">

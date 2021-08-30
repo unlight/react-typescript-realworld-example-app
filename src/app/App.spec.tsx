@@ -1,7 +1,7 @@
 import { Interface } from '@libs/application';
 import { render, waitFor } from '@testing-library/react';
 import { mock } from 'jest-mock-extended';
-import { inject, injector } from 'njct';
+import { injector } from 'njct';
 import React from 'react';
 
 import { App } from './App';

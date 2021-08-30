@@ -1,10 +1,13 @@
 import { classValidatorResolver } from '@hookform/resolvers/class-validator';
+import { Interface } from '@libs/application';
 import { UserSettingsInput } from '@libs/application/user';
 import { UserSettingsUpdateCommand } from '@libs/application/user/commands';
 import { UserSettingsHandler } from '@libs/application/user/queries';
 import { isLoading } from '@libs/ui/Loader';
-import React, { useEffect, useState } from 'react';
+import { inject } from 'njct';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useHistory } from 'react-router-dom';
 import usePromise from 'react-use-promise';
 import { useSetRecoilState } from 'recoil';
 
@@ -45,6 +48,12 @@ function useSettings() {
         }
     }, [reset, result, setIsLoading]);
 
+    const logout = useCallback(async () => {
+        const sessionService = inject<Interface.SessionService>('sessionservice');
+        await sessionService.logout();
+        document.location = '/';
+    }, []);
+
     return {
         settingsResult: result,
         setIsLoading,
@@ -55,11 +64,13 @@ function useSettings() {
         serverError,
         setServerError,
         onSubmit,
+        logout,
     };
 }
 
 export function Settings(): JSX.Element {
-    const { settingsResult, errors, register, serverError, onSubmit } = useSettings();
+    const { settingsResult, errors, register, serverError, onSubmit, logout } =
+        useSettings();
 
     return (
         <SettingsView
@@ -68,6 +79,7 @@ export function Settings(): JSX.Element {
             register={register}
             onSubmit={onSubmit}
             disabled={!settingsResult}
+            logout={logout}
         />
     );
 }

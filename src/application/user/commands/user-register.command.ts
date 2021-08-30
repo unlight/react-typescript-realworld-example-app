@@ -10,7 +10,7 @@ export class UserRegisterCommand {
         let result: Result<void, Error>;
         try {
             result = Ok(await this.userService.register(data));
-        } catch (error) {
+        } catch {
             // const innerError = ensureError(error);
             result = Err(new Error('UserRegistration'));
         }

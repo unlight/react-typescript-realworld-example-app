@@ -5,13 +5,13 @@ import { UserRegisterCommand } from '@libs/application/user/commands';
 import { inject } from 'njct';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Redirect, useHistory } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 
 import { RegisterView } from './RegisterView';
 
 function useData() {
     const userService = inject<Interface.UserService>('userservice');
-    const { push } = useHistory();
+    const sessionService = inject<Interface.SessionService>('sessionservice');
     const [serverErrorMessage, setServerErrorMessage] = useState('');
     const {
         register,
@@ -27,14 +27,14 @@ function useData() {
         const result = await command.execute(data);
         result.match({
             ok: () => {
-                push('/');
+                document.location = '/';
             },
             err: error => {
                 setServerErrorMessage(error.message);
             },
         });
     });
-    const isLoggedIn = userService.isLoggedIn();
+    const isLoggedIn = sessionService.isLoggedIn();
 
     return {
         isLoggedIn,
@@ -48,7 +48,7 @@ function useData() {
 export function Register(): JSX.Element {
     const { onSubmit, errors, register, serverErrorMessage, isLoggedIn } = useData();
 
-    if (!isLoggedIn) {
+    if (isLoggedIn) {
         return <Redirect to="/" />;
     }
 

@@ -6,6 +6,8 @@ import { inject } from 'njct';
 
 import { AppConfig } from './types';
 
+const tokenKey = 'user_token_v1';
+
 export class SessionService implements Interface.SessionService {
     constructor(
         private readonly storage: Storage = inject('Storage', () => localStorage),
@@ -26,16 +28,16 @@ export class SessionService implements Interface.SessionService {
     }
 
     update(token: string): void {
-        this.storage.setItem('user_token_v1', token);
+        this.storage.setItem(tokenKey, token);
     }
 
     getToken(): string | undefined {
-        const result = this.storage.getItem('user_token_v1');
+        const result = this.storage.getItem(tokenKey);
         return result ? result : undefined;
     }
 
     getUser() {
-        const token = this.storage.getItem('user_token_v1');
+        const token = this.storage.getItem(tokenKey);
         if (!token) {
             return undefined;
         }
@@ -51,5 +53,10 @@ export class SessionService implements Interface.SessionService {
         }
 
         return payload;
+    }
+
+    // eslint-disable-next-line @typescript-eslint/require-await
+    async logout() {
+        this.storage.removeItem(tokenKey);
     }
 }

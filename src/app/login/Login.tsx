@@ -1,22 +1,23 @@
 import { Interface } from '@libs/application';
+import ensureError from 'ensure-error';
 import { inject } from 'njct';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import { LoginFormData } from './types';
 
 function useLogin() {
     const sessionService = inject<Interface.SessionService>('sessionservice');
-    const { push } = useHistory();
     const [serverErrorMessage, setServerErrorMessage] = useState('');
     const { register, handleSubmit } = useForm<LoginFormData>();
     const onSubmit = handleSubmit(async data => {
         try {
             await sessionService.login(data);
-            push('/');
-        } catch (err) {
-            setServerErrorMessage(err.message);
+            document.location = '/';
+        } catch (err: unknown) {
+            const error = ensureError(err);
+            setServerErrorMessage(error.message);
         }
     });
 
@@ -37,7 +38,7 @@ export function Login(): JSX.Element {
                     <div className="col-md-6 offset-md-3 col-xs-12">
                         <h1 className="text-xs-center font-bold">Sign In</h1>
                         <p className="text-xs-center">
-                            <a href="/register">Do not have an account yet?</a>
+                            <Link to="/register">Do not have an account yet?</Link>
                         </p>
                         <form onSubmit={onSubmit}>
                             <fieldset className="form-group">

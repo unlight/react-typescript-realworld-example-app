@@ -16,10 +16,20 @@ export function Navbar(props: NavbarProps): JSX.Element {
                 </a>
                 <ul className="nav navbar-nav pull-xs-right">
                     <NavItem name="Home" href="/" />
-                    <NavItem name="New Post" href="/newpost" icon="ion-compose" />
-                    <NavItem name="Settings" href="/settings" icon="ion-gear-a" />
                     {user ? (
-                        <NavItem name={user.username} href={`@${user.username}`} />
+                        <>
+                            <NavItem
+                                name="New Post"
+                                href="/newpost"
+                                icon="ion-compose"
+                            />
+                            <NavItem
+                                name="Settings"
+                                href="/settings"
+                                icon="ion-gear-a"
+                            />
+                            <NavItem name={user.username} href={`@${user.username}`} />
+                        </>
                     ) : (
                         <NavItem name="Sign up" href="/register" />
                     )}

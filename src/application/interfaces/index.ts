@@ -10,7 +10,6 @@ import { UserCreateInput, UserRegistration, UserSettingsInput } from '../user';
 // Interfaces which we use in application
 
 export interface UserService {
-    isLoggedIn(): boolean;
     register(data: ObjectType<UserCreateInput>): Promise<void>;
     getCurrentUser(): Promise<UserRegistration>;
     updateCurrentUser(data: UserSettingsInput): Promise<UserRegistration>;
@@ -18,6 +17,7 @@ export interface UserService {
 
 export interface SessionService {
     login(data: { email: string; password: string }): Promise<void>;
+    logout(): Promise<void>;
     isLoggedIn(): boolean;
     update(token: string): void;
     getToken(): string | undefined;

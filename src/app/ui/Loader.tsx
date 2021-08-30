@@ -1,5 +1,5 @@
-import React, { PropsWithChildren, useCallback, useEffect } from 'react';
-import { atom, useRecoilValue, useSetRecoilState } from 'recoil';
+import React, { PropsWithChildren } from 'react';
+import { atom, useRecoilValue } from 'recoil';
 
 type LoaderProps = {};
 
