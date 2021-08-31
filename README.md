@@ -53,6 +53,7 @@ npm run dev
 -   pagination
 -   use https://github.com/erictooth/react-stateful-tabs
 -   use 2 components for tabs do not use feed query param
+-   setIsLoading make as global indicator error and pending
 
 ## Users
 

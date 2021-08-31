@@ -55,14 +55,14 @@ export class ArticleService implements Interface.ArticleService, Interface.TagSe
     }
 
     async findMany(args: ArticleFindManyArgs = {}): Promise<ArticleList> {
+        const searchParams = {
+            limit: args.take ?? 5,
+            skip: args.skip ?? 0,
+            ...(args.author && { author: args.author }),
+        };
         return await this.http
             .extend(this.authorization())
-            .get(`${this.config.apiBase}/articles`, {
-                searchParams: {
-                    limit: args.take ?? 5,
-                    skip: args.skip ?? 0,
-                },
-            })
+            .get(`${this.config.apiBase}/articles`, { searchParams })
             .json<ArticleList>();
     }
 

@@ -28,7 +28,10 @@ export function Navbar(props: NavbarProps): JSX.Element {
                                 href="/settings"
                                 icon="ion-gear-a"
                             />
-                            <NavItem name={user.username} href={`@${user.username}`} />
+                            <NavItem
+                                name={user.username}
+                                href={`/profile/${user.username}`}
+                            />
                         </>
                     ) : (
                         <NavItem name="Sign up" href="/register" />

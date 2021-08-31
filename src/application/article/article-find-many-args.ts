@@ -4,4 +4,5 @@ export class ArticleFindManyArgs {
     where?: ArticleWhereInput;
     take?: number;
     skip?: number;
+    author?: string;
 }

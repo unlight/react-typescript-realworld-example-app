@@ -1,6 +1,7 @@
 /**
  * Input/Output Ports
  */
+import { Profile } from '@libs/application/profile';
 import { ObjectType } from 'simplytyped';
 
 import { Article, ArticleFindManyArgs, ArticleList } from '../article';
@@ -11,8 +12,9 @@ import { UserCreateInput, UserRegistration, UserSettingsInput } from '../user';
 
 export interface UserService {
     register(data: ObjectType<UserCreateInput>): Promise<void>;
-    getCurrentUser(): Promise<UserRegistration>;
+    getCurrentUser(): Promise<UserRegistration>; // todo: move to session service
     updateCurrentUser(data: UserSettingsInput): Promise<UserRegistration>;
+    getProfile(name: string): Promise<Profile>;
 }
 
 export interface SessionService {
@@ -38,3 +40,5 @@ export interface ArticleService {
 export interface TagService {
     getAllTags(): Promise<Tag[]>;
 }
+
+export type { ArticleList, Profile };

@@ -1,4 +1,5 @@
 import type { Interface } from '@libs/application';
+import { Profile } from '@libs/application/profile';
 import type { UserRegistration, UserSettingsInput } from '@libs/application/user';
 import ky from 'ky';
 import { inject } from 'njct';
@@ -65,5 +66,12 @@ export class UserService implements Interface.UserService {
             .put(`${this.config.apiBase}/user`, { json: { user } })
             .json<{ user: UserRegistration }>()
             .then(result => result.user);
+    }
+
+    async getProfile(name: string) {
+        const result = await this.http
+            .get(`${this.config.apiBase}/profiles/${name}`)
+            .json<{ profile: Profile }>();
+        return result.profile;
     }
 }

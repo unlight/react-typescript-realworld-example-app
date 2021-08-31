@@ -1,3 +1,4 @@
+// todo: rename
 export interface UserRegistration {
     bio: string;
     createdAt: string;

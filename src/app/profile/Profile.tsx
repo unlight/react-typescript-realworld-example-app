@@ -1,95 +1,91 @@
+import { Interface } from '@libs/application';
+import { GetProfileHandler } from '@libs/application/profile';
+import { isLoading } from '@libs/ui/Loader';
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { useSetRecoilState } from 'recoil';
+import { PlainObject } from 'simplytyped';
+
+import { ArticlePreview } from '../article/Article';
+
+function useProfile() {
+    const setIsLoading = useSetRecoilState(isLoading);
+    const { username } = useParams<PlainObject>();
+    const [serverError, setServerError] = useState('');
+    const [{ profile, articleList }, setProfile] = useState<{
+        profile?: Interface.Profile;
+        articleList?: Interface.ArticleList;
+    }>({});
+
+    useEffect(() => {
+        setIsLoading(true);
+        void (async () => {
+            const result = await new GetProfileHandler().execute(username);
+            setIsLoading(false);
+            if (result.isErr()) {
+                return setServerError(result.unwrapErr().message);
+            }
+            const { profile, articleList } = result.unwrap();
+            setProfile({ profile, articleList });
+        })();
+    }, [username, setIsLoading]);
+
+    return { serverError, profile, articleList };
+}
+
 export function Profile() {
-    /*<div class="profile-page">
-    <div class="user-info">
-        <div class="container">
-            <div class="row">
-                <div class="col-xs-12 col-md-10 offset-md-1">
-                    <img src="http://i.imgur.com/Qr71crq.jpg" class="user-img" />
-                    <h4>Eric Simons</h4>
-                    <p>
-                        Cofounder @GoThinkster, lived in Aol's HQ for a few months,
-                        kinda looks like Peeta from the Hunger Games
-                    </p>
-                    <button class="btn btn-sm btn-outline-secondary action-btn">
-                        <i class="ion-plus-round"></i>
-                        &nbsp; Follow Eric Simons
-                    </button>
+    const { profile, articleList, serverError } = useProfile();
+
+    return (
+        <div className="profile-page">
+            {profile && (
+                <div className="user-info">
+                    <div className="container">
+                        <div className="row">
+                            <div className="col-xs-12 col-md-10 offset-md-1">
+                                {profile.image && (
+                                    <img
+                                        src={profile.image}
+                                        className="user-img inline-block"
+                                    />
+                                )}
+                                <h4>{profile.username}</h4>
+                                {profile.bio && <p>{profile.bio}</p>}
+                                <button className="btn btn-sm btn-outline-secondary action-btn">
+                                    <i className="ion-plus-round"></i>
+                                    &nbsp; Follow {profile.username}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            <div className="container">
+                <div className="row">
+                    <div className="col-xs-12 col-md-10 offset-md-1">
+                        <div className="articles-toggle">
+                            <ul className="nav nav-pills outline-active">
+                                <li className="nav-item">
+                                    <a className="nav-link active" href="">
+                                        My Articles
+                                    </a>
+                                </li>
+                                <li className="nav-item">
+                                    <a className="nav-link" href="">
+                                        Favorited Articles
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+
+                        {articleList &&
+                            articleList.articles.map(article => (
+                                <ArticlePreview article={article} key={article.slug} />
+                            ))}
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-
-    <div class="container">
-        <div class="row">
-            <div class="col-xs-12 col-md-10 offset-md-1">
-                <div class="articles-toggle">
-                    <ul class="nav nav-pills outline-active">
-                        <li class="nav-item">
-                            <a class="nav-link active" href="">
-                                My Articles
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="">
-                                Favorited Articles
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-
-                <div class="article-preview">
-                    <div class="article-meta">
-                        <a href="">
-                            <img src="http://i.imgur.com/Qr71crq.jpg" />
-                        </a>
-                        <div class="info">
-                            <a href="" class="author">
-                                Eric Simons
-                            </a>
-                            <span class="date">January 20th</span>
-                        </div>
-                        <button class="btn btn-outline-primary btn-sm pull-xs-right">
-                            <i class="ion-heart"></i> 29
-                        </button>
-                    </div>
-                    <a href="" class="preview-link">
-                        <h1>How to build webapps that scale</h1>
-                        <p>This is the description for the post.</p>
-                        <span>Read more...</span>
-                    </a>
-                </div>
-
-                <div class="article-preview">
-                    <div class="article-meta">
-                        <a href="">
-                            <img src="http://i.imgur.com/N4VcUeJ.jpg" />
-                        </a>
-                        <div class="info">
-                            <a href="" class="author">
-                                Albert Pai
-                            </a>
-                            <span class="date">January 20th</span>
-                        </div>
-                        <button class="btn btn-outline-primary btn-sm pull-xs-right">
-                            <i class="ion-heart"></i> 32
-                        </button>
-                    </div>
-                    <a href="" class="preview-link">
-                        <h1>
-                            The song you won't ever stop singing. No matter how hard you
-                            try.
-                        </h1>
-                        <p>This is the description for the post.</p>
-                        <span>Read more...</span>
-                        <ul class="tag-list">
-                            <li class="tag-default tag-pill tag-outline">Music</li>
-                            <li class="tag-default tag-pill tag-outline">Song</li>
-                        </ul>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>;
-*/
+    );
 }

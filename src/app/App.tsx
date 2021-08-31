@@ -10,6 +10,7 @@ import { Article, CreateArticle } from './article';
 import { Home } from './home';
 import { Feed } from './home/Feed';
 import { Login } from './login';
+import { Profile } from './profile';
 import { Register } from './register';
 import { Settings } from './settings';
 
@@ -27,6 +28,7 @@ export function App(): JSX.Element {
                     <Route path="/newpost" component={CreateArticle} />
                     <Route path="/login" component={Login} />
                     <Route path="/settings" component={Settings} />
+                    <Route path="/profile/:username" component={Profile} />
                     <Route>
                         <div className="container page">404, Not Found!</div>
                     </Route>
