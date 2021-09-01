@@ -1,7 +1,7 @@
 import { Err, Ok, Result } from '@hqoss/monads';
 
 import { UserService } from '../../interfaces';
-import { UserCreateInput } from '../user-create-input';
+import { UserCreateInput } from '../models';
 
 export class UserRegisterCommand {
     constructor(private readonly userService: UserService) {}

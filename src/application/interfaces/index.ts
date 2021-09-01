@@ -6,14 +6,14 @@ import { ObjectType } from 'simplytyped';
 
 import { Article, ArticleFindManyArgs, ArticleList } from '../article';
 import { Tag } from '../tag';
-import { UserCreateInput, UserRegistration, UserSettingsInput } from '../user';
+import { User, UserCreateInput, UserSettingsInput } from '../user';
 
 // Interfaces which we use in application
 
 export interface UserService {
     register(data: ObjectType<UserCreateInput>): Promise<void>;
-    getCurrentUser(): Promise<UserRegistration>; // todo: move to session service
-    updateCurrentUser(data: UserSettingsInput): Promise<UserRegistration>;
+    getCurrentUser(): Promise<User>;
+    updateCurrentUser(data: UserSettingsInput): Promise<User>;
     getProfile(name: string): Promise<Profile>;
 }
 

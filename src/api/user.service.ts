@@ -1,6 +1,6 @@
 import type { Interface } from '@libs/application';
 import { Profile } from '@libs/application/profile';
-import type { UserRegistration, UserSettingsInput } from '@libs/application/user';
+import type { User, UserSettingsInput } from '@libs/application/user';
 import ky from 'ky';
 import { inject } from 'njct';
 
@@ -31,7 +31,7 @@ export class UserService implements Interface.UserService {
         const url = `${this.config.apiBase}/users`;
         const result = await this.http
             .post(url, { json: { user } })
-            .json<{ user: UserRegistration }>();
+            .json<{ user: User }>();
         this.sessionService.update(result.user.token);
     }
 
@@ -43,7 +43,7 @@ export class UserService implements Interface.UserService {
         const result = await this.http
             .extend(this.authorization())
             .get(`${this.config.apiBase}/user`)
-            .json<{ user: UserRegistration }>();
+            .json<{ user: User }>();
         return result.user;
     }
 
@@ -64,7 +64,7 @@ export class UserService implements Interface.UserService {
                 },
             })
             .put(`${this.config.apiBase}/user`, { json: { user } })
-            .json<{ user: UserRegistration }>()
+            .json<{ user: User }>()
             .then(result => result.user);
     }
 

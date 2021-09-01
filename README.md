@@ -54,6 +54,7 @@ npm run dev
 -   use https://github.com/erictooth/react-stateful-tabs
 -   use 2 components for tabs do not use feed query param
 -   setIsLoading make as global indicator error and pending
+-   notification component https://www.tailwind-kit.com/components/alert https://tailwindow.github.io/component-tailwindcss/components/alert/alert-1/index.html https://tailwindow.github.io/component-tailwindcss/components/alert/alert-2/index.html
 
 ## Users
 

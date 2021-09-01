@@ -1,9 +1,11 @@
-// todo: rename
-export interface UserRegistration {
+/**
+ * Returns https://github.com/gothinkster/realworld/tree/master/api#users-for-authentication
+ */
+export interface User {
     bio: string;
     createdAt: string;
     email: string;
-    id: string;
+    id: number;
     image: string;
     token: string;
     updatedAt: string;
