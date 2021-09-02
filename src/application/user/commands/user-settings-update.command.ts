@@ -2,8 +2,7 @@ import { Err, Ok, Result } from '@hqoss/monads';
 import { inject } from 'njct';
 
 import { UserService } from '../../interfaces';
-import { User } from '../models';
-import { UserSettingsInput } from '../user-settings-input';
+import { User, UserSettingsInput } from '../models';
 
 export class UserSettingsUpdateCommand {
     // maybe create service for notify errors
