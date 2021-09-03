@@ -12,28 +12,28 @@ let articleService = mock<Interface.ArticleService>();
 let sessionService = mock<Interface.SessionService>();
 
 beforeEach(() => {
-    articleService = mock<Interface.ArticleService>();
-    sessionService = mock<Interface.SessionService>();
-    injector.provide('articleservice', () => articleService);
-    injector.provide('sessionservice', () => sessionService);
+  articleService = mock<Interface.ArticleService>();
+  sessionService = mock<Interface.SessionService>();
+  injector.provide('articleservice', () => articleService);
+  injector.provide('sessionservice', () => sessionService);
 
-    articleService.findMany.mockResolvedValue({ articles: [], articlesCount: 0 });
+  articleService.findMany.mockResolvedValue({ articles: [], articlesCount: 0 });
 });
 
 afterAll(() => {
-    injector.clear();
+  injector.clear();
 });
 
 it('renders app component', async () => {
-    const screen = render(<App />);
-    await waitFor(() => {
-        expect(screen.getByText('Home')).toBeInTheDocument();
-    });
+  const screen = render(<App />);
+  await waitFor(() => {
+    expect(screen.getByText('Home')).toBeInTheDocument();
+  });
 });
 
 it('renders all app html', async () => {
-    const screen = render(<App />);
-    await waitFor(() => {
-        expect(screen.baseElement.outerHTML).toBeTruthy();
-    });
+  const screen = render(<App />);
+  await waitFor(() => {
+    expect(screen.baseElement.outerHTML).toBeTruthy();
+  });
 });

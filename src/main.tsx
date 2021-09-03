@@ -2,11 +2,9 @@
 import './index.css';
 
 import { ArticleService, config, SessionService, UserService } from '@libs/api';
-import { Loader } from '@libs/ui/Loader';
 import { inject, injector } from 'njct';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { RecoilRoot } from 'recoil';
 
 import { App } from './app';
 
@@ -16,12 +14,4 @@ injector.provide('articleservice', () => inject.service(ArticleService));
 injector.provide('tagservice', () => inject.service(ArticleService));
 injector.provide('sessionservice', () => inject.service(SessionService));
 
-ReactDOM.render(
-    <React.StrictMode>
-        <RecoilRoot>
-            <App />
-            <Loader />
-        </RecoilRoot>
-    </React.StrictMode>,
-    document.querySelector('#app'),
-);
+ReactDOM.render(<App />, document.querySelector('#app'));

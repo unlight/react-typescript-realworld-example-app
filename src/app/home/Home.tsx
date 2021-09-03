@@ -6,15 +6,15 @@ import usePromise from 'react-use-promise';
 import { HomeView } from './HomeView';
 
 function useData() {
-    const [articleList] = usePromise(() => {
-        return new ArticleListHandler().execute();
-    }, []);
+  const [articleList] = usePromise(() => {
+    return new ArticleListHandler().execute();
+  }, []);
 
-    return { articleList };
+  return { articleList };
 }
 
 export function Home(props: RouteComponentProps): JSX.Element {
-    const { articleList } = useData();
+  const { articleList } = useData();
 
-    return <HomeView articles={articleList?.articles} />;
+  return <HomeView articles={articleList?.articles} />;
 }

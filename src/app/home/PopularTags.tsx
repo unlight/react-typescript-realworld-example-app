@@ -1,34 +1,28 @@
 import { TagListHandler } from '@libs/application/article/queries';
+import { Tag } from '@libs/application/tag';
 import React from 'react';
-import usePromise from 'react-use-promise';
+import { usePromise } from 'react-pending-resource';
 
-type PopularTagsProps = {};
-
-function useData() {
-    const [tagList] = usePromise(() => {
-        return new TagListHandler().execute();
-    }, []);
-
-    return { tagList };
-}
+type PopularTagsProps = {
+  tagList?: Tag[];
+};
 
 export function PopularTags(props: PopularTagsProps): JSX.Element {
-    const { tagList } = useData();
+  const tagList = usePromise(
+    'tags',
+    () => props.tagList ?? new TagListHandler().execute(),
+  );
 
-    return (
-        <div className="sidebar">
-            <p>Popular Tags</p>
-            <div className="tag-list">
-                {tagList ? (
-                    tagList.map(tag => (
-                        <a key={tag} href="" className="tag-pill tag-default">
-                            {tag}
-                        </a>
-                    ))
-                ) : (
-                    <p>Loading...</p>
-                )}
-            </div>
-        </div>
-    );
+  return (
+    <div className="sidebar">
+      <p>Popular Tags</p>
+      <div className="tag-list">
+        {tagList.map(tag => (
+          <a key={tag} href="" className="tag-pill tag-default">
+            {tag}
+          </a>
+        ))}
+      </div>
+    </div>
+  );
 }

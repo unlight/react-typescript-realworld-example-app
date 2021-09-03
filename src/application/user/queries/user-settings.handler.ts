@@ -5,17 +5,17 @@ import { inject } from 'njct';
 import { UserService } from '../../interfaces';
 
 export class UserSettingsHandler {
-    constructor(
-        private readonly userService: UserService = inject<UserService>('userservice'),
-    ) {}
+  constructor(
+    private readonly userService: UserService = inject<UserService>('userservice'),
+  ) {}
 
-    async execute() {
-        let result: Result<User, Error>;
-        try {
-            result = Ok(await this.userService.getCurrentUser());
-        } catch (error: any) {
-            result = Err(error);
-        }
-        return result;
+  async execute() {
+    let result: Result<User, Error>;
+    try {
+      result = Ok(await this.userService.getCurrentUser());
+    } catch (error: any) {
+      result = Err(error);
     }
+    return result;
+  }
 }

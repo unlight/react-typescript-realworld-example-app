@@ -3,16 +3,16 @@
 @tailwind utilities;
 
 body {
-    margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Ubuntu',
-        'Cantarell', 'Fira Sans', 'Droid Sans', sans-serif;
-    font-smoothing: auto;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Ubuntu',
+    'Cantarell', 'Fira Sans', 'Droid Sans', sans-serif;
+  font-smoothing: auto;
 }
 
 code {
-    font-family: source-code-pro, Menlo, Monaco, Consolas, monospace;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, monospace;
 }
 
 .container {
-    @apply max-w-screen-lg;
+  @apply max-w-screen-lg;
 }

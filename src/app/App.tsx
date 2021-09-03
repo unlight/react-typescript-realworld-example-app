@@ -2,10 +2,13 @@ import './App.css';
 
 import { Interface } from '@libs/application';
 import { Footer, Navbar } from '@libs/ui';
+import { Loader } from '@libs/ui/Loader';
 import { inject } from 'njct';
 import React from 'react';
 import { HashRouter, Route, Switch } from 'react-router-dom';
+import { RecoilRoot } from 'recoil';
 
+import { AppErrorBoundary } from './AppErrorBoundary';
 import { Article, CreateArticle } from './article';
 import { Home } from './home';
 import { Feed } from './home/Feed';
@@ -14,27 +17,32 @@ import { Profile } from './profile';
 import { Register } from './register';
 import { Settings } from './settings';
 
-export function App(): JSX.Element {
-    const user = inject<Interface.SessionService>('sessionservice').getUser();
-    return (
-        <>
-            <HashRouter>
-                <Navbar user={user} />
-                <Switch>
-                    <Route path="/" component={Home} exact />
-                    <Route path="/feed" component={Feed} exact />
-                    <Route path="/article/:slug" component={Article}></Route>
-                    <Route path="/register" component={Register} />
-                    <Route path="/newpost" component={CreateArticle} />
-                    <Route path="/login" component={Login} />
-                    <Route path="/settings" component={Settings} />
-                    <Route path="/profile/:username" component={Profile} />
-                    <Route>
-                        <div className="container page">404, Not Found!</div>
-                    </Route>
-                </Switch>
-                <Footer />
-            </HashRouter>
-        </>
-    );
+export function App() {
+  const user = inject<Interface.SessionService>('sessionservice').getUser();
+  return (
+    <React.StrictMode>
+      <RecoilRoot>
+        <AppErrorBoundary>
+          <HashRouter>
+            <Navbar user={user} />
+            <Switch>
+              <Route path="/" component={Home} exact />
+              <Route path="/feed" component={Feed} exact />
+              <Route path="/article/:slug" component={Article}></Route>
+              <Route path="/register" component={Register} />
+              <Route path="/newpost" component={CreateArticle} />
+              <Route path="/login" component={Login} />
+              <Route path="/settings" component={Settings} />
+              <Route path="/profile/:username" component={Profile} />
+              <Route>
+                <div className="container page">404, Not Found!</div>
+              </Route>
+            </Switch>
+            <Footer />
+          </HashRouter>
+        </AppErrorBoundary>
+        <Loader />
+      </RecoilRoot>
+    </React.StrictMode>
+  );
 }

@@ -12,68 +12,68 @@ import { useSetRecoilState } from 'recoil';
 import { CreateArticleView } from './CreateArticleView';
 
 function useData() {
-    const setIsLoading = useSetRecoilState(isLoading);
-    const {
-        register,
-        handleSubmit,
-        formState: { errors, isValid, isSubmitted },
-    } = useForm<ArticleCreateInput & { tagList: any }>({
-        resolver: classValidatorResolver(ArticleCreateInput),
-        reValidateMode: 'onBlur',
-        criteriaMode: 'all',
-    });
-    const [serverError, setServerError] = useState('');
+  const setIsLoading = useSetRecoilState(isLoading);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isValid, isSubmitted },
+  } = useForm<ArticleCreateInput & { tagList: any }>({
+    resolver: classValidatorResolver(ArticleCreateInput),
+    reValidateMode: 'onBlur',
+    criteriaMode: 'all',
+  });
+  const [serverError, setServerError] = useState('');
 
-    return {
-        register,
-        handleSubmit,
-        errors,
-        isValid,
-        isSubmitted,
-        serverError,
-        setServerError,
-        setIsLoading,
-    };
+  return {
+    register,
+    handleSubmit,
+    errors,
+    isValid,
+    isSubmitted,
+    serverError,
+    setServerError,
+    setIsLoading,
+  };
 }
 
 export function CreateArticle(): JSX.Element {
-    const sessionService = inject<Interface.SessionService>('sessionservice');
-    const history = useHistory();
-    const {
-        register,
-        handleSubmit,
-        errors,
-        isValid,
-        isSubmitted,
-        serverError,
-        setServerError,
-        setIsLoading,
-    } = useData();
+  const sessionService = inject<Interface.SessionService>('sessionservice');
+  const history = useHistory();
+  const {
+    register,
+    handleSubmit,
+    errors,
+    isValid,
+    isSubmitted,
+    serverError,
+    setServerError,
+    setIsLoading,
+  } = useData();
 
-    if (!sessionService.isLoggedIn()) {
-        return <Redirect to="/login" />;
+  if (!sessionService.isLoggedIn()) {
+    return <Redirect to="/login" />;
+  }
+
+  const onSubmit = handleSubmit(async data => {
+    setIsLoading(true);
+    const command = new ArticleCreateCommand();
+    const result = await command.execute(data);
+    setIsLoading(false);
+    if (result.isErr()) {
+      setServerError(result.unwrapErr().message);
+      return;
     }
+    const article = result.unwrap();
+    history.push(`/article/${article.slug}`);
+  });
 
-    const onSubmit = handleSubmit(async data => {
-        setIsLoading(true);
-        const command = new ArticleCreateCommand();
-        const result = await command.execute(data);
-        setIsLoading(false);
-        if (result.isErr()) {
-            setServerError(result.unwrapErr().message);
-            return;
-        }
-        const article = result.unwrap();
-        history.push(`/article/${article.slug}`);
-    });
-
-    return (
-        <CreateArticleView
-            onSubmit={onSubmit}
-            register={register}
-            errors={errors}
-            serverError={serverError}
-            disabled={isSubmitted && !isValid}
-        />
-    );
+  return (
+    <CreateArticleView
+      onSubmit={onSubmit}
+      register={register}
+      errors={errors}
+      serverError={serverError}
+      disabled={isSubmitted && !isValid}
+    />
+  );
 }
