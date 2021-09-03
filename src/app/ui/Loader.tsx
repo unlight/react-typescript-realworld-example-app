@@ -11,7 +11,11 @@ export const isLoading = atom({
 export function Loader(props: PropsWithChildren<LoaderProps>) {
   const showLoading = useRecoilValue(isLoading);
 
-  return showLoading ? (
+  return showLoading ? <Loading /> : null;
+}
+
+export function Loading() {
+  return (
     <div className="flex justify-center w-full h-full absolute inset-0 bg-opacity-25 bg-gray-500">
       <div className="flex space-x-1 text-sm text-gray-700 pt-10">
         <svg
@@ -31,5 +35,5 @@ export function Loader(props: PropsWithChildren<LoaderProps>) {
         <div>Loading ...</div>
       </div>
     </div>
-  ) : null;
+  );
 }
