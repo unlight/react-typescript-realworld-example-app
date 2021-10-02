@@ -47,7 +47,8 @@ npm run dev
 
 ## Todo
 
-- https://github.com/gothinkster/realworld-starter-kit/blob/master/FRONTEND_INSTRUCTIONS.md
+- how to toggle using usepromise
+- https://github.com/gothinkster/realworld/tree/main/documentation/docs/specs/frontend-specs
 - https://github.com/gothinkster/realworld/tree/master/api
 - react boundaries
 - use suspension

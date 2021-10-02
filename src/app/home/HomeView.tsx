@@ -1,6 +1,5 @@
 import { Article } from '@libs/application/article';
 import { Pagination } from '@libs/ui';
-import { Location } from 'history';
 import React, { Suspense } from 'react';
 import { NavLink } from 'react-router-dom';
 
@@ -13,6 +12,7 @@ type HomeViewProps = {
 
 export function HomeView(props: HomeViewProps): JSX.Element {
   const { articles } = props;
+
   return (
     <div className="home-page">
       {/*<div className="banner">

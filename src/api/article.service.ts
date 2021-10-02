@@ -66,12 +66,20 @@ export class ArticleService implements Interface.ArticleService, Interface.TagSe
       .json<ArticleList>();
   }
 
-  favorite(articleId: string): Promise<true> {
-    throw new Error('Method not implemented.');
+  async favorite(slug: string): Promise<Article> {
+    return await this.http
+      .extend(this.authorization())
+      .post(`${this.config.apiBase}/articles/${slug}/favorite`)
+      .json<ArticleEnvelope<Article>>()
+      .then(result => result.article);
   }
 
-  unfavorite(articleId: string): Promise<true> {
-    throw new Error('Method not implemented.');
+  async unfavorite(slug: string): Promise<Article> {
+    return await this.http
+      .extend(this.authorization())
+      .delete(`${this.config.apiBase}/articles/${slug}/favorite`)
+      .json<ArticleEnvelope<Article>>()
+      .then(result => result.article);
   }
 
   async feed(args: ArticleFindManyArgs): Promise<ArticleList> {

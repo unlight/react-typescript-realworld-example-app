@@ -31,8 +31,8 @@ export interface ArticleService {
   update(data: any): Promise<Article>;
   delete(data: any): Promise<void>;
   findMany(args?: ArticleFindManyArgs): Promise<ArticleList>;
-  favorite(articleId: string): Promise<true>;
-  unfavorite(articleId: string): Promise<true>;
+  favorite(articleId: string): Promise<Article>;
+  unfavorite(articleId: string): Promise<Article>;
   findOne(articleId: string): Promise<Article>;
   feed(args: ArticleFindManyArgs): Promise<ArticleList>;
 }
