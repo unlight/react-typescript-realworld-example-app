@@ -4,7 +4,7 @@ import { Interface } from '@libs/application';
 import { Footer, Loader, Loading, Navbar } from '@libs/ui';
 import { inject } from 'njct';
 import React, { Suspense } from 'react';
-import { HashRouter, Route, Switch } from 'react-router-dom';
+import { HashRouter, Route, Routes } from 'react-router-dom';
 import { RecoilRoot } from 'recoil';
 
 import { AppErrorBoundary } from './AppErrorBoundary';
@@ -15,7 +15,11 @@ import { Login } from './login';
 import { Register } from './register';
 import { Settings } from './settings';
 
-const Profile = React.lazy(() => import('./profile'));
+const Profile = (
+  <Suspense fallback={Loading}>
+    {React.createElement(React.lazy(() => import('./profile')))}
+  </Suspense>
+);
 
 export function App() {
   const user = inject<Interface.SessionService>('sessionservice').getUser();
@@ -25,21 +29,20 @@ export function App() {
         <AppErrorBoundary>
           <HashRouter>
             <Navbar user={user} />
-            <Suspense fallback={Loading}>
-              <Switch>
-                <Route path="/" component={Home} exact />
-                <Route path="/feed" component={Feed} exact />
-                <Route path="/article/:slug" component={Article}></Route>
-                <Route path="/register" component={Register} />
-                <Route path="/newpost" component={CreateArticle} />
-                <Route path="/login" component={Login} />
-                <Route path="/settings" component={Settings} />
-                <Route path="/profile/:username" component={Profile} />
-                <Route>
-                  <div className="container page">404, Not Found!</div>
-                </Route>
-              </Switch>
-            </Suspense>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/feed" element={<Feed />} />
+              <Route path="/article/:slug" element={<Article />}></Route>
+              <Route path="/register" element={<Register />} />
+              <Route path="/newpost" element={<CreateArticle />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/settings" element={<Settings />} />
+              <Route path="/profile/:username" element={Profile} />
+              <Route
+                path="*"
+                element={<div className="container page">404, Not Found!</div>}
+              />
+            </Routes>
             <Footer />
           </HashRouter>
         </AppErrorBoundary>

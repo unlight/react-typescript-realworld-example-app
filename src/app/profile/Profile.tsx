@@ -10,7 +10,7 @@ import { ArticlePreview } from '../article/Article';
 
 function useProfile() {
   const setIsLoading = useSetRecoilState(isLoading);
-  const { username } = useParams<PlainObject>();
+  const { username } = useParams();
   const [serverError, setServerError] = useState('');
   const [{ profile, articleList }, setProfile] = useState<{
     profile?: Interface.Profile;
@@ -20,7 +20,7 @@ function useProfile() {
   useEffect(() => {
     setIsLoading(true);
     void (async () => {
-      const result = await new GetProfileHandler().execute(username);
+      const result = await new GetProfileHandler().execute(username!);
       setIsLoading(false);
       if (result.isErr()) {
         return setServerError(result.unwrapErr().message);

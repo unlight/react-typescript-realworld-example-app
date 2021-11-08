@@ -65,7 +65,7 @@ function Button({
   toggleCallback,
   articleReader,
   favoritesCount,
-}) {
+}: any) {
   const article = articleReader();
   return (
     <button className={favoriteButtonClass} onClick={toggleCallback}>
@@ -74,7 +74,7 @@ function Button({
   );
 }
 
-function ButtonSuspensed({ favoritesCount }) {
+function ButtonSuspensed({ favoritesCount }: any) {
   return (
     <button className="btn btn-sm pull-xs-right" disabled>
       <i className="ion-heart"></i> {favoritesCount}

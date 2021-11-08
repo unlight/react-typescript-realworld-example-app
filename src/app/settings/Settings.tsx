@@ -7,7 +7,6 @@ import { isLoading } from '@libs/ui/Loader';
 import { inject } from 'njct';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useHistory } from 'react-router-dom';
 import usePromise from 'react-use-promise';
 import { useSetRecoilState } from 'recoil';
 

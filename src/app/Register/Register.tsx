@@ -5,7 +5,7 @@ import { UserRegisterCommand } from '@libs/application/user/commands';
 import { inject } from 'njct';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Redirect } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 
 import { RegisterView } from './RegisterView';
 
@@ -49,7 +49,7 @@ export function Register(): JSX.Element {
   const { onSubmit, errors, register, serverErrorMessage, isLoggedIn } = useData();
 
   if (isLoggedIn) {
-    return <Redirect to="/" />;
+    return <Navigate to="/home" />;
   }
 
   return (

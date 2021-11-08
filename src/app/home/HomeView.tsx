@@ -27,17 +27,12 @@ export function HomeView(props: HomeViewProps): JSX.Element {
             <div className="feed-toggle">
               <ul className="nav nav-pills outline-active">
                 <li className="nav-item">
-                  <NavLink
-                    to="/feed"
-                    activeClassName="active"
-                    className="nav-link"
-                    exact
-                  >
+                  <NavLink to="/feed" className="nav-link">
                     Your Feed
                   </NavLink>
                 </li>
                 <li className="nav-item">
-                  <NavLink activeClassName="active" to="/" className="nav-link" exact>
+                  <NavLink to="/" className="nav-link">
                     Global Feed
                   </NavLink>
                 </li>

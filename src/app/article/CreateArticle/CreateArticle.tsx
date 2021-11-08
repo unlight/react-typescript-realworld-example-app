@@ -6,7 +6,7 @@ import { isLoading } from '@libs/ui/Loader';
 import { inject } from 'njct';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Redirect, useHistory } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 import { useSetRecoilState } from 'recoil';
 
 import { CreateArticleView } from './CreateArticleView';
@@ -38,7 +38,7 @@ function useData() {
 
 export function CreateArticle(): JSX.Element {
   const sessionService = inject<Interface.SessionService>('sessionservice');
-  const history = useHistory();
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -51,7 +51,7 @@ export function CreateArticle(): JSX.Element {
   } = useData();
 
   if (!sessionService.isLoggedIn()) {
-    return <Redirect to="/login" />;
+    return <Navigate to="/login" />;
   }
 
   const onSubmit = handleSubmit(async data => {
@@ -64,7 +64,7 @@ export function CreateArticle(): JSX.Element {
       return;
     }
     const article = result.unwrap();
-    history.push(`/article/${article.slug}`);
+    navigate(`/article/${article.slug}`);
   });
 
   return (

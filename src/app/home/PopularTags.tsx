@@ -1,17 +1,16 @@
 import { TagListHandler } from '@libs/application/article/queries';
 import { Tag } from '@libs/application/tag';
 import React from 'react';
-import { usePromise } from 'react-pending-resource';
+import { suspend } from 'suspend-react';
 
 type PopularTagsProps = {
   tagList?: Tag[];
 };
 
 export function PopularTags(props: PopularTagsProps): JSX.Element {
-  const tagList = usePromise(
-    'tags',
-    () => props.tagList ?? new TagListHandler().execute(),
-  );
+  const tagList = suspend(async () => {
+    return props.tagList ?? new TagListHandler().execute();
+  }, []);
 
   return (
     <div className="sidebar">
