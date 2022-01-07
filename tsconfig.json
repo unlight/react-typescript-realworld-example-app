@@ -28,8 +28,8 @@
     "paths": {
       "@libs/application": ["src/application/index.ts"],
       "@libs/application/*": ["src/application/*"],
-      "@libs/ui": ["src/app/ui/index.ts"],
-      "@libs/ui/*": ["src/app/ui/*"],
+      "@libs/components": ["src/components/index.ts"],
+      "@libs/components/*": ["src/components/*"],
       "@libs/api": ["src/api/index.ts"],
       "@libs/api/*": ["src/api/*"],
       "@app_modules/*": ["src/app_modules/*"]

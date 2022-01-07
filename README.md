@@ -47,6 +47,7 @@ npm run dev
 
 ## Todo
 
+- switch to react location
 - how to toggle using usepromise
 - https://github.com/gothinkster/realworld/tree/main/documentation/docs/specs/frontend-specs
 - https://github.com/gothinkster/realworld/tree/master/api

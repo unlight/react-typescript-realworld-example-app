@@ -1,10 +1,9 @@
 import { Interface } from '@libs/application';
 import { GetProfileHandler } from '@libs/application/profile';
-import { isLoading } from '@libs/ui/Loader';
+import { isLoading } from '@libs/components/Loader';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useSetRecoilState } from 'recoil';
-import { PlainObject } from 'simplytyped';
 
 import { ArticlePreview } from '../article/Article';
 

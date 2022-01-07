@@ -3,7 +3,7 @@ import { Interface } from '@libs/application';
 import { UserSettingsInput } from '@libs/application/user';
 import { UserSettingsUpdateCommand } from '@libs/application/user/commands';
 import { UserSettingsHandler } from '@libs/application/user/queries';
-import { isLoading } from '@libs/ui/Loader';
+import { isLoading } from '@libs/components/Loader';
 import { inject } from 'njct';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';

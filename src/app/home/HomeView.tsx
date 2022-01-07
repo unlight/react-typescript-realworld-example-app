@@ -1,5 +1,5 @@
 import { Article } from '@libs/application/article';
-import { Pagination } from '@libs/ui';
+import { Pagination } from '@libs/components';
 import React, { Suspense } from 'react';
 import { NavLink } from 'react-router-dom';
 

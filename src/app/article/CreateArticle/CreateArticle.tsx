@@ -2,7 +2,7 @@ import { classValidatorResolver } from '@hookform/resolvers/class-validator';
 import { Interface } from '@libs/application';
 import { ArticleCreateInput } from '@libs/application/article';
 import { ArticleCreateCommand } from '@libs/application/article/commands/article-create.command';
-import { isLoading } from '@libs/ui/Loader';
+import { isLoading } from '@libs/components/Loader';
 import { inject } from 'njct';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';

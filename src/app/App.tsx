@@ -1,7 +1,7 @@
 import './App.css';
 
 import { Interface } from '@libs/application';
-import { Footer, Loader, Loading, Navbar } from '@libs/ui';
+import { Footer, Loader, Loading, Navbar } from '@libs/components';
 import { inject } from 'njct';
 import React, { Suspense } from 'react';
 import { HashRouter, Route, Routes } from 'react-router-dom';
