@@ -41,7 +41,7 @@ npm run dev
 ## Resources
 
 - https://demo.realworld.io/
-- https://github.com/gothinkster/realworld/tree/master/spec#frontend-specs
+- https://realworld-docs.netlify.app/docs/specs/backend-specs/endpoints
 - https://github.com/recoil-world/react-recoil-realworld-example-app
 - https://gist.github.com/unlight/68a69ba19c06512f18f254ff702a9e38 - frontend architecture layers
 
@@ -49,7 +49,7 @@ npm run dev
 
 - switch to react location
 - how to toggle using usepromise
-- https://github.com/gothinkster/realworld/tree/main/documentation/docs/specs/frontend-specs
+- https://realworld-docs.netlify.app/docs/specs/backend-specs/endpoints
 - https://github.com/gothinkster/realworld/tree/master/api
 - react boundaries
 - use suspension
@@ -62,6 +62,6 @@ npm run dev
 
 ## Users
 
+- gymynaxeru@mailinator.com
 - tetikokucy@mailinator.com
 - mynesy@mailinator.com
-- gymynaxeru@mailinator.com

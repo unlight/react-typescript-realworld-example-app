@@ -2,9 +2,9 @@ import { Interface } from '@libs/application';
 import { Article as SingleArticle } from '@libs/application/article';
 import { inject } from 'njct';
 import React, { useCallback, useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 
 import { ArticleView } from './ArticleView';
-import { useParams } from 'react-router-dom';
 
 function useData(parameters: { slug: string }) {
   const { slug } = parameters;

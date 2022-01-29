@@ -23,7 +23,7 @@ export function Navbar(props: NavbarProps): JSX.Element {
               <NavItem name={user.username} href={`/profile/${user.username}`} />
             </>
           ) : (
-            <NavItem name="Sign up" href="/register" />
+            <NavItem name="Sign In" href="/login" />
           )}
         </ul>
       </div>

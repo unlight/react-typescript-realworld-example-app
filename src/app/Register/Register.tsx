@@ -26,10 +26,10 @@ function useData() {
     const command = new UserRegisterCommand(userService);
     const result = await command.execute(data);
     result.match({
-      ok: () => {
+      Ok: () => {
         document.location = '/';
       },
-      err: error => {
+      Err: error => {
         setServerErrorMessage(error.message);
       },
     });

@@ -1,60 +1,86 @@
 import { Interface } from '@libs/application';
-import { GetProfileHandler } from '@libs/application/profile';
+import {
+  FollowUserCommand,
+  GetProfileHandler,
+  Profile,
+} from '@libs/application/profile';
+import { UnfollowUserCommand } from '@libs/application/profile/commands/unfollow-user.command';
 import { isLoading } from '@libs/components/Loader';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useSetRecoilState } from 'recoil';
+import { Result } from 'rsts';
 
 import { ArticlePreview } from '../article/Article';
+import { UserInfo } from './UserInfo';
 
 function useProfile() {
   const setIsLoading = useSetRecoilState(isLoading);
   const { username } = useParams();
   const [serverError, setServerError] = useState('');
-  const [{ profile, articleList }, setProfile] = useState<{
+  const [{ profile, articleList, toggleFollowInProgress }, setProfile] = useState<{
     profile?: Interface.Profile;
     articleList?: Interface.ArticleList;
-  }>({});
+    toggleFollowInProgress: boolean;
+  }>({
+    toggleFollowInProgress: false,
+  });
 
   useEffect(() => {
     setIsLoading(true);
     void (async () => {
+      // todo: Maybe use https://github.com/rauldeheer/use-async-effect
       const result = await new GetProfileHandler().execute(username!);
       setIsLoading(false);
       if (result.isErr()) {
         return setServerError(result.unwrapErr().message);
       }
       const { profile, articleList } = result.unwrap();
-      setProfile({ profile, articleList });
+      setProfile({ profile, articleList, toggleFollowInProgress });
     })();
-  }, [username, setIsLoading]);
+  }, [username, setIsLoading, toggleFollowInProgress]);
 
-  return { serverError, profile, articleList };
+  const toggleFollow = useCallback(async () => {
+    const name = profile?.username;
+    if (name) {
+      setProfile({
+        profile,
+        articleList,
+        toggleFollowInProgress: true,
+      });
+
+      let result: Result<Profile, Error>;
+      if (profile.following) {
+        const command = new UnfollowUserCommand();
+        result = await command.execute(name);
+      } else {
+        const command = new FollowUserCommand();
+        result = await command.execute(name);
+      }
+
+      setProfile({
+        profile: result.unwrap(),
+        articleList,
+        toggleFollowInProgress: false,
+      });
+    }
+  }, [profile, articleList]);
+
+  return { serverError, profile, articleList, toggleFollow, toggleFollowInProgress };
 }
 
 export function Profile() {
-  const { profile, articleList, serverError } = useProfile();
+  const { profile, articleList, serverError, toggleFollow, toggleFollowInProgress } =
+    useProfile();
 
   return (
     <div className="profile-page">
       {profile && (
-        <div className="user-info">
-          <div className="container">
-            <div className="row">
-              <div className="col-xs-12 col-md-10 offset-md-1">
-                {profile.image && (
-                  <img src={profile.image} className="user-img inline-block" />
-                )}
-                <h4>{profile.username}</h4>
-                {profile.bio && <p>{profile.bio}</p>}
-                <button className="btn btn-sm btn-outline-secondary action-btn">
-                  <i className="ion-plus-round"></i>
-                  &nbsp; Follow {profile.username}
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
+        <UserInfo
+          profile={profile}
+          toggleFollow={toggleFollow}
+          disableToggleFollow={toggleFollowInProgress}
+        />
       )}
 
       <div className="container">
@@ -75,10 +101,9 @@ export function Profile() {
               </ul>
             </div>
 
-            {articleList &&
-              articleList.articles.map(article => (
-                <ArticlePreview article={article} key={article.slug} />
-              ))}
+            {articleList?.articles.map(article => (
+              <ArticlePreview article={article} key={article.slug} />
+            ))}
           </div>
         </div>
       </div>

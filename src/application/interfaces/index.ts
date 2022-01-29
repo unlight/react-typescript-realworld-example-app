@@ -1,10 +1,10 @@
 /**
  * Input/Output Ports
  */
-import { Profile } from '@libs/application/profile';
 import { ObjectType } from 'simplytyped';
 
 import { Article, ArticleFindManyArgs, ArticleList } from '../article';
+import { Profile } from '../profile';
 import { Tag } from '../tag';
 import { User, UserCreateInput, UserSettingsInput } from '../user';
 
@@ -15,6 +15,8 @@ export interface UserService {
   getCurrentUser(): Promise<User>;
   updateCurrentUser(data: UserSettingsInput): Promise<User>;
   getProfile(name: string): Promise<Profile>;
+  followUser(username: string): Promise<Profile>;
+  unfollowUser(username: string): Promise<Profile>;
 }
 
 export interface SessionService {
@@ -41,4 +43,5 @@ export interface TagService {
   getAllTags(): Promise<Tag[]>;
 }
 
-export type { ArticleList, Profile };
+export type { ArticleList } from '../article';
+export type { Profile } from '@libs/application/profile';

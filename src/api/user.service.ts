@@ -55,7 +55,7 @@ export class UserService implements Interface.UserService {
               if (!response.ok) {
                 const code = response.status;
                 const { errors } = await response.json();
-                return Promise.reject({ code, errors });
+                throw { code, errors };
               }
             },
           ],
@@ -68,7 +68,24 @@ export class UserService implements Interface.UserService {
 
   async getProfile(name: string) {
     const result = await this.http
+      .extend(this.authorization())
       .get(`${this.config.apiBase}/profiles/${name}`)
+      .json<{ profile: Profile }>();
+    return result.profile;
+  }
+
+  async followUser(name: string) {
+    const result = await this.http
+      .extend(this.authorization())
+      .post(`${this.config.apiBase}/profiles/${name}/follow`)
+      .json<{ profile: Profile }>();
+    return result.profile;
+  }
+
+  async unfollowUser(name: string) {
+    const result = await this.http
+      .extend(this.authorization())
+      .delete(`${this.config.apiBase}/profiles/${name}/follow`)
       .json<{ profile: Profile }>();
     return result.profile;
   }

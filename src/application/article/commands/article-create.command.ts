@@ -1,5 +1,5 @@
-import { Err, Ok, Result } from '@hqoss/monads';
 import { inject } from 'njct';
+import { Err, Ok, Result } from 'rsts';
 
 import { Interface } from '../..';
 import { Article, ArticleCreateInput } from '..';

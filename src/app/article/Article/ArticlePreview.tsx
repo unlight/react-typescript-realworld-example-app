@@ -1,6 +1,7 @@
 import { Article } from '@libs/application/article';
 import classNames from 'clsx';
 import React, { Suspense } from 'react';
+import { Link } from 'react-router-dom';
 
 import { useTogglefavoriteArticle } from './use-toggle-favorite-article.hook';
 
@@ -9,7 +10,6 @@ type ArticlePreviewProps = {
 };
 
 export function ArticlePreview(props: ArticlePreviewProps): JSX.Element {
-  console.log('ArticlePreview', 1);
   const { author, description, title, slug, createdAt } = props.article;
   const { toggleCallback, articleReader } = useTogglefavoriteArticle(
     slug,
@@ -35,9 +35,9 @@ export function ArticlePreview(props: ArticlePreviewProps): JSX.Element {
           <img src={author.image} />
         </a>
         <div className="info">
-          <a href="" className="author">
+          <Link to={`/profile/${author.username}`} className="author">
             {author.username}
-          </a>
+          </Link>
           <span className="date">{createdAt}</span>
         </div>
         <Suspense

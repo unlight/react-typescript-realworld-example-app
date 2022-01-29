@@ -1,4 +1,4 @@
-import { Err, Ok, Result } from '@hqoss/monads';
+import { Err, Ok, Result } from 'rsts';
 
 import { UserService } from '../../interfaces';
 import { UserCreateInput } from '../models';

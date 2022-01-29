@@ -35,8 +35,8 @@ function useSettings() {
     const result = await new UserSettingsUpdateCommand().execute(data);
     setIsLoading(false);
     if (result.isErr()) {
-      const { code } = result.unwrapErr();
-      setServerError(`Failed to update settings, error code ${code}`);
+      const { message } = result.unwrapErr();
+      setServerError(`Failed to update settings, error message ${message}`);
     }
   });
 
