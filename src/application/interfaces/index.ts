@@ -3,7 +3,7 @@
  */
 import { ObjectType } from 'simplytyped';
 
-import { Article, ArticleFindManyArgs, ArticleList } from '../article';
+import { ArticleFindManyArgs, ArticleList, SingleArticle } from '../article';
 import { Profile } from '../profile';
 import { Tag } from '../tag';
 import { User, UserCreateInput, UserSettingsInput } from '../user';
@@ -29,13 +29,13 @@ export interface SessionService {
 }
 
 export interface ArticleService {
-  create(data: any): Promise<Article>;
-  update(data: any): Promise<Article>;
+  create(data: any): Promise<SingleArticle>;
+  update(data: any): Promise<SingleArticle>;
   delete(data: any): Promise<void>;
   findMany(args?: ArticleFindManyArgs): Promise<ArticleList>;
-  favorite(articleId: string): Promise<Article>;
-  unfavorite(articleId: string): Promise<Article>;
-  findOne(articleId: string): Promise<Article>;
+  favorite(articleId: string): Promise<SingleArticle>;
+  unfavorite(articleId: string): Promise<SingleArticle>;
+  findOne(articleId: string): Promise<SingleArticle>;
   feed(args: ArticleFindManyArgs): Promise<ArticleList>;
 }
 

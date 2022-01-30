@@ -1,4 +1,5 @@
 import { Interface } from '@libs/application';
+import { ToggleFollowButton } from '@libs/components';
 import React from 'react';
 
 export function UserInfo({
@@ -20,14 +21,12 @@ export function UserInfo({
             )}
             <h4>{profile.username}</h4>
             {profile.bio && <p>{profile.bio}</p>}
-            <button
-              className="btn btn-sm btn-outline-secondary action-btn"
-              onClick={toggleFollow}
+            <ToggleFollowButton
+              toggleFollow={toggleFollow}
               disabled={disableToggleFollow}
-            >
-              <i className="ion-plus-round"></i>
-              &nbsp; {profile.following ? 'Unfollow' : 'Follow'} {profile.username}
-            </button>
+              following={profile.following}
+              username={profile.username}
+            />
           </div>
         </div>
       </div>

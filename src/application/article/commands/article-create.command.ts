@@ -2,7 +2,7 @@ import { inject } from 'njct';
 import { Err, Ok, Result } from 'rsts';
 
 import { Interface } from '../..';
-import { Article, ArticleCreateInput } from '..';
+import { ArticleCreateInput, SingleArticle } from '..';
 
 export class ArticleCreateCommand {
   constructor(
@@ -14,8 +14,8 @@ export class ArticleCreateCommand {
     ),
   ) {}
 
-  async execute(data: ArticleCreateInput): Promise<Result<Article, Error>> {
-    let result: Result<Article, Error>;
+  async execute(data: ArticleCreateInput): Promise<Result<SingleArticle, Error>> {
+    let result: Result<SingleArticle, Error>;
     if (!this.sessionService.isLoggedIn()) {
       return Err(new Error('Unauthorized'));
     }

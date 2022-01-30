@@ -1,5 +1,5 @@
 import { Interface } from '@libs/application';
-import { Article as SingleArticle } from '@libs/application/article';
+import { SingleArticle as SingleArticle } from '@libs/application/article';
 import { inject } from 'njct';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
@@ -26,9 +26,9 @@ function useData(parameters: { slug: string }) {
   return { article };
 }
 
-export function Article(): JSX.Element {
+export function Article(): JSX.Element | null {
   const { slug } = useParams();
   const { article } = useData({ slug: slug! });
 
-  return <ArticleView article={article} />;
+  return article ? <ArticleView article={article} /> : null;
 }

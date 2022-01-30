@@ -1,6 +1,6 @@
-import { Article } from './article';
 import type { ArticleCreateInput } from './article-create-input';
+import { SingleArticle } from './single-article';
 
-export interface ArticleEnvelope<T = ArticleCreateInput | Article> {
+export interface ArticleEnvelope<T = ArticleCreateInput | SingleArticle> {
   article: T;
 }

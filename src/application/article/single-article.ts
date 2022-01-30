@@ -1,4 +1,4 @@
-export interface Article {
+export interface SingleArticle {
   slug: string;
   title: string;
   description: string;
@@ -13,5 +13,5 @@ export interface Article {
     following: boolean;
   };
   favorited: boolean;
-  favoritesCount: boolean;
+  favoritesCount: number;
 }

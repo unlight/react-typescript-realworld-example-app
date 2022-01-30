@@ -1,6 +1,6 @@
-import { Article } from './article';
+import { SingleArticle } from './single-article';
 
 export interface ArticleList {
-  articles: Article[];
+  articles: SingleArticle[];
   articlesCount: number;
 }

@@ -1,4 +1,4 @@
-import { Article } from '@libs/application/article';
+import { SingleArticle } from '@libs/application/article';
 import { Pagination } from '@libs/components';
 import React, { Suspense } from 'react';
 import { NavLink } from 'react-router-dom';
@@ -7,7 +7,7 @@ import { ArticlePreview } from '../article/Article';
 import { PopularTags } from './PopularTags';
 
 type HomeViewProps = {
-  articles?: Article[];
+  articles?: SingleArticle[];
 };
 
 export function HomeView(props: HomeViewProps): JSX.Element {

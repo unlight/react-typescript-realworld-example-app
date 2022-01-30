@@ -1,10 +1,10 @@
 import type { Interface } from '@libs/application';
 import {
-  Article,
   ArticleCreateInput,
   ArticleEnvelope,
   ArticleFindManyArgs,
   ArticleList,
+  SingleArticle,
 } from '@libs/application/article';
 import { Tag } from '@libs/application/tag';
 import ky from 'ky';
@@ -30,23 +30,23 @@ export class ArticleService implements Interface.ArticleService, Interface.TagSe
     private readonly config: AppConfig = inject('config'),
   ) {}
 
-  async create(article: ArticleCreateInput): Promise<Article> {
+  async create(article: ArticleCreateInput): Promise<SingleArticle> {
     const url = `${this.config.apiBase}/articles`;
     const articleEnvelope = await this.http
       .extend(this.authorization())
       .post(url, { json: { article } })
-      .json<ArticleEnvelope<Article>>();
+      .json<ArticleEnvelope<SingleArticle>>();
     return articleEnvelope.article;
   }
 
-  async findOne(slug: string): Promise<Article> {
+  async findOne(slug: string): Promise<SingleArticle> {
     const envelope = await this.http
       .get(`${this.config.apiBase}/articles/${slug}`)
-      .json<ArticleEnvelope<Article>>();
+      .json<ArticleEnvelope<SingleArticle>>();
     return envelope.article;
   }
 
-  update(data: any): Promise<Article> {
+  update(data: any): Promise<SingleArticle> {
     throw new Error('Method not implemented.');
   }
 
@@ -66,19 +66,19 @@ export class ArticleService implements Interface.ArticleService, Interface.TagSe
       .json<ArticleList>();
   }
 
-  async favorite(slug: string): Promise<Article> {
+  async favorite(slug: string): Promise<SingleArticle> {
     return await this.http
       .extend(this.authorization())
       .post(`${this.config.apiBase}/articles/${slug}/favorite`)
-      .json<ArticleEnvelope<Article>>()
+      .json<ArticleEnvelope<SingleArticle>>()
       .then(result => result.article);
   }
 
-  async unfavorite(slug: string): Promise<Article> {
+  async unfavorite(slug: string): Promise<SingleArticle> {
     return await this.http
       .extend(this.authorization())
       .delete(`${this.config.apiBase}/articles/${slug}/favorite`)
-      .json<ArticleEnvelope<Article>>()
+      .json<ArticleEnvelope<SingleArticle>>()
       .then(result => result.article);
   }
 
