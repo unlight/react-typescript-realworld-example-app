@@ -10,7 +10,7 @@ const tokenKey = 'user_token_v1';
 
 export class SessionService implements Interface.SessionService {
   constructor(
-    private readonly storage: Storage = inject('Storage', () => localStorage),
+    private readonly storage: Storage = inject('storage', () => localStorage),
     private readonly http = inject('httpclient', () => ky),
     private readonly config: AppConfig = inject('config'),
   ) {}

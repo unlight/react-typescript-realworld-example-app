@@ -29,7 +29,7 @@ For more information on how to this works with other frontends/backends, head ov
 ### Architecture notes
 
 - use case it is command in application/feature/commands
-- src/ui: reusable components
+- src/components: reusable ui components
 
 ## Getting started
 

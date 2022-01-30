@@ -6,17 +6,26 @@ import {
 } from '@libs/application/profile';
 import { UnfollowUserCommand } from '@libs/application/profile/commands/unfollow-user.command';
 import { isLoading } from '@libs/components/Loader';
+import { useRequest } from 'ahooks';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useSetRecoilState } from 'recoil';
-import { Result } from 'rsts';
+import { Ok, Result } from 'rsts';
 
 import { ArticlePreview } from '../article/Article';
 import { UserInfo } from './UserInfo';
 
+async function fetchProfile(name: string) {
+  const result = await new GetProfileHandler().execute(name);
+  if (result.isErr()) {
+    throw new Error('Fetch profile error');
+  }
+  return result.unwrap();
+}
+
 function useProfile() {
   const setIsLoading = useSetRecoilState(isLoading);
-  const { username } = useParams();
+  const { username } = useParams() as { username: string };
   const [serverError, setServerError] = useState('');
   const [{ profile, articleList, toggleFollowInProgress }, setProfile] = useState<{
     profile?: Interface.Profile;
@@ -26,19 +35,29 @@ function useProfile() {
     toggleFollowInProgress: false,
   });
 
-  useEffect(() => {
-    setIsLoading(true);
-    void (async () => {
-      // todo: Maybe use https://github.com/rauldeheer/use-async-effect
-      const result = await new GetProfileHandler().execute(username!);
+  const { run } = useRequest(fetchProfile, {
+    manual: true,
+    onBefore: () => {
+      setIsLoading(true);
+    },
+    onSuccess: data => {
+      setProfile({
+        profile: data.profile,
+        articleList: data.articleList,
+        toggleFollowInProgress,
+      });
+    },
+    onError: error => {
+      setServerError(error.message);
+    },
+    onFinally: () => {
       setIsLoading(false);
-      if (result.isErr()) {
-        return setServerError(result.unwrapErr().message);
-      }
-      const { profile, articleList } = result.unwrap();
-      setProfile({ profile, articleList, toggleFollowInProgress });
-    })();
-  }, [username, setIsLoading, toggleFollowInProgress]);
+    },
+  });
+
+  useEffect(() => {
+    run(username);
+  }, [run, username]);
 
   const toggleFollow = useCallback(async () => {
     const name = profile?.username;
@@ -75,6 +94,7 @@ export function Profile() {
 
   return (
     <div className="profile-page">
+      {serverError && <p className="error-messages my-4">{serverError}</p>}
       {profile && (
         <UserInfo
           profile={profile}
