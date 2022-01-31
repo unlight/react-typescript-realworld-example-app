@@ -1,19 +1,24 @@
 import { ArticleFeedHandler } from '@libs/application/article/queries';
+import { useRequest } from 'ahooks';
 import React from 'react';
-import usePromise from 'react-use-promise';
 
 import { HomeView } from './HomeView';
 
-function useData() {
-  const [articleList] = usePromise(() => {
-    return new ArticleFeedHandler().execute();
-  }, []);
+function useFeed() {
+  const { data: articleList } = useRequest(async () => {
+    const command = new ArticleFeedHandler();
+    return await command.execute();
+  });
 
   return { articleList };
 }
 
-export function Feed(): JSX.Element {
-  const { articleList } = useData();
+export function Feed(): JSX.Element | null {
+  const { articleList } = useFeed();
 
-  return <HomeView articles={articleList?.articles} />;
+  if (!articleList) {
+    return null;
+  }
+
+  return <HomeView articles={articleList.articles} />;
 }

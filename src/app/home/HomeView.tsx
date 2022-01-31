@@ -7,7 +7,7 @@ import { ArticlePreview } from '../article/Article';
 import { PopularTags } from './PopularTags';
 
 type HomeViewProps = {
-  articles?: SingleArticle[];
+  articles: SingleArticle[];
 };
 
 export function HomeView(props: HomeViewProps): JSX.Element {
@@ -38,14 +38,9 @@ export function HomeView(props: HomeViewProps): JSX.Element {
                 </li>
               </ul>
             </div>
-            {articles ? (
-              articles.map(article => (
-                <ArticlePreview key={article.slug} article={article} />
-              ))
-            ) : (
-              <p className="text-center">Loading...</p>
-            )}
-
+            {articles.map(article => (
+              <ArticlePreview key={article.slug} article={article} />
+            ))}
             <Pagination />
           </div>
 

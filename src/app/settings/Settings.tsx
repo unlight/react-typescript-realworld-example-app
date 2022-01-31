@@ -4,19 +4,31 @@ import { UserSettingsInput } from '@libs/application/user';
 import { UserSettingsUpdateCommand } from '@libs/application/user/commands';
 import { UserSettingsHandler } from '@libs/application/user/queries';
 import { isLoading } from '@libs/components/Loader';
+import { useRequest } from 'ahooks';
 import { inject } from 'njct';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import usePromise from 'react-use-promise';
 import { useSetRecoilState } from 'recoil';
 
 import { SettingsView } from './SettingsView';
 
+async function requestSettings() {
+  const command = new UserSettingsHandler();
+  const result = await command.execute();
+  return result.unwrap();
+}
+
 function useSettings() {
   const setIsLoading = useSetRecoilState(isLoading);
-  const [result] = usePromise(() => {
-    return new UserSettingsHandler().execute();
-  }, []);
+  const { runAsync, data: userSettings } = useRequest(requestSettings, {
+    manual: true,
+    onBefore: () => {
+      setIsLoading(true);
+    },
+    onFinally: () => {
+      setIsLoading(false);
+    },
+  });
   const {
     setError,
     register,
@@ -41,11 +53,10 @@ function useSettings() {
   });
 
   useEffect(() => {
-    setIsLoading(!result);
-    if (result?.isOk()) {
-      reset(result.unwrap());
-    }
-  }, [reset, result, setIsLoading]);
+    runAsync().then(userSettings => {
+      reset(userSettings);
+    });
+  }, [runAsync, reset]);
 
   const logout = useCallback(async () => {
     const sessionService = inject<SessionService>('sessionservice');
@@ -54,7 +65,7 @@ function useSettings() {
   }, []);
 
   return {
-    settingsResult: result,
+    userSettings,
     setIsLoading,
     register,
     errors,
@@ -68,7 +79,7 @@ function useSettings() {
 }
 
 export function Settings(): JSX.Element {
-  const { settingsResult, errors, register, serverError, onSubmit, logout } =
+  const { userSettings, errors, register, serverError, onSubmit, logout } =
     useSettings();
 
   return (
@@ -77,7 +88,7 @@ export function Settings(): JSX.Element {
       errors={errors}
       register={register}
       onSubmit={onSubmit}
-      disabled={!settingsResult}
+      disabled={!userSettings}
       logout={logout}
     />
   );

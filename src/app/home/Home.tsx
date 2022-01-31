@@ -1,19 +1,24 @@
 import { ArticleListHandler } from '@libs/application/article/queries';
+import { useRequest } from 'ahooks';
 import React from 'react';
-import usePromise from 'react-use-promise';
 
 import { HomeView } from './HomeView';
 
-function useData() {
-  const [articleList] = usePromise(() => {
-    return new ArticleListHandler().execute();
-  }, []);
+function useHome() {
+  const { data: articleList } = useRequest(async () => {
+    const command = new ArticleListHandler();
+    return await command.execute();
+  });
 
   return { articleList };
 }
 
-export function Home(): JSX.Element {
-  const { articleList } = useData();
+export function Home(): JSX.Element | null {
+  const { articleList } = useHome();
 
-  return <HomeView articles={articleList?.articles} />;
+  if (!articleList) {
+    return null;
+  }
+
+  return <HomeView articles={articleList.articles} />;
 }
