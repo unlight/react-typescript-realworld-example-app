@@ -47,8 +47,8 @@ npm run dev
 
 ## Todo
 
+- get rid of class-validator (use zod)
 - switch to react location
-- how to toggle using usepromise
 - https://realworld-docs.netlify.app/docs/specs/backend-specs/endpoints
 - https://github.com/gothinkster/realworld/tree/master/api
 - react boundaries
