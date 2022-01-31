@@ -1,7 +1,7 @@
 module.exports = {
   mode: 'aot',
-  purge: ['./index.html', './src/**/*.tsx'],
-  darkMode: false, // or 'media' or 'class'
+  content: ['./index.html', './src/**/*.tsx'],
+  darkMode: 'media', // or 'media' or 'class'
   theme: {
     extend: {},
   },
