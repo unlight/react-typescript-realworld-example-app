@@ -46,6 +46,7 @@ module.exports = {
     'etc',
     'testing-library',
     '@kyleshevlin',
+    'boundaries',
     'only-warn',
   ],
   ignorePatterns: ['@generated/**', '*.config.js', '.*rc.js'],
@@ -57,8 +58,69 @@ module.exports = {
       fragment: 'Fragment', // Fragment to use (may be a property of <pragma>), default to "Fragment"
       version: 'detect', // React version. "detect" automatically picks the version you have installed.
     },
+    'import/resolver': {
+      typescript: {},
+      node: {},
+    },
+    'boundaries/ignore': [
+      '**/*.spec.{ts,tsx}',
+      '**/testing/**',
+      '**/@generated/**',
+      'src/main.{ts,tsx}',
+    ],
+    'boundaries/elements': [
+      {
+        type: 'common',
+        pattern: 'src/app_modules',
+        mode: 'folder',
+      },
+      {
+        type: 'components',
+        pattern: 'src/components',
+        mode: 'folder',
+      },
+      {
+        type: 'application',
+        pattern: 'src/application',
+        mode: 'folder',
+      },
+      {
+        type: 'api',
+        pattern: 'src/api',
+        mode: 'folder',
+      },
+      {
+        type: 'pages',
+        pattern: 'src/app',
+        mode: 'folder',
+      },
+    ],
   },
   rules: {
+    // boundaries
+    'boundaries/element-types': [
+      1,
+      {
+        // Allow or disallow any dependency by default
+        default: 'disallow',
+        // Define a custom message for this rule
+        message: '${file.type} is not allowed to import ${dependency.type}',
+        rules: [
+          {
+            // In this type of files...
+            from: ['pages'],
+            // ...allow importing this type of elements
+            allow: ['application', 'components'],
+          },
+          {
+            from: ['api'],
+            allow: ['application'],
+            message: 'API can import only application interfaces',
+          },
+        ],
+      },
+    ],
+    'boundaries/no-unknown': 1,
     // core
     'consistent-return': [1, { treatUndefinedAsUnspecified: true }],
     quotes: [1, 'single', { allowTemplateLiterals: true, avoidEscape: true }],

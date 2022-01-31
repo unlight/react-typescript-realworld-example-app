@@ -53,7 +53,6 @@ npm run dev
 - https://github.com/gothinkster/realworld/tree/master/api
 - react boundaries
 - use suspension
-- Configure eslint import rules (dependency direction)
 - pagination - https://tailwindow.github.io/component-tailwindcss/components/button/pagination/index.html#
 - use https://github.com/erictooth/react-stateful-tabs
 - use 2 components for tabs do not use feed query param

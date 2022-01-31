@@ -10,7 +10,7 @@ import { useRequest } from 'ahooks';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useSetRecoilState } from 'recoil';
-import { Ok, Result } from 'rsts';
+import { Result } from 'rsts';
 
 import { ArticlePreview } from '../article/Article';
 import { UserInfo } from './UserInfo';
