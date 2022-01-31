@@ -1,5 +1,4 @@
 import { SessionService } from '@libs/application';
-import ensureError from 'ensure-error';
 import { inject } from 'njct';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -15,9 +14,8 @@ function useLogin() {
     try {
       await sessionService.login(data);
       document.location = '/';
-    } catch (err: unknown) {
-      const error = ensureError(err);
-      setServerErrorMessage(error.message);
+    } catch (err: any) {
+      setServerErrorMessage(err.message);
     }
   });
 
