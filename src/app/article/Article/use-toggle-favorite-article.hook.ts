@@ -1,5 +1,4 @@
-import { SingleArticle } from '@libs/application/article';
-import { ArticleService } from '@libs/application/interfaces';
+import { ArticleService, SingleArticle } from '@libs/application/article';
 import { useRequest } from 'ahooks';
 import { inject } from 'njct';
 import { useCallback, useState } from 'react';

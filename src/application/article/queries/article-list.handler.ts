@@ -1,14 +1,11 @@
-import { ArticleService } from '@libs/application/interfaces';
 import { inject } from 'njct';
 
-import { ArticleList } from '../article-list';
+import { ArticleList, ArticleService } from '..';
 import { ArticleListQuery } from './article-list.query';
 
 export class ArticleListHandler {
   constructor(
-    private readonly articleService: ArticleService = inject<ArticleService>(
-      'articleservice',
-    ),
+    private readonly articleService = inject<ArticleService>('articleservice'),
   ) {}
 
   // todo: result monad

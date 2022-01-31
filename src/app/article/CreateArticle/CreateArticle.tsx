@@ -1,7 +1,6 @@
 import { classValidatorResolver } from '@hookform/resolvers/class-validator';
-import { Interface } from '@libs/application';
-import { ArticleCreateInput } from '@libs/application/article';
-import { ArticleCreateCommand } from '@libs/application/article/commands/article-create.command';
+import { SessionService } from '@libs/application';
+import { ArticleCreateCommand, ArticleCreateInput } from '@libs/application/article';
 import { isLoading } from '@libs/components/Loader';
 import { inject } from 'njct';
 import React, { useState } from 'react';
@@ -37,7 +36,7 @@ function useData() {
 }
 
 export function CreateArticle(): JSX.Element {
-  const sessionService = inject<Interface.SessionService>('sessionservice');
+  const sessionService = inject<SessionService>('sessionservice');
   const navigate = useNavigate();
   const {
     register,

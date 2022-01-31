@@ -1,6 +1,6 @@
 import './App.css';
 
-import { Interface } from '@libs/application';
+import { SessionService } from '@libs/application';
 import { Footer, Loader, Loading, Navbar } from '@libs/components';
 import { inject } from 'njct';
 import React, { Suspense } from 'react';
@@ -22,7 +22,7 @@ const Profile = (
 );
 
 export function App() {
-  const user = inject<Interface.SessionService>('sessionservice').getUser();
+  const user = inject<SessionService>('sessionservice').getUser();
   return (
     <React.StrictMode>
       <RecoilRoot>

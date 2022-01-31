@@ -1,18 +1,19 @@
-import type { Interface } from '@libs/application';
+import { SessionService } from '@libs/application';
 import {
   ArticleCreateInput,
   ArticleEnvelope,
   ArticleFindManyArgs,
   ArticleList,
+  ArticleService as IArticleService,
   SingleArticle,
 } from '@libs/application/article';
-import { Tag } from '@libs/application/tag';
+import { Tag, TagService } from '@libs/application/tag';
 import ky from 'ky';
 import { inject } from 'njct';
 
 import { AppConfig } from './types';
 
-export class ArticleService implements Interface.ArticleService, Interface.TagService {
+export class ArticleService implements IArticleService, TagService {
   private authorization = () => {
     const token = this.sessionService.getToken();
     return {
@@ -23,9 +24,7 @@ export class ArticleService implements Interface.ArticleService, Interface.TagSe
   };
 
   constructor(
-    private readonly sessionService: Interface.SessionService = inject(
-      'sessionservice',
-    ),
+    private readonly sessionService = inject<SessionService>('sessionservice'),
     private readonly http = inject('httpclient', () => ky),
     private readonly config: AppConfig = inject('config'),
   ) {}

@@ -1,13 +1,11 @@
 import { inject } from 'njct';
 import { Err, Ok, Result } from 'rsts';
 
-import { Interface } from '../..';
-import { Profile } from '../../interfaces';
+import { UserService } from '../../user';
+import { Profile } from '../interfaces';
 
 export class FollowUserCommand {
-  constructor(
-    private readonly userService = inject<Interface.UserService>('userservice'),
-  ) {}
+  constructor(private readonly userService = inject<UserService>('userservice')) {}
 
   async execute(name: string): Promise<Result<Profile, Error>> {
     let result: Result<Profile, Error>;

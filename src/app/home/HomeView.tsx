@@ -1,6 +1,6 @@
 import { SingleArticle } from '@libs/application/article';
 import { Pagination } from '@libs/components';
-import React, { Suspense } from 'react';
+import React from 'react';
 import { NavLink } from 'react-router-dom';
 
 import { ArticlePreview } from '../article/Article';
@@ -50,9 +50,7 @@ export function HomeView(props: HomeViewProps): JSX.Element {
           </div>
 
           <div className="col-md-3">
-            <Suspense fallback={<p>Loading...</p>}>
-              <PopularTags />
-            </Suspense>
+            <PopularTags />
           </div>
         </div>
       </div>

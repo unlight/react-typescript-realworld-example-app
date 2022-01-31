@@ -1,5 +1,5 @@
 import { classValidatorResolver } from '@hookform/resolvers/class-validator';
-import { Interface } from '@libs/application';
+import { SessionService, UserService } from '@libs/application';
 import { UserCreateInput } from '@libs/application/user';
 import { UserRegisterCommand } from '@libs/application/user/commands';
 import { inject } from 'njct';
@@ -10,8 +10,8 @@ import { Navigate } from 'react-router-dom';
 import { RegisterView } from './RegisterView';
 
 function useData() {
-  const userService = inject<Interface.UserService>('userservice');
-  const sessionService = inject<Interface.SessionService>('sessionservice');
+  const userService = inject<UserService>('userservice');
+  const sessionService = inject<SessionService>('sessionservice');
   const [serverErrorMessage, setServerErrorMessage] = useState('');
   const {
     register,

@@ -1,8 +1,8 @@
 import { inject } from 'njct';
 import { Err, Ok, Result } from 'rsts';
 
-import { UserService } from '../../interfaces';
 import { User, UserSettingsInput } from '../models';
+import { UserService } from '../user-service.interface';
 
 export class UserSettingsUpdateCommand {
   // maybe create service for notify errors

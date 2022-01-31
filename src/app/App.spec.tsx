@@ -1,4 +1,5 @@
-import { Interface } from '@libs/application';
+import { SessionService } from '@libs/application';
+import { ArticleService } from '@libs/application/article';
 import { render, waitFor } from '@testing-library/react';
 import { mock } from 'jest-mock-extended';
 import { injector } from 'njct';
@@ -8,12 +9,12 @@ import { App } from './App';
 
 jest.mock('./home/PopularTags', () => ({ PopularTags: () => 'populartags' }));
 
-let articleService = mock<Interface.ArticleService>();
-let sessionService = mock<Interface.SessionService>();
+let articleService = mock<ArticleService>();
+let sessionService = mock<SessionService>();
 
 beforeEach(() => {
-  articleService = mock<Interface.ArticleService>();
-  sessionService = mock<Interface.SessionService>();
+  articleService = mock<ArticleService>();
+  sessionService = mock<SessionService>();
   injector.provide('articleservice', () => articleService);
   injector.provide('sessionservice', () => sessionService);
 

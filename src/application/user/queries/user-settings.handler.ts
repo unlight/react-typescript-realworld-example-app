@@ -2,7 +2,7 @@ import { User } from '@libs/application/user';
 import { inject } from 'njct';
 import { Err, Ok, Result } from 'rsts';
 
-import { UserService } from '../../interfaces';
+import { UserService } from '../user-service.interface';
 
 export class UserSettingsHandler {
   constructor(

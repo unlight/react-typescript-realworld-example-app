@@ -1,4 +1,4 @@
-import { Interface } from '@libs/application';
+import { Profile } from '@libs/application/profile';
 import { ToggleFollowButton } from '@libs/components';
 import React from 'react';
 
@@ -7,7 +7,7 @@ export function UserInfo({
   toggleFollow,
   disableToggleFollow,
 }: {
-  profile: Interface.Profile;
+  profile: Profile;
   toggleFollow: () => unknown;
   disableToggleFollow: boolean;
 }) {

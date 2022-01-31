@@ -1,12 +1,16 @@
-import type { Interface } from '@libs/application';
+import { SessionService } from '@libs/application';
 import { Profile } from '@libs/application/profile';
-import type { User, UserSettingsInput } from '@libs/application/user';
+import type {
+  User,
+  UserService as IUserService,
+  UserSettingsInput,
+} from '@libs/application/user';
 import ky from 'ky';
 import { inject } from 'njct';
 
 import { AppConfig } from './types';
 
-export class UserService implements Interface.UserService {
+export class UserService implements IUserService {
   private authorization = () => {
     const token = this.sessionService.getToken();
     return {
@@ -18,9 +22,7 @@ export class UserService implements Interface.UserService {
   constructor(
     private readonly config = inject<AppConfig>('config'),
     private readonly http = inject('httpclient', () => ky),
-    private readonly sessionService = inject<Interface.SessionService>(
-      'sessionservice',
-    ),
+    private readonly sessionService = inject<SessionService>('sessionservice'),
   ) {}
 
   async register(user: {

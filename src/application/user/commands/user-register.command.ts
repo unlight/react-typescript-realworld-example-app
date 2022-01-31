@@ -1,7 +1,7 @@
 import { Err, Ok, Result } from 'rsts';
 
-import { UserService } from '../../interfaces';
 import { UserCreateInput } from '../models';
+import { UserService } from '../user-service.interface';
 
 export class UserRegisterCommand {
   constructor(private readonly userService: UserService) {}

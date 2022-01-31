@@ -1,5 +1,5 @@
 import { classValidatorResolver } from '@hookform/resolvers/class-validator';
-import { Interface } from '@libs/application';
+import { SessionService } from '@libs/application';
 import { UserSettingsInput } from '@libs/application/user';
 import { UserSettingsUpdateCommand } from '@libs/application/user/commands';
 import { UserSettingsHandler } from '@libs/application/user/queries';
@@ -48,7 +48,7 @@ function useSettings() {
   }, [reset, result, setIsLoading]);
 
   const logout = useCallback(async () => {
-    const sessionService = inject<Interface.SessionService>('sessionservice');
+    const sessionService = inject<SessionService>('sessionservice');
     await sessionService.logout();
     document.location = '/';
   }, []);

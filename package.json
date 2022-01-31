@@ -29,12 +29,11 @@
     "njct": "^8.1.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "react-hook-form": "^7.25.1",
+    "react-hook-form": "^7.25.3",
     "react-router-dom": "^6.2.1",
     "react-use-promise": "^0.4.1",
-    "recoil": "^0.5.2",
+    "recoil": "^0.6.1",
     "rsts": "^1.0.0",
-    "suspend-react": "^0.0.8",
     "use-async-resource": "^2.2.2"
   },
   "devDependencies": {
@@ -51,7 +50,7 @@
     "autoprefixer": "^10.4.2",
     "cssnano": "^5.0.16",
     "cssnano-preset-default": "^5.1.11",
-    "eslint": "^8.7.0",
+    "eslint": "^8.8.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-import-resolver-node": "^0.3.6",
     "eslint-plugin-etc": "^2.0.2",

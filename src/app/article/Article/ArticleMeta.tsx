@@ -1,7 +1,9 @@
-import { Interface } from '@libs/application';
 import { SingleArticle } from '@libs/application/article';
-import { Profile } from '@libs/application/interfaces';
-import { FollowUserCommand, UnfollowUserCommand } from '@libs/application/profile';
+import {
+  FollowUserCommand,
+  Profile,
+  UnfollowUserCommand,
+} from '@libs/application/profile';
 import { Author } from '@libs/application/user';
 import { ToggleFavoritePostButton, ToggleFollowButton } from '@libs/components';
 import React, { useCallback, useState } from 'react';
@@ -12,7 +14,7 @@ import { useTogglefavoriteArticle } from './use-toggle-favorite-article.hook';
 
 function useArticleMeta(author: Author) {
   const [{ profile, toggleFollowInProgress }, setProfile] = useState<{
-    profile: Interface.Profile;
+    profile: Profile;
     toggleFollowInProgress: boolean;
   }>({
     profile: author,

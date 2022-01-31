@@ -1,8 +1,8 @@
-import { Interface } from '@libs/application';
+import { ArticleList } from '@libs/application';
 import {
   FollowUserCommand,
   GetProfileHandler,
-  Profile,
+  Profile as ApplicationProfile,
 } from '@libs/application/profile';
 import { UnfollowUserCommand } from '@libs/application/profile/commands/unfollow-user.command';
 import { isLoading } from '@libs/components/Loader';
@@ -28,8 +28,8 @@ function useProfile() {
   const { username } = useParams() as { username: string };
   const [serverError, setServerError] = useState('');
   const [{ profile, articleList, toggleFollowInProgress }, setProfile] = useState<{
-    profile?: Interface.Profile;
-    articleList?: Interface.ArticleList;
+    profile?: ApplicationProfile;
+    articleList?: ArticleList;
     toggleFollowInProgress: boolean;
   }>({
     toggleFollowInProgress: false,
@@ -68,7 +68,7 @@ function useProfile() {
         toggleFollowInProgress: true,
       });
 
-      let result: Result<Profile, Error>;
+      let result: Result<ApplicationProfile, Error>;
       if (profile.following) {
         const command = new UnfollowUserCommand();
         result = await command.execute(name);

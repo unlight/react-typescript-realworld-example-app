@@ -1,17 +1,13 @@
 import { inject } from 'njct';
 import { Err, Ok, Result } from 'rsts';
 
-import { Interface } from '../..';
-import { ArticleCreateInput, SingleArticle } from '..';
+import { SessionService } from '../..';
+import { ArticleCreateInput, ArticleService, SingleArticle } from '..';
 
 export class ArticleCreateCommand {
   constructor(
-    private readonly articleService = inject<Interface.ArticleService>(
-      'articleservice',
-    ),
-    private readonly sessionService = inject<Interface.SessionService>(
-      'sessionservice',
-    ),
+    private readonly articleService = inject<ArticleService>('articleservice'),
+    private readonly sessionService = inject<SessionService>('sessionservice'),
   ) {}
 
   async execute(data: ArticleCreateInput): Promise<Result<SingleArticle, Error>> {

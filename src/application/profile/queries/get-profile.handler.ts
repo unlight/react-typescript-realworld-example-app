@@ -1,8 +1,8 @@
 import { inject } from 'njct';
 import { Err, Ok, Result } from 'rsts';
 
-import { ArticleList } from '../../article';
-import { ArticleService, UserService } from '../../interfaces';
+import { ArticleList, ArticleService } from '../../article';
+import { UserService } from '../../user';
 import { Profile } from '../interfaces';
 
 export class GetProfileHandler {
