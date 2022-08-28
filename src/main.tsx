@@ -7,11 +7,12 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import { App } from './app';
+import * as tokens from './application/tokens';
 
-injector.provide('config', () => config);
-injector.provide('userservice', () => inject.service(UserService));
-injector.provide('articleservice', () => inject.service(ArticleService));
-injector.provide('tagservice', () => inject.service(ArticleService));
-injector.provide('sessionservice', () => inject.service(SessionService));
+injector.provide(tokens.Config, () => config);
+injector.provide(tokens.UserService, () => inject(UserService));
+injector.provide(tokens.ArticleService, () => inject(ArticleService));
+injector.provide('tagservice', () => inject(ArticleService));
+injector.provide('sessionservice', () => inject(SessionService));
 
 ReactDOM.render(<App />, document.querySelector('#app'));

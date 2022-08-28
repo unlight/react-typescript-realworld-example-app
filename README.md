@@ -47,6 +47,7 @@ npm run dev
 
 ## Todo
 
+- get rid of jest use vitest
 - get rid of class-validator (use zod)
 - switch to react location
 - https://realworld-docs.netlify.app/docs/specs/backend-specs/endpoints
