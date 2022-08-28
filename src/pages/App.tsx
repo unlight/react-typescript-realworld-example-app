@@ -1,7 +1,7 @@
 import './App.css';
 
-import { SessionService } from '@libs/application';
-import { Footer, Loader, Loading, Navbar } from '@libs/components';
+import { SessionServiceInterface } from '@application';
+import { Footer, Loader, Loading, Navbar } from '@components';
 import { inject } from 'njct';
 import React, { Suspense } from 'react';
 import { HashRouter, Route, Routes } from 'react-router-dom';
@@ -22,7 +22,7 @@ const Profile = (
 );
 
 export function App() {
-  const user = inject<SessionService>('sessionservice').getUser();
+  const user = inject<SessionServiceInterface>('sessionservice').getUser();
   return (
     <React.StrictMode>
       <RecoilRoot>

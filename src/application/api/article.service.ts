@@ -1,21 +1,22 @@
-import { SessionService } from '@libs/application';
+import { SessionServiceInterface, Tokens } from '@application';
 import {
   ArticleCreateInput,
   ArticleEnvelope,
   ArticleFindManyArgs,
   ArticleList,
-  ArticleService as IArticleService,
+  ArticleServiceInterface,
   SingleArticle,
-} from '@libs/application/article';
-import { Tag, TagService } from '@libs/application/tag';
+} from '@application/article';
+import { Tag, TagService } from '@application/tag';
 import ky from 'ky';
 import { inject } from 'njct';
+import { Err, Ok, Result } from 'rsts';
 
 import { AppConfig } from './types';
 
-export class ArticleService implements IArticleService, TagService {
+export class ArticleService implements ArticleServiceInterface, TagService {
   private authorization = () => {
-    const token = this.sessionService.getToken();
+    const token = this.session.getToken();
     return {
       headers: {
         Authorization: token ? `Token ${token}` : undefined,
@@ -24,18 +25,27 @@ export class ArticleService implements IArticleService, TagService {
   };
 
   constructor(
-    private readonly sessionService = inject<SessionService>('sessionservice'),
+    private readonly session = inject<SessionServiceInterface>(Tokens.SessionService),
     private readonly http = inject('httpclient', () => ky),
     private readonly config: AppConfig = inject('config'),
   ) {}
 
-  async create(article: ArticleCreateInput): Promise<SingleArticle> {
+  async create(article: ArticleCreateInput): Promise<Result<SingleArticle, Error>> {
+    if (!this.session.isLoggedIn()) {
+      return Err(new Error('Unauthorized'));
+    }
+
+    // todo: Move to DataService or ArticleRepository
     const url = `${this.config.apiBase}/articles`;
-    const articleEnvelope = await this.http
+    // eslint-disable-next-line sonarjs/prefer-immediate-return
+    const result = await this.http
       .extend(this.authorization())
       .post(url, { json: { article } })
-      .json<ArticleEnvelope<SingleArticle>>();
-    return articleEnvelope.article;
+      .json<ArticleEnvelope<SingleArticle>>()
+      .then(data => Ok(data.article))
+      .catch(cause => Err(new Error('ArticleCreate', { cause })));
+
+    return result;
   }
 
   async findOne(slug: string): Promise<SingleArticle> {

@@ -1,13 +1,13 @@
 /// <reference types="vite/client" />
 import './index.css';
 
-import { ArticleService, config, SessionService, UserService } from '@libs/api';
+import { ArticleService, config, SessionService, UserService } from '@application/api';
 import { inject, injector } from 'njct';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import { App } from './app';
 import * as tokens from './application/tokens';
+import { App } from './pages';
 
 injector.provide(tokens.Config, () => config);
 injector.provide(tokens.UserService, () => inject(UserService));

@@ -1,4 +1,4 @@
-import { ArticleCreateInput } from '@libs/application/article';
+import { ArticleCreateInput } from '@application/article';
 import React from 'react';
 import { FieldError } from 'react-hook-form';
 

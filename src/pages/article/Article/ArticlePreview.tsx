@@ -1,4 +1,4 @@
-import { SingleArticle } from '@libs/application/article';
+import { SingleArticle } from '@application/article';
 import React from 'react';
 import { Link } from 'react-router-dom';
 

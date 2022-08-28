@@ -1,4 +1,4 @@
-import { User } from '@libs/application/user';
+import { User } from '@application/user';
 import { inject } from 'njct';
 import { Err, Ok, Result } from 'rsts';
 

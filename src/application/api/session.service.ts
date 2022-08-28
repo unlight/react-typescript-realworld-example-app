@@ -1,5 +1,5 @@
-import { SessionService as ISessionService } from '@libs/application';
-import { UserLoginEnvelope } from '@libs/application/user';
+import { SessionServiceInterface } from '@application';
+import { UserLoginEnvelope } from '@application/user';
 import jwtDecode, { JwtPayload } from 'jwt-decode';
 import ky from 'ky';
 import { inject } from 'njct';
@@ -8,7 +8,7 @@ import { AppConfig } from './types';
 
 const tokenKey = 'user_token_v1';
 
-export class SessionService implements ISessionService {
+export class SessionService implements SessionServiceInterface {
   constructor(
     private readonly storage: Storage = inject('storage', () => localStorage),
     private readonly http = inject('httpclient', () => ky),

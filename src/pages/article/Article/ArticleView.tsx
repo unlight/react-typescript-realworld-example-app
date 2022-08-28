@@ -1,4 +1,4 @@
-import { SingleArticle as SingleArticle } from '@libs/application/article';
+import { SingleArticle as SingleArticle } from '@application/article';
 import React from 'react';
 
 import { ArticleMeta } from './ArticleMeta';

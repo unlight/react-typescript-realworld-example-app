@@ -1,9 +1,9 @@
+import { SessionServiceInterface } from '@application';
+import { UserSettingsInput } from '@application/user';
+import { UserSettingsUpdateCommand } from '@application/user/commands';
+import { UserSettingsHandler } from '@application/user/queries';
+import { isLoading } from '@components/Loader';
 import { classValidatorResolver } from '@hookform/resolvers/class-validator';
-import { SessionService } from '@libs/application';
-import { UserSettingsInput } from '@libs/application/user';
-import { UserSettingsUpdateCommand } from '@libs/application/user/commands';
-import { UserSettingsHandler } from '@libs/application/user/queries';
-import { isLoading } from '@libs/components/Loader';
 import { useRequest } from 'ahooks';
 import { inject } from 'njct';
 import React, { useCallback, useEffect, useState } from 'react';
@@ -53,13 +53,13 @@ function useSettings() {
   });
 
   useEffect(() => {
-    runAsync().then(userSettings => {
+    void runAsync().then(userSettings => {
       reset(userSettings);
     });
   }, [runAsync, reset]);
 
   const logout = useCallback(async () => {
-    const sessionService = inject<SessionService>('sessionservice');
+    const sessionService = inject<SessionServiceInterface>('sessionservice');
     await sessionService.logout();
     document.location = '/';
   }, []);

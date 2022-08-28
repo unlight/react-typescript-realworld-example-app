@@ -1,5 +1,5 @@
-import { Profile } from '@libs/application/profile';
-import { ToggleFollowButton } from '@libs/components';
+import { Profile } from '@application/profile';
+import { ToggleFollowButton } from '@components';
 import React from 'react';
 
 export function UserInfo({

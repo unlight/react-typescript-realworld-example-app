@@ -1,4 +1,4 @@
-import { UserCreateInput } from '@libs/application/user';
+import { UserCreateInput } from '@application/user';
 import React from 'react';
 import { FieldError } from 'react-hook-form';
 import { Link } from 'react-router-dom';

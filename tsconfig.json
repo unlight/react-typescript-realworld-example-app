@@ -26,12 +26,12 @@
     "jsx": "react",
     "baseUrl": ".",
     "paths": {
-      "@libs/application": ["src/application/index.ts"],
-      "@libs/application/*": ["src/application/*"],
-      "@libs/components": ["src/components/index.ts"],
-      "@libs/components/*": ["src/components/*"],
-      "@libs/api": ["src/api/index.ts"],
-      "@libs/api/*": ["src/api/*"],
+      "@components": ["src/components/index.ts"],
+      "@components/*": ["src/components/*"],
+      "@application": ["src/application/index.ts"],
+      "@application/*": ["src/application/*"],
+      "@application/api": ["src/application/api/index.ts"],
+      "@application/api/*": ["src/application/api/*"],
       "@app_modules/*": ["src/app_modules/*"]
     }
   },

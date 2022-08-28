@@ -1,4 +1,4 @@
-import { SessionService } from '@libs/application';
+import { SessionServiceInterface, Tokens } from '@application';
 import { inject } from 'njct';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 import { LoginFormData } from './types';
 
 function useLogin() {
-  const sessionService = inject<SessionService>('sessionservice');
+  const sessionService = inject<SessionServiceInterface>(Tokens.SessionService);
   const [serverErrorMessage, setServerErrorMessage] = useState('');
   const { register, handleSubmit } = useForm<LoginFormData>();
   const onSubmit = handleSubmit(async data => {

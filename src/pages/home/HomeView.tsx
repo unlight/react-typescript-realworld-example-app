@@ -1,5 +1,5 @@
-import { SingleArticle } from '@libs/application/article';
-import { Pagination } from '@libs/components';
+import { SingleArticle } from '@application/article';
+import { Pagination } from '@components';
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 

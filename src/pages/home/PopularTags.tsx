@@ -1,4 +1,4 @@
-import { TagListHandler } from '@libs/application/article';
+import { TagListHandler } from '@application/article';
 import { useRequest } from 'ahooks';
 import React from 'react';
 

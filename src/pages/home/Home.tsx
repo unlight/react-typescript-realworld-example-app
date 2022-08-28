@@ -1,4 +1,4 @@
-import { ArticleListHandler } from '@libs/application/article/queries';
+import { ArticleListHandler } from '@application/article/queries';
 import { useRequest } from 'ahooks';
 import React from 'react';
 

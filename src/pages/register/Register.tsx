@@ -1,7 +1,7 @@
+import { SessionServiceInterface, UserService } from '@application';
+import { UserCreateInput } from '@application/user';
+import { UserRegisterCommand } from '@application/user/commands';
 import { classValidatorResolver } from '@hookform/resolvers/class-validator';
-import { SessionService, UserService } from '@libs/application';
-import { UserCreateInput } from '@libs/application/user';
-import { UserRegisterCommand } from '@libs/application/user/commands';
 import { inject } from 'njct';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -11,7 +11,7 @@ import { RegisterView } from './RegisterView';
 
 function useData() {
   const userService = inject<UserService>('userservice');
-  const sessionService = inject<SessionService>('sessionservice');
+  const sessionService = inject<SessionServiceInterface>('sessionservice');
   const [serverErrorMessage, setServerErrorMessage] = useState('');
   const {
     register,

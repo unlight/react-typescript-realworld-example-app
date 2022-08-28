@@ -1,4 +1,4 @@
-import { UserSettingsInput } from '@libs/application/user';
+import { UserSettingsInput } from '@application/user';
 import classNames from 'clsx';
 import React from 'react';
 import { FieldError } from 'react-hook-form';

@@ -1,10 +1,10 @@
-import { SessionService } from '@libs/application';
-import { Profile } from '@libs/application/profile';
+import { SessionServiceInterface, Tokens } from '@application';
+import { Profile } from '@application/profile';
 import type {
   User,
   UserService as IUserService,
   UserSettingsInput,
-} from '@libs/application/user';
+} from '@application/user';
 import ky from 'ky';
 import { inject } from 'njct';
 
@@ -20,9 +20,11 @@ export class UserService implements IUserService {
     };
   };
   constructor(
-    private readonly config = inject<AppConfig>('config'),
+    private readonly config = inject<AppConfig>(Tokens.Config),
     private readonly http = inject('httpclient', () => ky),
-    private readonly sessionService = inject<SessionService>('sessionservice'),
+    private readonly sessionService = inject<SessionServiceInterface>(
+      Tokens.SessionService,
+    ),
   ) {}
 
   async register(user: {

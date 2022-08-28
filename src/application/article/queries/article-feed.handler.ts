@@ -1,12 +1,12 @@
 import { inject } from 'njct';
 
-import { ArticleService } from '..';
+import { ArticleServiceInterface } from '..';
 import { ArticleList } from '../article-list';
 import { ArticleListQuery } from './article-list.query';
 
 export class ArticleFeedHandler {
   constructor(
-    private readonly articleService = inject<ArticleService>('articleservice'),
+    private readonly articleService = inject<ArticleServiceInterface>('articleservice'),
   ) {}
 
   async execute(data: ArticleListQuery = {}): Promise<ArticleList> {

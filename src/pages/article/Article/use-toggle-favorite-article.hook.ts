@@ -1,10 +1,10 @@
-import { ArticleService, SingleArticle } from '@libs/application/article';
+import { ArticleServiceInterface, SingleArticle } from '@application/article';
 import { useRequest } from 'ahooks';
 import { inject } from 'njct';
 import { useCallback, useState } from 'react';
 
 async function togglefavoriteArticle(slug: string, favorited: boolean) {
-  const articleService = inject<ArticleService>('articleservice');
+  const articleService = inject<ArticleServiceInterface>('articleservice');
   return favorited ? articleService.unfavorite(slug) : articleService.favorite(slug);
 }
 

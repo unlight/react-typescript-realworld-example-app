@@ -1,11 +1,11 @@
-import { ArticleList } from '@libs/application';
+import { ArticleList } from '@application';
 import {
   FollowUserCommand,
   GetProfileHandler,
   Profile as ApplicationProfile,
-} from '@libs/application/profile';
-import { UnfollowUserCommand } from '@libs/application/profile/commands/unfollow-user.command';
-import { isLoading } from '@libs/components/Loader';
+} from '@application/profile';
+import { UnfollowUserCommand } from '@application/profile/commands/unfollow-user.command';
+import { isLoading } from '@components/Loader';
 import { useRequest } from 'ahooks';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';

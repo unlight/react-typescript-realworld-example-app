@@ -1,7 +1,7 @@
+import { SessionServiceInterface, Tokens } from '@application';
+import { ArticleCreateInput, ArticleServiceInterface } from '@application/article';
+import { isLoading } from '@components/Loader';
 import { classValidatorResolver } from '@hookform/resolvers/class-validator';
-import { SessionService } from '@libs/application';
-import { ArticleCreateCommand, ArticleCreateInput } from '@libs/application/article';
-import { isLoading } from '@libs/components/Loader';
 import { inject } from 'njct';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -11,6 +11,7 @@ import { useSetRecoilState } from 'recoil';
 import { CreateArticleView } from './CreateArticleView';
 
 function useData() {
+  const navigate = useNavigate();
   const setIsLoading = useSetRecoilState(isLoading);
   const {
     register,
@@ -23,40 +24,10 @@ function useData() {
   });
   const [serverError, setServerError] = useState('');
 
-  return {
-    register,
-    handleSubmit,
-    errors,
-    isValid,
-    isSubmitted,
-    serverError,
-    setServerError,
-    setIsLoading,
-  };
-}
-
-export function CreateArticle(): JSX.Element {
-  const sessionService = inject<SessionService>('sessionservice');
-  const navigate = useNavigate();
-  const {
-    register,
-    handleSubmit,
-    errors,
-    isValid,
-    isSubmitted,
-    serverError,
-    setServerError,
-    setIsLoading,
-  } = useData();
-
-  if (!sessionService.isLoggedIn()) {
-    return <Navigate to="/login" />;
-  }
-
   const onSubmit = handleSubmit(async data => {
+    const articleService = inject<ArticleServiceInterface>(Tokens.ArticleService);
     setIsLoading(true);
-    const command = new ArticleCreateCommand();
-    const result = await command.execute(data);
+    const result = await articleService.create(data);
     setIsLoading(false);
     if (result.isErr()) {
       setServerError(result.unwrapErr().message);
@@ -66,11 +37,32 @@ export function CreateArticle(): JSX.Element {
     navigate(`/article/${article.slug}`);
   });
 
+  return {
+    register,
+    handleSubmit,
+    errors,
+    isValid,
+    isSubmitted,
+    serverError,
+    setServerError,
+    setIsLoading,
+    onSubmit,
+  };
+}
+
+export function CreateArticle(): JSX.Element {
+  const sessionService = inject<SessionServiceInterface>('sessionservice');
+  const { register, errors, isValid, isSubmitted, serverError, onSubmit } = useData();
+
+  if (!sessionService.isLoggedIn()) {
+    return <Navigate to="/login" />;
+  }
+
   return (
     <CreateArticleView
       onSubmit={onSubmit}
       register={register}
-      errors={errors}
+      errors={errors as any}
       serverError={serverError}
       disabled={isSubmitted && !isValid}
     />

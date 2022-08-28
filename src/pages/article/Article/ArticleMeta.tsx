@@ -1,11 +1,7 @@
-import { SingleArticle } from '@libs/application/article';
-import {
-  FollowUserCommand,
-  Profile,
-  UnfollowUserCommand,
-} from '@libs/application/profile';
-import { Author } from '@libs/application/user';
-import { ToggleFavoritePostButton, ToggleFollowButton } from '@libs/components';
+import { SingleArticle } from '@application/article';
+import { FollowUserCommand, Profile, UnfollowUserCommand } from '@application/profile';
+import { Author } from '@application/user';
+import { ToggleFavoritePostButton, ToggleFollowButton } from '@components';
 import React, { useCallback, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Result } from 'rsts';
