@@ -1,13 +1,16 @@
-import { ArticleListHandler } from '@application/article/queries';
+import { Tokens } from '@application';
+import { ArticleServiceInterface } from '@application/article';
 import { useRequest } from 'ahooks';
+import { inject } from 'njct';
 import React from 'react';
 
 import { HomeView } from './HomeView';
 
 function useHome() {
   const { data: articleList } = useRequest(async () => {
-    const command = new ArticleListHandler();
-    return await command.execute();
+    const articleService = inject<ArticleServiceInterface>(Tokens.ArticleService);
+    const result = await articleService.findMany();
+    return result.unwrap();
   });
 
   return { articleList };

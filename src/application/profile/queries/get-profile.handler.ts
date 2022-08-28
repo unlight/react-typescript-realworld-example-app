@@ -18,7 +18,7 @@ export class GetProfileHandler {
         this.userService.getProfile(username),
         this.articleService.findMany({ author: username }),
       ]);
-      result = Ok({ profile, articleList });
+      result = Ok({ profile, articleList: articleList.unwrap() });
     } catch (error: any) {
       result = Err(error);
     }

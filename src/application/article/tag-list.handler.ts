@@ -1,6 +1,6 @@
 import { inject } from 'njct';
 
-import { Tag, TagService } from '../../tag';
+import { Tag, TagService } from '../tag';
 
 export class TagListHandler {
   constructor(private readonly tagService = inject<TagService>('tagservice')) {}

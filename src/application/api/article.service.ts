@@ -36,6 +36,7 @@ export class ArticleService implements ArticleServiceInterface, TagService {
     }
 
     // todo: Move to DataService or ArticleRepository
+    // todo: Move all from api to feature folder
     const url = `${this.config.apiBase}/articles`;
     // eslint-disable-next-line sonarjs/prefer-immediate-return
     const result = await this.http
@@ -43,9 +44,24 @@ export class ArticleService implements ArticleServiceInterface, TagService {
       .post(url, { json: { article } })
       .json<ArticleEnvelope<SingleArticle>>()
       .then(data => Ok(data.article))
-      .catch(cause => Err(new Error('ArticleCreate', { cause })));
+      .catch((cause: unknown) => Err(new Error('ArticleCreate', { cause })));
 
     return result;
+  }
+
+  async findMany(args: ArticleFindManyArgs = {}): Promise<Result<ArticleList, Error>> {
+    const searchParams = {
+      limit: args.take ?? 5,
+      skip: args.skip ?? 0,
+      ...(args.author && { author: args.author }),
+    };
+
+    return await this.http
+      .extend(this.authorization())
+      .get(`${this.config.apiBase}/articles`, { searchParams })
+      .json<ArticleList>()
+      .then(json => Ok(json))
+      .catch((cause: unknown) => Err(new Error('Fetch articles', { cause })));
   }
 
   async findOne(slug: string): Promise<SingleArticle> {
@@ -61,18 +77,6 @@ export class ArticleService implements ArticleServiceInterface, TagService {
 
   delete(data: any): Promise<void> {
     throw new Error('Method not implemented.');
-  }
-
-  async findMany(args: ArticleFindManyArgs = {}): Promise<ArticleList> {
-    const searchParams = {
-      limit: args.take ?? 5,
-      skip: args.skip ?? 0,
-      ...(args.author && { author: args.author }),
-    };
-    return await this.http
-      .extend(this.authorization())
-      .get(`${this.config.apiBase}/articles`, { searchParams })
-      .json<ArticleList>();
   }
 
   async favorite(slug: string): Promise<SingleArticle> {
