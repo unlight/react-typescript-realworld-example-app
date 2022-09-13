@@ -11,7 +11,7 @@ function useData(parameters: { slug: string }) {
   const [article, setArticle] = useState<SingleArticle | undefined>(undefined);
 
   const getArticle = useCallback(
-    async slug => {
+    async (slug: string) => {
       const article = await articleService.findOne(slug);
       setArticle(article);
     },

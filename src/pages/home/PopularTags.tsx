@@ -1,7 +1,7 @@
+import { TagService } from '@application/tag';
 import { useRequest } from 'ahooks';
 import { inject } from 'njct';
 import React from 'react';
-import { TagService } from '@application/tag';
 
 export function PopularTags(): JSX.Element {
   const { data: tagList, loading } = useRequest(async () => {

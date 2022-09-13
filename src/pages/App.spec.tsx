@@ -1,14 +1,15 @@
 import { SessionServiceInterface } from '@application';
 import { ArticleServiceInterface } from '@application/article';
 import { render, waitFor } from '@testing-library/react';
-import { mock } from 'jest-mock-extended';
 import { injector } from 'njct';
 import React from 'react';
 import { Ok } from 'rsts';
+import { afterAll, beforeEach, expect, it, vi } from 'vitest';
+import { mock } from 'vitest-mock-extended';
 
 import { App } from './App';
 
-jest.mock('./home/PopularTags', () => ({ PopularTags: () => 'populartags' }));
+vi.mock('./home/PopularTags', () => ({ PopularTags: () => 'populartags' }));
 
 let articleService = mock<ArticleServiceInterface>();
 let sessionService = mock<SessionServiceInterface>();
