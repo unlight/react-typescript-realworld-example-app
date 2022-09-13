@@ -1,16 +1,4 @@
 import React from 'react';
-import { atom, useRecoilValue } from 'recoil';
-
-export const isLoading = atom({
-  key: 'appIsLoading',
-  default: false,
-});
-
-export function Loader() {
-  const showLoading = useRecoilValue(isLoading);
-
-  return showLoading ? <>{Loading}</> : null;
-}
 
 export const Loading = (
   <div className="flex justify-center w-full h-full absolute inset-0 bg-opacity-25 bg-gray-500">
