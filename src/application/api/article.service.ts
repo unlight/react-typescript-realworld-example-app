@@ -111,6 +111,9 @@ export class ArticleService implements ArticleServiceInterface, TagService {
     const envelope = await this.http
       .get(`${this.config.apiBase}/tags`)
       .json<{ tags: Tag[] }>();
-    return envelope.tags;
+
+    return envelope.tags.filter(
+      (x: string) => x.replace(/[^\u0020-\u007E]/g, '').length > 1,
+    );
   }
 }

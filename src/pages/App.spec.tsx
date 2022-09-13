@@ -4,6 +4,7 @@ import { render, waitFor } from '@testing-library/react';
 import { mock } from 'jest-mock-extended';
 import { injector } from 'njct';
 import React from 'react';
+import { Ok } from 'rsts';
 
 import { App } from './App';
 
@@ -18,7 +19,7 @@ beforeEach(() => {
   injector.provide('articleservice', () => articleService);
   injector.provide('sessionservice', () => sessionService);
 
-  articleService.findMany.mockResolvedValue({ articles: [] as any, articlesCount: 0 });
+  articleService.findMany.mockResolvedValue(Ok({ articles: [], articlesCount: 0 }));
 });
 
 afterAll(() => {

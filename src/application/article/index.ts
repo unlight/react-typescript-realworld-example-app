@@ -5,4 +5,3 @@ export type { ArticleFindManyArgs } from './article-find-many-args';
 export type { ArticleList } from './article-list';
 export type { ArticleServiceInterface } from './article-service.interface';
 export type { SingleArticle } from './single-article';
-export { TagListHandler } from './tag-list.handler';

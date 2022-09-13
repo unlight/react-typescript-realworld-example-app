@@ -16,7 +16,6 @@ For more information on how to this works with other frontends/backends, head ov
 - React
 - Recoil
 - Vite
-- Jest
 - ESLint
 
 ## How it works
