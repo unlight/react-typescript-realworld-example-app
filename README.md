@@ -27,7 +27,6 @@ For more information on how to this works with other frontends/backends, head ov
 
 ### Architecture notes
 
-- use case it is command in application/feature/commands
 - src/components: reusable ui components
 
 ## Getting started
@@ -46,6 +45,7 @@ npm run dev
 
 ## Todo
 
+- get rid of commands
 - get rid of class-validator (use zod)
 - switch to react location
 - https://realworld-docs.netlify.app/docs/specs/backend-specs/endpoints

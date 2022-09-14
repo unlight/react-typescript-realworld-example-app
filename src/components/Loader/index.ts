@@ -1,3 +1,3 @@
-export { isLoading } from './is-loading.atom';
+export { isLoading } from './isLoading.atom';
 export { Loader } from './Loader';
 export { Loading } from './Loading';

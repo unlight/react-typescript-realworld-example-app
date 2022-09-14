@@ -1,7 +1,7 @@
 import React from 'react';
 import { useRecoilValue } from 'recoil';
 
-import { isLoading } from './is-loading.atom';
+import { isLoading } from './isLoading.atom';
 import { Loading } from './Loading';
 
 export function Loader() {

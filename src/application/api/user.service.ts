@@ -7,6 +7,7 @@ import type {
 } from '@application/user';
 import ky from 'ky';
 import { inject } from 'njct';
+import { Err, Ok, Result } from 'rsts';
 
 import { AppConfig } from './types';
 
@@ -27,14 +28,26 @@ export class UserService implements IUserService {
     ),
   ) {}
 
-  async register(user: {
+  async register(data: {
     username: string;
     password: string;
     email: string;
-  }): Promise<void> {
+  }): Promise<Result<User>> {
     const url = `${this.config.apiBase}/users`;
-    const result = await this.http.post(url, { json: { user } }).json<{ user: User }>();
-    this.sessionService.update(result.user.token);
+    let user: User;
+
+    try {
+      user = await this.http
+        .post(url, { json: { user: data } })
+        .json<{ user: User }>()
+        .then(r => r.user);
+    } catch (cause) {
+      return Err(new Error('UserRegistration', { cause }));
+    }
+
+    this.sessionService.update(user.token);
+
+    return Ok(user);
   }
 
   isLoggedIn(): boolean {
@@ -49,8 +62,12 @@ export class UserService implements IUserService {
     return result.user;
   }
 
-  async updateCurrentUser(user: UserSettingsInput) {
-    return this.http
+  async updateCurrentUser(data: UserSettingsInput): Promise<Result<User>> {
+    if (!data.password) {
+      delete data.password;
+    }
+    // eslint-disable-next-line sonarjs/prefer-immediate-return
+    const result = await this.http
       .extend(this.authorization())
       .extend({
         hooks: {
@@ -65,9 +82,12 @@ export class UserService implements IUserService {
           ],
         },
       })
-      .put(`${this.config.apiBase}/user`, { json: { user } })
+      .put(`${this.config.apiBase}/user`, { json: { user: data } })
       .json<{ user: User }>()
-      .then(result => result.user);
+      .then(result => Ok(result.user))
+      .catch(cause => Err(new Error('UpdateCurrentUser', { cause })));
+
+    return result;
   }
 
   async getProfile(name: string) {
