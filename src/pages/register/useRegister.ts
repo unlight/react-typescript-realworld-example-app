@@ -1,4 +1,4 @@
-import { SessionServiceInterface, UserService } from '@application';
+import { SessionServiceInterface, Tokens, UserService } from '@application';
 import { UserCreateInput } from '@application/user';
 import { classValidatorResolver } from '@hookform/resolvers/class-validator';
 import { inject } from 'njct';
@@ -6,8 +6,8 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 export function useRegister() {
-  const userService = inject<UserService>('userservice');
-  const sessionService = inject<SessionServiceInterface>('sessionservice');
+  const userService = inject<UserService>(Tokens.UserService);
+  const sessionService = inject<SessionServiceInterface>(Tokens.SessionService);
   const [serverErrorMessage, setServerErrorMessage] = useState('');
   const {
     register,

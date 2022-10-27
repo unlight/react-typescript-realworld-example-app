@@ -66,7 +66,9 @@ export function RegisterView(props: RegisterViewProps): JSX.Element {
               {serverErrorMessage && (
                 <p className="error-messages">{serverErrorMessage}</p>
               )}
-              <button className="btn btn-lg btn-primary pull-xs-right">Sign up</button>
+              <button className="btn btn-lg btn-primary pull-xs-right">
+                Sign up
+              </button>
             </form>
           </div>
         </div>
