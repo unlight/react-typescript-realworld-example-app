@@ -1,10 +1,11 @@
+import { Tokens } from '@application';
 import { SingleArticle } from '@application/article';
-import { FollowUserCommand, Profile, UnfollowUserCommand } from '@application/profile';
-import { Author } from '@application/user';
+import { Profile } from '@application/profile';
+import { Author, UserService } from '@application/user';
 import { ToggleFavoritePostButton, ToggleFollowButton } from '@components';
+import { inject } from 'njct';
 import React, { useCallback, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Result } from 'rsts';
 
 import { useTogglefavoriteArticle } from './use-toggle-favorite-article.hook';
 
@@ -18,19 +19,15 @@ function useArticleMeta(author: Author) {
   });
 
   const toggleFollow = useCallback(async () => {
+    const userService = inject<UserService>(Tokens.UserService);
     setProfile({
       profile,
       toggleFollowInProgress: true,
     });
 
-    let result: Result<Profile, Error>;
-    if (profile.following) {
-      const command = new UnfollowUserCommand();
-      result = await command.execute(profile.username);
-    } else {
-      const command = new FollowUserCommand();
-      result = await command.execute(profile.username);
-    }
+    const result = await (profile.following
+      ? userService.unfollowUser(author.username)
+      : userService.followUser(author.username));
 
     setProfile({
       profile: result.unwrap(),
@@ -50,10 +47,11 @@ type ArticleMetaProps = {
 
 export function ArticleMeta(props: ArticleMetaProps): JSX.Element {
   const { showFollowButton = false, createdAt } = props;
-  const { author, toggleFollow, toggleFollowInProgress } = useArticleMeta(props.author);
-  const { article, requestInProgress, toggleCallback } = useTogglefavoriteArticle(
-    props.article,
+  const { author, toggleFollow, toggleFollowInProgress } = useArticleMeta(
+    props.author,
   );
+  const { article, requestInProgress, toggleCallback } =
+    useTogglefavoriteArticle(props.article);
 
   return (
     <div className="article-meta">

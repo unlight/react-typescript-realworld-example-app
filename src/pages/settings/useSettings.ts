@@ -1,7 +1,6 @@
 import { SessionServiceInterface, Tokens } from '@application';
 import { UserService } from '@application/api';
 import { UserSettingsInput } from '@application/user';
-import { UserSettingsHandler } from '@application/user/queries';
 import { isLoading } from '@components/Loader';
 import { classValidatorResolver } from '@hookform/resolvers/class-validator';
 import { useRequest } from 'ahooks';
@@ -11,8 +10,9 @@ import { useForm } from 'react-hook-form';
 import { useSetRecoilState } from 'recoil';
 
 async function requestSettings() {
-  const command = new UserSettingsHandler();
-  const result = await command.execute();
+  const userService = inject<UserService>(Tokens.UserService);
+  const result = await userService.getCurrentUser();
+
   return result.unwrap();
 }
 

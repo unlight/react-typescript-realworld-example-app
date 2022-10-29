@@ -1,6 +1,6 @@
+import { Tokens } from '@application';
 import { ArticleList, ArticleServiceInterface } from '@application/article';
-import { FollowUserCommand, Profile } from '@application/profile';
-import { UnfollowUserCommand } from '@application/profile/commands/unfollow-user.command';
+import { Profile } from '@application/profile';
 import { UserService } from '@application/user';
 import { isLoading } from '@components/Loader';
 import { useRequest } from 'ahooks';
@@ -8,7 +8,6 @@ import { inject } from 'njct';
 import { useCallback, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useSetRecoilState } from 'recoil';
-import { Result } from 'rsts';
 
 type FetchProfileResult = { profile: Profile; articleList: ArticleList };
 type State = {
@@ -18,7 +17,7 @@ type State = {
 };
 
 async function fetchProfile(username: string): Promise<FetchProfileResult> {
-  const userService = inject<UserService>('userservice');
+  const userService = inject<UserService>(Tokens.UserService);
   const articleService = inject<ArticleServiceInterface>('articleservice');
 
   const [profile, articleList] = await Promise.all([
@@ -61,6 +60,7 @@ export function useProfile() {
   }, [run, username]);
 
   const toggleFollow = useCallback(async () => {
+    const userService = inject<UserService>(Tokens.UserService);
     const name = profile?.username;
     if (name) {
       setProfile({
@@ -69,14 +69,9 @@ export function useProfile() {
         toggleFollowInProgress: true,
       });
 
-      let result: Result<Profile, Error>;
-      if (profile.following) {
-        const command = new UnfollowUserCommand();
-        result = await command.execute(name);
-      } else {
-        const command = new FollowUserCommand();
-        result = await command.execute(name);
-      }
+      const result = await (profile.following
+        ? userService.unfollowUser(name)
+        : userService.followUser(name));
 
       setProfile({
         profile: result.unwrap(),

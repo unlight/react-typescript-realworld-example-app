@@ -25,12 +25,16 @@ export class ArticleService implements ArticleServiceInterface, TagService {
   };
 
   constructor(
-    private readonly session = inject<SessionServiceInterface>(Tokens.SessionService),
+    private readonly session = inject<SessionServiceInterface>(
+      Tokens.SessionService,
+    ),
     private readonly http = inject('httpclient', () => ky),
-    private readonly config: AppConfig = inject('config'),
+    private readonly config: AppConfig = inject(Tokens.Config),
   ) {}
 
-  async create(article: ArticleCreateInput): Promise<Result<SingleArticle, Error>> {
+  async create(
+    article: ArticleCreateInput,
+  ): Promise<Result<SingleArticle, Error>> {
     if (!this.session.isLoggedIn()) {
       return Err(new Error('Unauthorized'));
     }
@@ -49,7 +53,9 @@ export class ArticleService implements ArticleServiceInterface, TagService {
     return result;
   }
 
-  async findMany(args: ArticleFindManyArgs = {}): Promise<Result<ArticleList, Error>> {
+  async findMany(
+    args: ArticleFindManyArgs = {},
+  ): Promise<Result<ArticleList, Error>> {
     const searchParams = {
       limit: args.take ?? 5,
       skip: args.skip ?? 0,

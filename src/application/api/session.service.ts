@@ -1,4 +1,4 @@
-import { SessionServiceInterface } from '@application';
+import { SessionServiceInterface, Tokens } from '@application';
 import { UserLoginEnvelope } from '@application/user';
 import jwtDecode, { JwtPayload } from 'jwt-decode';
 import ky from 'ky';
@@ -12,7 +12,7 @@ export class SessionService implements SessionServiceInterface {
   constructor(
     private readonly storage: Storage = inject('storage', () => localStorage),
     private readonly http = inject('httpclient', () => ky),
-    private readonly config: AppConfig = inject('config'),
+    private readonly config: AppConfig = inject(Tokens.Config),
   ) {}
 
   isLoggedIn(): boolean {

@@ -6,9 +6,9 @@ import { User, UserCreateInput, UserSettingsInput } from './models';
 
 export interface UserService {
   register(data: ObjectType<UserCreateInput>): Promise<Result<User>>;
-  getCurrentUser(): Promise<User>;
+  getCurrentUser(): Promise<Result<User>>;
   updateCurrentUser(data: UserSettingsInput): Promise<Result<User>>;
   getProfile(name: string): Promise<Profile>;
-  followUser(username: string): Promise<Profile>;
-  unfollowUser(username: string): Promise<Profile>;
+  followUser(username: string): Promise<Result<Profile>>;
+  unfollowUser(username: string): Promise<Result<Profile>>;
 }

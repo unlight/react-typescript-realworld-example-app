@@ -1,30 +1,7 @@
-import { SessionServiceInterface, Tokens } from '@application';
-import { inject } from 'njct';
-import React, { useState } from 'react';
-import { useForm } from 'react-hook-form';
+import React from 'react';
 import { Link } from 'react-router-dom';
 
-import { LoginFormData } from './types';
-
-function useLogin() {
-  const sessionService = inject<SessionServiceInterface>(Tokens.SessionService);
-  const [serverErrorMessage, setServerErrorMessage] = useState('');
-  const { register, handleSubmit } = useForm<LoginFormData>();
-  const onSubmit = handleSubmit(async data => {
-    try {
-      await sessionService.login(data);
-      document.location = '/';
-    } catch (err: any) {
-      setServerErrorMessage(err.message);
-    }
-  });
-
-  return {
-    serverErrorMessage,
-    onSubmit,
-    register,
-  };
-}
+import { useLogin } from './useLogin';
 
 export function Login(): JSX.Element {
   const { serverErrorMessage, onSubmit, register } = useLogin();
@@ -58,7 +35,9 @@ export function Login(): JSX.Element {
               {serverErrorMessage && (
                 <p className="error-messages">{serverErrorMessage}</p>
               )}
-              <button className="btn btn-lg btn-primary pull-xs-right">Sign In</button>
+              <button className="btn btn-lg btn-primary pull-xs-right">
+                Sign In
+              </button>
             </form>
           </div>
         </div>

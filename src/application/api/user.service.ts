@@ -55,11 +55,12 @@ export class UserService implements IUserService {
   }
 
   async getCurrentUser() {
-    const result = await this.http
+    return this.http
       .extend(this.authorization())
       .get(`${this.config.apiBase}/user`)
-      .json<{ user: User }>();
-    return result.user;
+      .json<{ user: User }>()
+      .then(data => Ok(data.user))
+      .catch((cause: unknown) => Err(new Error('GetCurrentUser', { cause })));
   }
 
   async updateCurrentUser(data: UserSettingsInput): Promise<Result<User>> {
@@ -85,7 +86,9 @@ export class UserService implements IUserService {
       .put(`${this.config.apiBase}/user`, { json: { user: data } })
       .json<{ user: User }>()
       .then(result => Ok(result.user))
-      .catch(cause => Err(new Error('UpdateCurrentUser', { cause })));
+      .catch((cause: unknown) =>
+        Err(new Error('UpdateCurrentUser', { cause })),
+      );
 
     return result;
   }
@@ -99,18 +102,20 @@ export class UserService implements IUserService {
   }
 
   async followUser(name: string) {
-    const result = await this.http
+    return await this.http
       .extend(this.authorization())
       .post(`${this.config.apiBase}/profiles/${name}/follow`)
-      .json<{ profile: Profile }>();
-    return result.profile;
+      .json<{ profile: Profile }>()
+      .then(data => Ok(data.profile))
+      .catch((cause: unknown) => Err(new Error('FollowUser', { cause })));
   }
 
   async unfollowUser(name: string) {
-    const result = await this.http
+    return this.http
       .extend(this.authorization())
       .delete(`${this.config.apiBase}/profiles/${name}/follow`)
-      .json<{ profile: Profile }>();
-    return result.profile;
+      .json<{ profile: Profile }>()
+      .then(data => Ok(data.profile))
+      .catch((cause: unknown) => Err(new Error('UnfollowUser', { cause })));
   }
 }

@@ -45,7 +45,6 @@ npm run dev
 
 ## Todo
 
-- get rid of commands
 - get rid of class-validator (use zod)
 - switch to react location
 - https://realworld-docs.netlify.app/docs/specs/backend-specs/endpoints
@@ -63,3 +62,4 @@ npm run dev
 - gymynaxeru@mailinator.com
 - tetikokucy@mailinator.com
 - mynesy@mailinator.com
+- password: Pa$$w0rd!
