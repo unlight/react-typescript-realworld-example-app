@@ -5,7 +5,9 @@ import { useCallback, useState } from 'react';
 
 async function togglefavoriteArticle(slug: string, favorited: boolean) {
   const articleService = inject<ArticleServiceInterface>('articleservice');
-  return favorited ? articleService.unfavorite(slug) : articleService.favorite(slug);
+  return favorited
+    ? articleService.unfavorite(slug)
+    : articleService.favorite(slug);
 }
 
 export function useTogglefavoriteArticle(initialArticle: SingleArticle) {

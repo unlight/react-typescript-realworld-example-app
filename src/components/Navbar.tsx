@@ -20,7 +20,10 @@ export function Navbar(props: NavbarProps): JSX.Element {
             <>
               <NavItem name="New Post" href="/newpost" icon="ion-compose" />
               <NavItem name="Settings" href="/settings" icon="ion-gear-a" />
-              <NavItem name={user.username} href={`/profile/${user.username}`} />
+              <NavItem
+                name={user.username}
+                href={`/profile/${user.username}`}
+              />
             </>
           ) : (
             <NavItem name="Sign In" href="/login" />

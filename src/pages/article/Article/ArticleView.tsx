@@ -27,8 +27,8 @@ export function ArticleView(props: ArticleViewProps): JSX.Element {
         <div className="row article-content">
           <div className="col-md-12">
             <p>
-              Web development technologies have evolved at an incredible clip over the
-              past few years.
+              Web development technologies have evolved at an incredible clip
+              over the past few years.
             </p>
             <h2 id="introducing-ionic">Introducing RealWorld.</h2>
             <p>It's a great solution for learning how other frameworks work.</p>
@@ -67,7 +67,8 @@ export function ArticleView(props: ArticleViewProps): JSX.Element {
             <div className="card">
               <div className="card-block">
                 <p className="card-text">
-                  With supporting text below as a natural lead-in to additional content.
+                  With supporting text below as a natural lead-in to additional
+                  content.
                 </p>
               </div>
               <div className="card-footer">
@@ -88,7 +89,8 @@ export function ArticleView(props: ArticleViewProps): JSX.Element {
             <div className="card">
               <div className="card-block">
                 <p className="card-text">
-                  With supporting text below as a natural lead-in to additional content.
+                  With supporting text below as a natural lead-in to additional
+                  content.
                 </p>
               </div>
               <div className="card-footer">

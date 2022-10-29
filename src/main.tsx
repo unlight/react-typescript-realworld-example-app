@@ -1,7 +1,12 @@
 /// <reference types="vite/client" />
 import './index.css';
 
-import { ArticleService, config, SessionService, UserService } from '@application/api';
+import {
+  ArticleService,
+  config,
+  SessionService,
+  UserService,
+} from '@application/api';
 import { inject, injector } from 'njct';
 import React from 'react';
 import ReactDOM from 'react-dom';

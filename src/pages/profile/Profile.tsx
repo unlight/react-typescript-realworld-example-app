@@ -5,8 +5,13 @@ import { useProfile } from './useProfile';
 import { UserInfo } from './UserInfo';
 
 export function Profile() {
-  const { profile, articleList, serverError, toggleFollow, toggleFollowInProgress } =
-    useProfile();
+  const {
+    profile,
+    articleList,
+    serverError,
+    toggleFollow,
+    toggleFollowInProgress,
+  } = useProfile();
 
   return (
     <div className="profile-page">

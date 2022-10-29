@@ -6,7 +6,9 @@ import { ArticleServiceInterface } from './article-service.interface';
 
 export class ArticleFeedHandler {
   constructor(
-    private readonly articleService = inject<ArticleServiceInterface>('articleservice'),
+    private readonly articleService = inject<ArticleServiceInterface>(
+      'articleservice',
+    ),
   ) {}
 
   async execute(data: ArticleListQuery = {}): Promise<ArticleList> {

@@ -1,5 +1,8 @@
 import { SessionServiceInterface, Tokens } from '@application';
-import { ArticleCreateInput, ArticleServiceInterface } from '@application/article';
+import {
+  ArticleCreateInput,
+  ArticleServiceInterface,
+} from '@application/article';
 import { isLoading } from '@components/Loader';
 import { classValidatorResolver } from '@hookform/resolvers/class-validator';
 import { inject } from 'njct';
@@ -25,7 +28,9 @@ function useData() {
   const [serverError, setServerError] = useState('');
 
   const onSubmit = handleSubmit(async data => {
-    const articleService = inject<ArticleServiceInterface>(Tokens.ArticleService);
+    const articleService = inject<ArticleServiceInterface>(
+      Tokens.ArticleService,
+    );
     setIsLoading(true);
     const result = await articleService.create(data);
     setIsLoading(false);
@@ -52,7 +57,8 @@ function useData() {
 
 export function CreateArticle(): JSX.Element {
   const sessionService = inject<SessionServiceInterface>('sessionservice');
-  const { register, errors, isValid, isSubmitted, serverError, onSubmit } = useData();
+  const { register, errors, isValid, isSubmitted, serverError, onSubmit } =
+    useData();
 
   if (!sessionService.isLoggedIn()) {
     return <Navigate to="/login" />;

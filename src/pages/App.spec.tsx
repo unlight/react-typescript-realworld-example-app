@@ -20,7 +20,9 @@ beforeEach(() => {
   injector.provide('articleservice', () => articleService);
   injector.provide('sessionservice', () => sessionService);
 
-  articleService.findMany.mockResolvedValue(Ok({ articles: [], articlesCount: 0 }));
+  articleService.findMany.mockResolvedValue(
+    Ok({ articles: [], articlesCount: 0 }),
+  );
 });
 
 afterAll(() => {

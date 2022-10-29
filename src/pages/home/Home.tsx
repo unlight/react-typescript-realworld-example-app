@@ -8,7 +8,9 @@ import { HomeView } from './HomeView';
 
 function useHome() {
   const { data: articleList } = useRequest(async () => {
-    const articleService = inject<ArticleServiceInterface>(Tokens.ArticleService);
+    const articleService = inject<ArticleServiceInterface>(
+      Tokens.ArticleService,
+    );
     const result = await articleService.findMany();
     return result.unwrap();
   });

@@ -72,13 +72,17 @@ export function CreateArticleView(props: CreateArticleProps): JSX.Element {
                 <div className="tag-list"></div>
                 {errors.tagList?.types && (
                   <ul className="error-messages text-sm">
-                    {Object.entries(errors.tagList.types).map(([type, message]) => (
-                      <li key={type}>{message}</li>
-                    ))}
+                    {Object.entries(errors.tagList.types).map(
+                      ([type, message]) => (
+                        <li key={type}>{message}</li>
+                      ),
+                    )}
                   </ul>
                 )}
               </fieldset>
-              {serverError && <p className="error-messages my-4">{serverError}</p>}
+              {serverError && (
+                <p className="error-messages my-4">{serverError}</p>
+              )}
               <button
                 className="btn btn-lg pull-xs-right btn-primary"
                 disabled={disabled}

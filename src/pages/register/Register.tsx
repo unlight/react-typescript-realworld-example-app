@@ -5,7 +5,8 @@ import { RegisterView } from './RegisterView';
 import { useRegister } from './useRegister';
 
 export function Register(): JSX.Element {
-  const { onSubmit, errors, register, serverErrorMessage, isLoggedIn } = useRegister();
+  const { onSubmit, errors, register, serverErrorMessage, isLoggedIn } =
+    useRegister();
 
   if (isLoggedIn) {
     return <Navigate to="/home" />;

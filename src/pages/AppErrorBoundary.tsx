@@ -3,7 +3,9 @@ import React, { PropsWithChildren } from 'react';
 /**
  * GLobal application error handler.
  */
-export class AppErrorBoundary extends React.Component<PropsWithChildren<unknown>> {
+export class AppErrorBoundary extends React.Component<
+  PropsWithChildren<unknown>
+> {
   static getDerivedStateFromError(error: any) {
     return { error };
   }
