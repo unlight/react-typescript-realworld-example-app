@@ -62,7 +62,7 @@ export class ArticleService implements ArticleServiceInterface, TagService {
       ...(args.author && { author: args.author }),
     };
 
-    return await this.http
+    return this.http
       .extend(this.authorization())
       .get(`${this.config.apiBase}/articles`, { searchParams })
       .json<ArticleList>()
