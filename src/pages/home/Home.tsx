@@ -10,5 +10,10 @@ export function Home(): JSX.Element | null {
     return null;
   }
 
-  return <HomeView articles={articleList.articles} />;
+  return (
+    <HomeView
+      articles={articleList.articles}
+      count={articleList.articlesCount}
+    />
+  );
 }

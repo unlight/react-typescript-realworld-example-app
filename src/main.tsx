@@ -9,7 +9,7 @@ import {
 } from '@application/api';
 import { inject, injector } from 'njct';
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 
 import * as tokens from './application/tokens';
 import { App } from './pages';
@@ -20,4 +20,5 @@ injector.provide(tokens.ArticleService, () => inject(ArticleService));
 injector.provide('tagservice', () => inject(ArticleService));
 injector.provide('sessionservice', () => inject(SessionService));
 
-ReactDOM.render(<App />, document.querySelector('#app'));
+const root = createRoot(document.querySelector('#app'));
+root.render(<App />);

@@ -8,10 +8,11 @@ import { PopularTags } from './PopularTags';
 
 type HomeViewProps = {
   articles: SingleArticle[];
+  count: number;
 };
 
 export function HomeView(props: HomeViewProps): JSX.Element {
-  const { articles } = props;
+  const { articles, count } = props;
 
   return (
     <div className="home-page">
@@ -41,7 +42,7 @@ export function HomeView(props: HomeViewProps): JSX.Element {
             {articles.map(article => (
               <ArticlePreview key={article.slug} article={article} />
             ))}
-            <Pagination />
+            <Pagination total={count} />
           </div>
 
           <div className="col-md-3">

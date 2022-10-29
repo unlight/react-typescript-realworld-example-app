@@ -58,7 +58,7 @@ export class ArticleService implements ArticleServiceInterface, TagService {
   ): Promise<Result<ArticleList, Error>> {
     const searchParams = {
       limit: args.take ?? 5,
-      skip: args.skip ?? 0,
+      offset: args.skip ?? 0,
       ...(args.author && { author: args.author }),
     };
 
