@@ -1,0 +1,8 @@
+{
+  "Error0": "Network error, server is unreachable or unresponding.",
+  "Error400": "Bad Request, the request was invalid or cannot be otherwise served.",
+  "Error401": "Unauthorized, the target resource requires a valid authentication credentials.",
+  "Error403": "You don't have permission to do that.",
+  "Error500": "Internal Server Error, looks like something went wrong!",
+  "Error503": "Service Unavailable, the server is currently unable to handle the request due to a temporary overload or scheduled maintenance."
+}

@@ -42,16 +42,17 @@ npm run dev
 - https://realworld-docs.netlify.app/docs/specs/backend-specs/endpoints
 - https://github.com/recoil-world/react-recoil-realworld-example-app
 - https://gist.github.com/unlight/68a69ba19c06512f18f254ff702a9e38 - frontend architecture layers
+- https://blog.johnnyreilly.com/2022/09/20/react-usesearchparamsstate/
 
 ## Todo
 
+- pagination - https://tailwindow.github.io/component-tailwindcss/components/button/pagination/index.html#
 - get rid of class-validator (use zod)
 - switch to react location
 - https://realworld-docs.netlify.app/docs/specs/backend-specs/endpoints
 - https://github.com/gothinkster/realworld/tree/master/api
 - react boundaries
 - use suspension
-- pagination - https://tailwindow.github.io/component-tailwindcss/components/button/pagination/index.html#
 - use https://github.com/erictooth/react-stateful-tabs
 - use 2 components for tabs do not use feed query param
 - setIsLoading make as global indicator error and pending
