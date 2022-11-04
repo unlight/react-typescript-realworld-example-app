@@ -4,7 +4,7 @@ import { SessionServiceInterface, Tokens } from '@application';
 import { Footer, Loader, Loading, Navbar } from '@components';
 import { inject } from 'njct';
 import React, { Suspense } from 'react';
-import { HashRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { RecoilRoot } from 'recoil';
 
 import { AppErrorBoundary } from './AppErrorBoundary';
@@ -27,7 +27,7 @@ export function App() {
     <React.StrictMode>
       <RecoilRoot>
         <AppErrorBoundary>
-          <HashRouter>
+          <BrowserRouter>
             <Navbar user={user} />
             <Routes>
               <Route path="/" element={<Home />} />
@@ -44,7 +44,7 @@ export function App() {
               />
             </Routes>
             <Footer />
-          </HashRouter>
+          </BrowserRouter>
         </AppErrorBoundary>
         <Loader />
       </RecoilRoot>

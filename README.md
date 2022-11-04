@@ -47,6 +47,7 @@ npm run dev
 ## Todo
 
 - pagination - https://tailwindow.github.io/component-tailwindcss/components/button/pagination/index.html#
+  https://ahooks.js.org/hooks/use-pagination
 - get rid of class-validator (use zod)
 - switch to react location
 - https://realworld-docs.netlify.app/docs/specs/backend-specs/endpoints

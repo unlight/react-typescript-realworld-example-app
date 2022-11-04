@@ -155,7 +155,7 @@ module.exports = {
       },
     ],
     'unicorn/filename-case': [
-      1,
+      0,
       {
         cases: {
           kebabCase: true,
