@@ -3,7 +3,7 @@ import React from 'react';
 import { HomeView } from './HomeView';
 import { useHome } from './useHome';
 
-export function Home(): JSX.Element | null {
+export function HomePage(): JSX.Element | null {
   const { articleList } = useHome();
 
   if (!articleList) {

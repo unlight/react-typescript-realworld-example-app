@@ -2,7 +2,7 @@
   "ts-node": {
     "transpileOnly": true,
     "compilerOptions": {
-      "target": "es2018",
+      "target": "es2020",
       "module": "commonjs"
     }
   },
@@ -28,10 +28,6 @@
     "paths": {
       "@components": ["src/components/index.ts"],
       "@components/*": ["src/components/*"],
-      "@application": ["src/application/index.ts"],
-      "@application/*": ["src/application/*"],
-      "@application/api": ["src/application/api/index.ts"],
-      "@application/api/*": ["src/application/api/*"],
       "@app_modules/*": ["src/app_modules/*"]
     }
   },

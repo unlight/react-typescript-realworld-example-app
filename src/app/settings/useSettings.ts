@@ -1,6 +1,3 @@
-import { SessionServiceInterface, Tokens } from '@application';
-import { UserService } from '@application/api';
-import { UserSettingsInput } from '@application/user';
 import { isLoading } from '@components/Loader';
 import { classValidatorResolver } from '@hookform/resolvers/class-validator';
 import { useRequest } from 'ahooks';
@@ -8,6 +5,10 @@ import { inject } from 'njct';
 import { useCallback, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useSetRecoilState } from 'recoil';
+
+import { SessionServiceInterface } from '../auth';
+import * as Tokens from '../tokens';
+import { UserService, UserSettingsInput } from '../user';
 
 async function requestSettings() {
   const userService = inject<UserService>(Tokens.UserService);
@@ -56,7 +57,9 @@ export function useSettings() {
   }, [runAsync, reset]);
 
   const logout = useCallback(async () => {
-    const sessionService = inject<SessionServiceInterface>('sessionservice');
+    const sessionService = inject<SessionServiceInterface>(
+      Tokens.SessionService,
+    );
     await sessionService.logout();
     document.location = '/';
   }, []);
@@ -66,7 +69,6 @@ export function useSettings() {
     setIsLoading,
     register,
     errors,
-    handleSubmit,
     setError,
     serverError,
     setServerError,

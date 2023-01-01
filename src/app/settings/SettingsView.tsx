@@ -1,7 +1,8 @@
-import { UserSettingsInput } from '@application/user';
 import classNames from 'clsx';
 import React from 'react';
 import { FieldError } from 'react-hook-form';
+
+import { UserSettingsInput } from '../user';
 
 type SettingsViewProps = {
   errors: {

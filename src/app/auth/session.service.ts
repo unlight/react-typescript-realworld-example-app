@@ -1,10 +1,9 @@
-import { SessionServiceInterface, Tokens } from '@application';
-import { UserLoginEnvelope } from '@application/user';
 import jwtDecode, { JwtPayload } from 'jwt-decode';
 import ky from 'ky';
 import { inject } from 'njct';
 
-import { AppConfig } from './types';
+import { AppConfig } from '../types';
+import { SessionServiceInterface } from './session-service.interface';
 
 const tokenKey = 'user_token_v1';
 
@@ -33,7 +32,7 @@ export class SessionService implements SessionServiceInterface {
 
   getToken(): string | undefined {
     const result = this.storage.getItem(tokenKey);
-    return result ? result : undefined;
+    return result ?? undefined;
   }
 
   getUser() {
