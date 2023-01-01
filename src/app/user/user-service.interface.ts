@@ -4,7 +4,7 @@ import { ObjectType } from 'simplytyped';
 import { Profile } from '../profile';
 import { User, UserCreateInput, UserSettingsInput } from './models';
 
-export interface UserService {
+export interface UserServiceInterface {
   register(data: ObjectType<UserCreateInput>): Promise<Result<User>>;
   getCurrentUser(): Promise<Result<User>>;
   updateCurrentUser(data: UserSettingsInput): Promise<Result<User>>;

@@ -167,7 +167,7 @@ module.exports = {
     'import/max-dependencies': [1, { max: 15 }],
     // simple-import-sort with recomended settings
     'simple-import-sort/imports': 1,
-    'simple-import-sort/exports': 1,
+    'simple-import-sort/exports': 0,
     'sort-imports': 0,
     'import/first': 1,
     'import/newline-after-import': 1,

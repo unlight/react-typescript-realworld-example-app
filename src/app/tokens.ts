@@ -4,3 +4,4 @@ export const ArticleService = 'ArticleService';
 export const SessionService = 'SessionService';
 export const Storage = 'Storage';
 export const HttpClient = 'HttpClient';
+export const TagService = 'TagService';

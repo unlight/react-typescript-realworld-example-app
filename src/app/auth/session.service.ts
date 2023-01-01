@@ -2,7 +2,9 @@ import jwtDecode, { JwtPayload } from 'jwt-decode';
 import ky from 'ky';
 import { inject } from 'njct';
 
+import * as Tokens from '../tokens';
 import { AppConfig } from '../types';
+import { UserLoginEnvelope } from '../user';
 import { SessionServiceInterface } from './session-service.interface';
 
 const tokenKey = 'user_token_v1';
@@ -51,6 +53,7 @@ export class SessionService implements SessionServiceInterface {
       return undefined;
     }
 
+    // eslint-disable-next-line consistent-return
     return payload;
   }
 

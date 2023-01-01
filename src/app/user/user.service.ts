@@ -1,17 +1,15 @@
-import { SessionServiceInterface, Tokens } from '@application';
-import { Profile } from '@application/profile';
-import type {
-  User,
-  UserService as IUserService,
-  UserSettingsInput,
-} from '@application/user';
 import ky from 'ky';
 import { inject } from 'njct';
 import { Err, Ok, Result } from 'rsts';
 
-import { AppConfig } from './types';
+import { SessionServiceInterface } from '../auth';
+import { Profile } from '../profile/interfaces';
+import * as Tokens from '../tokens';
+import { AppConfig } from '../types';
+import { User, UserSettingsInput } from './models';
+import { UserServiceInterface } from './user-service.interface';
 
-export class UserService implements IUserService {
+export class UserService implements UserServiceInterface {
   private authorization = () => {
     const token = this.sessionService.getToken();
     return {
