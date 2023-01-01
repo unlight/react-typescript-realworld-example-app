@@ -1,5 +1,3 @@
-import { SessionServiceInterface } from '@application';
-import { ArticleServiceInterface } from '@application/article';
 import { render, waitFor } from '@testing-library/react';
 import { injector } from 'njct';
 import React from 'react';
@@ -8,6 +6,9 @@ import { afterAll, beforeEach, expect, it, vi } from 'vitest';
 import { mock } from 'vitest-mock-extended';
 
 import { App } from './App';
+import { ArticleServiceInterface } from './article';
+import { SessionServiceInterface } from './auth';
+import * as Tokens from './tokens';
 
 vi.mock('./home/PopularTags', () => ({ PopularTags: () => 'populartags' }));
 
@@ -17,8 +18,8 @@ let sessionService = mock<SessionServiceInterface>();
 beforeEach(() => {
   articleService = mock<ArticleServiceInterface>();
   sessionService = mock<SessionServiceInterface>();
-  injector.provide('articleservice', () => articleService);
-  injector.provide('sessionservice', () => sessionService);
+  injector.provide(Tokens.ArticleService, () => articleService);
+  injector.provide(Tokens.SessionService, () => sessionService);
 
   articleService.findMany.mockResolvedValue(
     Ok({ articles: [], articlesCount: 0 }),

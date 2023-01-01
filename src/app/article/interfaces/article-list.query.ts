@@ -1,4 +1,4 @@
-export class ArticleListQuery {
+export interface ArticleListQuery {
   tag?: string;
   author?: string;
   favorited?: string;

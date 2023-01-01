@@ -1,6 +1,6 @@
 import { ArticleWhereInput } from './article-where-input';
 
-export class ArticleFindManyArgs {
+export interface ArticleFindManyArgs {
   where?: ArticleWhereInput;
   take?: number;
   skip?: number;
